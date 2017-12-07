@@ -1,0 +1,16 @@
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\obj\Debug\New_Inventario_Lab.vbprojResolveAssemblyReference.cache
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\obj\Debug\Inventario_Lab.Form1.resources
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\obj\Debug\Inventario_Lab.FormIngreso.resources
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\obj\Debug\Inventario_Lab.Form3.resources
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\obj\Debug\Inventario_Lab.Resources.resources
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\obj\Debug\New_Inventario_Lab.vbproj.GenerateResource.Cache
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\obj\Debug\New_Inventario_Lab.vbproj.CoreCompileInputs.cache
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\obj\Debug\Inventario_Lab.exe
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\obj\Debug\Inventario_Lab.xml
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\obj\Debug\Inventario_Lab.pdb
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\bin\Debug\Inventario_Lab.exe.config
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\bin\Debug\Inventario_Lab.exe
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\bin\Debug\Inventario_Lab.pdb
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\bin\Debug\Inventario_Lab.xml
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\bin\Debug\MySql.Data.dll
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\bin\Debug\MySql.Data.xml

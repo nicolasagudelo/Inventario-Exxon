@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{48CF604C-2148-4436-8823-E47BF08088ED}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>Inventario_Lab.My.MyApplication</StartupObject>
+    <RootNamespace>Inventario_Lab</RootNamespace>
+    <AssemblyName>Inventario_Lab</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Inventario_Lab.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Inventario_Lab.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form2.Designer.vb">
+      <DependentUpon>Form2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form3.Designer.vb">
+      <DependentUpon>Form3.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form3.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form2.resx">
+      <DependentUpon>Form2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form3.resx">
+      <DependentUpon>Form3.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Administrar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Admin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Productos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reportes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Admin_User.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Proveedores.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Equipos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Movimientos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ges_Usuario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ges_Almacen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bandeja_Trabajo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Solicitudes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Proovedor!.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ingreso.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Salida.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Consultas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Crear_Producto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Modificar_Equipo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Crear_Producto1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Crear_Equipo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Modificar_Producto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Proveedores_Modificar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Preoveedores_Crear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buscar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Guardar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Nuevo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Guardar1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Eliminar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Equipo1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Movimientos1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Proveedores1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Movimiento1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Foto!.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Agregar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Agregar1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Quitar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Eliminar1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\remove_1275.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Nuev_Equ.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Foto! - Copia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\if_female_628285.png" />
+    <None Include="Resources\if_icon-136-document-edit_314834.png" />
+    <Content Include="Resources\if_log-in_2561252.ico" />
+    <Content Include="Resources\if_malecostume_403022.png" />
+    <Content Include="Resources\if_male_628288.png" />
+    <Content Include="Resources\if_matureman1_628284.png" />
+    <Content Include="Resources\NoImage.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>

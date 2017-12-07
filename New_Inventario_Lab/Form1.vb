@@ -4,6 +4,9 @@ Imports System.Drawing.Imaging
 Imports System.Data
 Imports System.Windows.Forms
 Imports System.Configuration
+Imports System.Security.Cryptography
+Imports System.Text
+
 Public Class Form1
     Dim conn As New MySqlConnection
     Private Sub Connect()
@@ -159,9 +162,12 @@ Public Class Form1
     End Sub
 
     Private Sub Gestion_Usuario_Click(sender As Object, e As EventArgs) Handles Gestion_Usuario.Click
+        Modificar_Usuario = 0
+        Agregar_Usuario = 0
+        HabilitarControlesUsuario()
+        ActivarCamposContrasena()
         Esconder_tabpages_submenu()
         TabPage7.Parent = TabControl2 'Usuarios
-        Recorrer_Usuarios()
         TabPage8.Parent = TabControl2 'Monto
         Cargar_Tabla("*", "Doag")
         Nombre_Doag.Text = Tabla1.Rows(0).ItemArray(1).ToString
@@ -180,23 +186,26 @@ Public Class Form1
         Cargar_Tabla("*", "Perfiles")
         Nombre_Perfil.Text = Tabla1.Rows(0).ItemArray(1).ToString
         Nivel_Permisos.Text = Tabla1.Rows(0).ItemArray(2).ToString
-
+        Recorrer_Usuarios()
     End Sub
 
-    Dim usuario_num As Integer = 0
+    Dim usuario_num As Integer = 1
     Dim Id_Usuario As String
     Dim Tabla1 As New DataTable
 
     Private Sub Recorrer_Usuarios()
+        Label10.Visible = True
+        Anterior_Usuario.Visible = True
+        Siguiente_Usuario.Visible = True
         Cargar_Tabla("Id_Usuario, Nombre_Usuario, Usuario, Id_Perfil, Foto, Id_Doag", "USUARIOS")
-        Label10.Text = "Usuario " & (usuario_num + 1) & " de " & (Tabla1.Rows.Count)
-        Id_Usuario = Tabla1.Rows(usuario_num).ItemArray(0).ToString
-        Nombre_Usuario.Text = Tabla1.Rows(usuario_num).ItemArray(1).ToString
-        Usuario_Nickname.Text = Tabla1.Rows(usuario_num).ItemArray(2).ToString
-        Perfiles_Usuario.SelectedValue = Convert.ToInt64(Tabla1.Rows(usuario_num).ItemArray(3))
-        Doag_Usuarios.SelectedValue = Convert.ToInt64(Tabla1.Rows(usuario_num).ItemArray(5))
+        Label10.Text = "Usuario " & (usuario_num) & " de " & (Tabla1.Rows.Count)
+        Id_Usuario = Tabla1.Rows(usuario_num - 1).ItemArray(0).ToString
+        Nombre_Usuario.Text = Tabla1.Rows(usuario_num - 1).ItemArray(1).ToString
+        Usuario_Nickname.Text = Tabla1.Rows(usuario_num - 1).ItemArray(2).ToString
+        Perfiles_Usuario.SelectedValue = Convert.ToInt64(Tabla1.Rows(usuario_num - 1).ItemArray(3))
+        Doag_Usuarios.SelectedValue = Convert.ToInt64(Tabla1.Rows(usuario_num - 1).ItemArray(5))
         Try
-            Dim b64str As String = Tabla1.Rows(usuario_num).ItemArray(4).ToString
+            Dim b64str As String = Tabla1.Rows(usuario_num - 1).ItemArray(4).ToString
             Dim binaryData() As Byte = Convert.FromBase64String(b64str)
             Dim stream As New MemoryStream(binaryData)
             Foto_Usuario.Image = Image.FromStream(stream)
@@ -206,22 +215,25 @@ Public Class Form1
     End Sub
 
     Private Sub Siguiente_Usuario_Click(sender As Object, e As EventArgs) Handles Siguiente_Usuario.Click
-        If usuario_num >= (Tabla1.Rows.Count - 1) Then
-            usuario_num = 0
+        usuario_num += 1
+        If usuario_num > (Tabla1.Rows.Count) Then
+            usuario_num = 1
             Recorrer_Usuarios()
-        Else
-            usuario_num = usuario_num + 1
-            Recorrer_Usuarios()
+            Exit Sub
         End If
+        Recorrer_Usuarios()
     End Sub
+
     Private Sub Anterior_Usuario_Click(sender As Object, e As EventArgs) Handles Anterior_Usuario.Click
+        usuario_num -= 1
+        Dim a = Tabla1.Rows.Count
         If usuario_num = 0 Then
-            usuario_num = Tabla1.Rows.Count - 1
+            usuario_num = Tabla1.Rows.Count
             Recorrer_Usuarios()
-        Else
-            usuario_num = usuario_num - 1
-            Recorrer_Usuarios()
+            Exit Sub
         End If
+        Recorrer_Usuarios()
+
     End Sub
 
     Private Sub Cargar_Tabla(ByVal Columns As String, ByVal Nombre_Tabla As String)
@@ -240,6 +252,9 @@ Public Class Form1
     End Sub
 
     Private Sub Foto_Usuario_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles Foto_Usuario.DragEnter
+        If Agregar_Usuario = 1 Then
+            Exit Sub
+        End If
         'DataFormats.FileDrop nos devuelve el array de rutas de archivos
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then
             'Los archivos son externos a nuestra aplicación por lo que de indicaremos All ya que dará lo mismo.
@@ -247,6 +262,9 @@ Public Class Form1
         End If
     End Sub
     Private Sub Foto_Usuario_DragDrop(ByVal sender As Object, e As DragEventArgs) Handles Foto_Usuario.DragDrop
+        If Agregar_Usuario = 1 Then
+            Exit Sub
+        End If
 
         If MessageBox.Show("¿Esta seguro que desea CAMBIAR la foto?" & vbCrLf & "Esta accion no se puede deshacer", "Alerta", MessageBoxButtons.YesNo) = DialogResult.Yes Then
             If e.Data.GetDataPresent(DataFormats.FileDrop) Then
@@ -292,4 +310,196 @@ Public Class Form1
         End Select
     End Sub
 
+    Dim Modificar_Usuario As Integer = 0
+
+    Private Sub BtnModificarUsuario_Click(sender As Object, e As EventArgs) Handles BtnModificarUsuario.Click
+        Agregar_Usuario = 0
+        If Modificar_Usuario = 1 Then
+            Modificar_Usuario = 0
+        ElseIf Modificar_Usuario = 0 Then
+            Modificar_Usuario = 1
+        End If
+        HabilitarControlesUsuario()
+        ActivarCamposContrasena()
+        Label10.Visible = True
+        Anterior_Usuario.Visible = True
+        Siguiente_Usuario.Visible = True
+        Recorrer_Usuarios()
+    End Sub
+
+    Dim Agregar_Usuario As Integer = 0
+    Private Sub Nuevo_Usuario_Click(sender As Object, e As EventArgs) Handles Nuevo_Usuario.Click
+        Modificar_Usuario = 0
+        Agregar_Usuario = 1
+        HabilitarControlesUsuario()
+        ActivarCamposContrasena()
+        Nombre_Usuario.Clear()
+        Nombre_Usuario.Focus()
+        Usuario_Nickname.Clear()
+        Foto_Usuario.Image = My.Resources.NoImage
+        Label10.Visible = False
+        Anterior_Usuario.Visible = False
+        Siguiente_Usuario.Visible = False
+    End Sub
+
+    Private Sub ActivarCamposContrasena()
+        If Agregar_Usuario = 1 Then
+            Label21.Visible = True
+            Label21.Enabled = True
+            Contrasena_Usuario.Enabled = True
+            Contrasena_Usuario.Visible = True
+            Contrasena_Usuario.Clear()
+        Else
+            Label21.Visible = False
+            Label21.Enabled = False
+            Contrasena_Usuario.Enabled = False
+            Contrasena_Usuario.Visible = False
+            Contrasena_Usuario.Clear()
+        End If
+    End Sub
+
+    Private Sub HabilitarControlesUsuario()
+        If Modificar_Usuario = 1 Or Agregar_Usuario = 1 Then
+            Nombre_Usuario.ReadOnly = False
+            Usuario_Nickname.ReadOnly = False
+            Perfiles_Usuario.Enabled = True
+            Doag_Usuarios.Enabled = True
+        Else
+            Nombre_Usuario.ReadOnly = True
+            Usuario_Nickname.ReadOnly = True
+            Perfiles_Usuario.Enabled = False
+            Doag_Usuarios.Enabled = False
+        End If
+    End Sub
+
+    Private Sub TabPage7_Leave(sender As Object, e As EventArgs) Handles TabPage7.Leave
+        Modificar_Usuario = 0
+        Agregar_Usuario = 0
+        HabilitarControlesUsuario()
+        ActivarCamposContrasena()
+    End Sub
+
+    Private Sub Guardar_Usuario_Click(sender As Object, e As EventArgs) Handles Guardar_Usuario.Click
+        If Modificar_Usuario = 1 Then
+            Dim reader As MySqlDataReader
+            Dim Nombre As String = Nombre_Usuario.Text.Trim
+            Dim Usuario As String = Usuario_Nickname.Text.Trim
+            Dim IDPerfil As String = Perfiles_Usuario.SelectedValue.ToString
+            Dim IDDoag As String = Doag_Usuarios.SelectedValue.ToString
+
+            Try
+                conn.Open()
+                Dim query As String = "UPDATE usuarios SET Nombre_Usuario = @nombre, Usuario = @usuario
+                                , Id_Perfil = @IDPerfil, Id_Doag = @doag WHERE Id_Usuario = @IDUsu;"
+                Dim cmd As New MySqlCommand(query, conn)
+                With cmd.Parameters
+                    .AddWithValue("nombre", Nombre)
+                    .AddWithValue("usuario", Usuario)
+                    .AddWithValue("IDPerfil", IDPerfil)
+                    .AddWithValue("doag", IDDoag)
+                    .AddWithValue("IDUsu", Id_Usuario)
+                End With
+                reader = cmd.ExecuteReader
+                MsgBox("Usuario modificado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                conn.Close()
+            End Try
+
+        ElseIf Agregar_Usuario = 1 Then
+
+            Dim reader As MySqlDataReader
+            Dim Nombre As String = Nombre_Usuario.Text.Trim
+            Dim Usuario As String = Usuario_Nickname.Text.Trim
+            Dim IDPerfil As String = Perfiles_Usuario.SelectedValue.ToString
+            Dim IDDoag As String = Doag_Usuarios.SelectedValue.ToString
+            Dim Contrasena As String = Contrasena_Usuario.Text
+            Dim NewSalt As String = GenerateSalt()
+            If Contrasena = "" Then
+                Contrasena = "123"
+            End If
+            If Nombre = "" Or Usuario = "" Then
+                MsgBox("Todos los campos son obligatorios", MsgBoxStyle.Exclamation, "Error")
+                Exit Sub
+            End If
+
+            Contrasena = NewSalt + Contrasena
+            Contrasena = ComputeHashOfString(Of SHA256CryptoServiceProvider)(Contrasena)
+
+            Try
+                conn.Open()
+                Dim query As String = "INSERT into usuarios (Nombre_Usuario, Usuario, Salt, Hash, Id_Perfil, Id_Doag)
+                                      VALUES (@nombre, @usuario, @Salt, @Hash, @IDPerfil, @doag);"
+                Dim cmd As New MySqlCommand(query, conn)
+                With cmd.Parameters
+                    .AddWithValue("nombre", Nombre)
+                    .AddWithValue("usuario", Usuario)
+                    .AddWithValue("Salt", NewSalt)
+                    .AddWithValue("Hash", Contrasena)
+                    .AddWithValue("IDPerfil", IDPerfil)
+                    .AddWithValue("doag", IDDoag)
+                    .AddWithValue("IDUsu", Id_Usuario)
+                End With
+                reader = cmd.ExecuteReader
+                MsgBox("Usuario Agregado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                conn.Close()
+            End Try
+            Agregar_Usuario = 0
+            HabilitarControlesUsuario()
+            ActivarCamposContrasena()
+            Recorrer_Usuarios()
+        End If
+    End Sub
+
+    Public Function ComputeHashOfString(Of T As HashAlgorithm)(ByVal str As String,
+                                                                             Optional ByVal enc As Encoding = Nothing) As String
+        If (enc Is Nothing) Then
+            enc = Encoding.Default
+        End If
+        Using algorithm As HashAlgorithm = DirectCast(Activator.CreateInstance(GetType(T)), HashAlgorithm)
+            Dim data As Byte() = enc.GetBytes(str)
+            Dim hash As Byte() = algorithm.ComputeHash(data)
+            Dim sb As New StringBuilder(capacity:=hash.Length * 2)
+            For Each b As Byte In hash
+                sb.Append(b.ToString("X2"))
+            Next
+            Return sb.ToString.ToLower()
+        End Using
+
+    End Function
+
+    Private Function GenerateSalt()
+        Dim saltsize As Integer = 47
+        Dim saltbytes() As Byte
+        saltbytes = New Byte(saltsize - 1) {}
+        Dim rng As RNGCryptoServiceProvider
+        rng = New RNGCryptoServiceProvider
+        rng.GetNonZeroBytes(saltbytes)
+        Return Convert.ToBase64String(saltbytes)
+    End Function
+
+    Private Sub Eliminar_Usuario_Click(sender As Object, e As EventArgs) Handles Eliminar_Usuario.Click
+        If Agregar_Usuario = 1 Then
+            Exit Sub
+        End If
+        If MessageBox.Show("¿Esta seguro que desea ELIMINAR este Usuario?", "Alerta", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            Try
+                conn.Open()
+                Dim query As String = "Delete from Usuarios where ID_Usuario = @IdUsu;"
+                Dim cmd As New MySqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("IdUsu", Id_Usuario)
+                cmd.ExecuteNonQuery()
+                MsgBox("Usuario Eliminado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
+            End Try
+        End If
+        Recorrer_Usuarios()
+    End Sub
 End Class

@@ -102,7 +102,7 @@ Inventario_Lab
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
 </member>
-<member name="P:Inventario_Lab.My.Resources.Resources.Foto_">
+<member name="P:Inventario_Lab.My.Resources.Resources.Foto">
 <summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
@@ -127,7 +127,7 @@ Inventario_Lab
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
 </member>
-<member name="P:Inventario_Lab.My.Resources.Resources.if_icon_136_document_edit_314834">
+<member name="P:Inventario_Lab.My.Resources.Resources.if_icon_136_document_edit_314724">
 <summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
@@ -202,7 +202,7 @@ Inventario_Lab
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
 </member>
-<member name="P:Inventario_Lab.My.Resources.Resources.Proovedor_">
+<member name="P:Inventario_Lab.My.Resources.Resources.Proovedor">
 <summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>

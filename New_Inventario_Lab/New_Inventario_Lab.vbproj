@@ -261,6 +261,7 @@
   <ItemGroup>
     <Content Include="Resources\if_female_628285.png" />
     <None Include="Resources\if_icon-136-document-edit_314834.png" />
+    <None Include="Resources\if_icon-136-document-edit_314724.png" />
     <Content Include="Resources\if_log-in_2561252.ico" />
     <Content Include="Resources\if_malecostume_403022.png" />
     <Content Include="Resources\if_male_628288.png" />

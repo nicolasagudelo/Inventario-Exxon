@@ -145,7 +145,7 @@
   <data name="Admin_User" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Admin_User.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Proovedor!" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Proovedor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Proovedor!.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Proveedores1" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -226,7 +226,7 @@
   <data name="Crear_Producto" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Crear_Producto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Foto!" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Foto" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Foto!.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Agregar1" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -238,8 +238,8 @@
   <data name="FemaleImg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\if_female_628285.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="if_icon_136_document_edit_314834" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\if_icon-136-document-edit_314834.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="if_icon_136_document_edit_314724" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\if_icon-136-document-edit_314724.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Male1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\if_male_628288.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

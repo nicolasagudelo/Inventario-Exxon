@@ -82,6 +82,8 @@ Partial Class Form1
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.Contrasena_Usuario = New System.Windows.Forms.TextBox()
         Me.BtnModificarUsuario = New System.Windows.Forms.Button()
         Me.Label78 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
@@ -104,13 +106,14 @@ Partial Class Form1
         Me.Usuario_Nickname = New System.Windows.Forms.TextBox()
         Me.Nombre_Usuario = New System.Windows.Forms.TextBox()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
+        Me.Monto_Doag = New System.Windows.Forms.TextBox()
+        Me.BtnModificarDoag = New System.Windows.Forms.Button()
         Me.Label79 = New System.Windows.Forms.Label()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.Comentario_Doag = New System.Windows.Forms.TextBox()
-        Me.Monto_Doag = New System.Windows.Forms.TextBox()
         Me.Nombre_Doag = New System.Windows.Forms.TextBox()
         Me.Eliminar_Doag = New System.Windows.Forms.Button()
         Me.Nuevo_Doag = New System.Windows.Forms.Button()
@@ -290,8 +293,6 @@ Partial Class Form1
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Label21 = New System.Windows.Forms.Label()
-        Me.Contrasena_Usuario = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.Solicitudes, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -944,6 +945,29 @@ Partial Class Form1
         Me.TabPage7.TabIndex = 0
         Me.TabPage7.Text = "Usuarios"
         '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Enabled = False
+        Me.Label21.Location = New System.Drawing.Point(11, 238)
+        Me.Label21.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(93, 17)
+        Me.Label21.TabIndex = 37
+        Me.Label21.Text = "Contraseña"
+        Me.Label21.Visible = False
+        '
+        'Contrasena_Usuario
+        '
+        Me.Contrasena_Usuario.Enabled = False
+        Me.Contrasena_Usuario.Location = New System.Drawing.Point(14, 278)
+        Me.Contrasena_Usuario.Margin = New System.Windows.Forms.Padding(4)
+        Me.Contrasena_Usuario.Name = "Contrasena_Usuario"
+        Me.Contrasena_Usuario.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.Contrasena_Usuario.Size = New System.Drawing.Size(194, 24)
+        Me.Contrasena_Usuario.TabIndex = 36
+        Me.Contrasena_Usuario.Visible = False
+        '
         'BtnModificarUsuario
         '
         Me.BtnModificarUsuario.FlatAppearance.BorderColor = System.Drawing.Color.LightSteelBlue
@@ -1187,13 +1211,14 @@ Partial Class Form1
         'TabPage8
         '
         Me.TabPage8.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.TabPage8.Controls.Add(Me.Monto_Doag)
+        Me.TabPage8.Controls.Add(Me.BtnModificarDoag)
         Me.TabPage8.Controls.Add(Me.Label79)
         Me.TabPage8.Controls.Add(Me.DataGridView1)
         Me.TabPage8.Controls.Add(Me.Label24)
         Me.TabPage8.Controls.Add(Me.Label25)
         Me.TabPage8.Controls.Add(Me.Label26)
         Me.TabPage8.Controls.Add(Me.Comentario_Doag)
-        Me.TabPage8.Controls.Add(Me.Monto_Doag)
         Me.TabPage8.Controls.Add(Me.Nombre_Doag)
         Me.TabPage8.Controls.Add(Me.Eliminar_Doag)
         Me.TabPage8.Controls.Add(Me.Nuevo_Doag)
@@ -1205,6 +1230,30 @@ Partial Class Form1
         Me.TabPage8.Size = New System.Drawing.Size(1108, 652)
         Me.TabPage8.TabIndex = 1
         Me.TabPage8.Text = "Monto"
+        '
+        'Monto_Doag
+        '
+        Me.Monto_Doag.Location = New System.Drawing.Point(264, 88)
+        Me.Monto_Doag.Margin = New System.Windows.Forms.Padding(4)
+        Me.Monto_Doag.Name = "Monto_Doag"
+        Me.Monto_Doag.ReadOnly = True
+        Me.Monto_Doag.Size = New System.Drawing.Size(194, 24)
+        Me.Monto_Doag.TabIndex = 37
+        Me.Monto_Doag.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'BtnModificarDoag
+        '
+        Me.BtnModificarDoag.FlatAppearance.BorderColor = System.Drawing.Color.LightSteelBlue
+        Me.BtnModificarDoag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red
+        Me.BtnModificarDoag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.BtnModificarDoag.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnModificarDoag.Image = Global.Inventario_Lab.My.Resources.Resources.if_icon_136_document_edit_314724
+        Me.BtnModificarDoag.Location = New System.Drawing.Point(624, 8)
+        Me.BtnModificarDoag.Name = "BtnModificarDoag"
+        Me.BtnModificarDoag.Size = New System.Drawing.Size(42, 38)
+        Me.BtnModificarDoag.TabIndex = 36
+        Me.TPAdministrar.SetToolTip(Me.BtnModificarDoag, "Modificar Usuario")
+        Me.BtnModificarDoag.UseVisualStyleBackColor = True
         '
         'Label79
         '
@@ -1223,6 +1272,7 @@ Partial Class Form1
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.8!)
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.DataGridView1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView1.BackgroundColor = System.Drawing.Color.LightSteelBlue
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.GridColor = System.Drawing.SystemColors.ControlDarkDark
@@ -1252,9 +1302,9 @@ Partial Class Form1
         Me.Label25.Location = New System.Drawing.Point(263, 52)
         Me.Label25.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(49, 17)
+        Me.Label25.Size = New System.Drawing.Size(52, 17)
         Me.Label25.TabIndex = 13
-        Me.Label25.Text = "Suma"
+        Me.Label25.Text = "Monto"
         '
         'Label26
         '
@@ -1262,32 +1312,25 @@ Partial Class Form1
         Me.Label26.Location = New System.Drawing.Point(10, 52)
         Me.Label26.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(52, 17)
+        Me.Label26.Size = New System.Drawing.Size(66, 17)
         Me.Label26.TabIndex = 12
-        Me.Label26.Text = "Monto"
+        Me.Label26.Text = "Nombre"
         '
         'Comentario_Doag
         '
         Me.Comentario_Doag.Location = New System.Drawing.Point(14, 172)
         Me.Comentario_Doag.Margin = New System.Windows.Forms.Padding(4)
         Me.Comentario_Doag.Name = "Comentario_Doag"
+        Me.Comentario_Doag.ReadOnly = True
         Me.Comentario_Doag.Size = New System.Drawing.Size(650, 24)
         Me.Comentario_Doag.TabIndex = 11
-        '
-        'Monto_Doag
-        '
-        Me.Monto_Doag.Location = New System.Drawing.Point(266, 89)
-        Me.Monto_Doag.Margin = New System.Windows.Forms.Padding(4)
-        Me.Monto_Doag.Name = "Monto_Doag"
-        Me.Monto_Doag.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.Monto_Doag.Size = New System.Drawing.Size(194, 24)
-        Me.Monto_Doag.TabIndex = 10
         '
         'Nombre_Doag
         '
         Me.Nombre_Doag.Location = New System.Drawing.Point(14, 89)
         Me.Nombre_Doag.Margin = New System.Windows.Forms.Padding(4)
         Me.Nombre_Doag.Name = "Nombre_Doag"
+        Me.Nombre_Doag.ReadOnly = True
         Me.Nombre_Doag.Size = New System.Drawing.Size(194, 24)
         Me.Nombre_Doag.TabIndex = 9
         '
@@ -3325,29 +3368,6 @@ Partial Class Form1
         Me.PictureBox1.TabStop = False
         Me.TPAdministrar.SetToolTip(Me.PictureBox1, "Administrar")
         '
-        'Label21
-        '
-        Me.Label21.AutoSize = True
-        Me.Label21.Enabled = False
-        Me.Label21.Location = New System.Drawing.Point(11, 238)
-        Me.Label21.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(93, 17)
-        Me.Label21.TabIndex = 37
-        Me.Label21.Text = "Contraseña"
-        Me.Label21.Visible = False
-        '
-        'Contrasena_Usuario
-        '
-        Me.Contrasena_Usuario.Enabled = False
-        Me.Contrasena_Usuario.Location = New System.Drawing.Point(14, 278)
-        Me.Contrasena_Usuario.Margin = New System.Windows.Forms.Padding(4)
-        Me.Contrasena_Usuario.Name = "Contrasena_Usuario"
-        Me.Contrasena_Usuario.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.Contrasena_Usuario.Size = New System.Drawing.Size(194, 24)
-        Me.Contrasena_Usuario.TabIndex = 36
-        Me.Contrasena_Usuario.Visible = False
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 16.0!)
@@ -3513,7 +3533,6 @@ Partial Class Form1
     Friend WithEvents Label25 As Label
     Friend WithEvents Label26 As Label
     Friend WithEvents Comentario_Doag As TextBox
-    Friend WithEvents Monto_Doag As TextBox
     Friend WithEvents Nombre_Doag As TextBox
     Friend WithEvents Label27 As Label
     Friend WithEvents Label28 As Label
@@ -3708,4 +3727,6 @@ Partial Class Form1
     Friend WithEvents BtnModificarUsuario As Button
     Friend WithEvents Label21 As Label
     Friend WithEvents Contrasena_Usuario As TextBox
+    Friend WithEvents BtnModificarDoag As Button
+    Friend WithEvents Monto_Doag As TextBox
 End Class

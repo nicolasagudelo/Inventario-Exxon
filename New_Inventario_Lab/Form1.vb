@@ -6,6 +6,7 @@ Imports System.Windows.Forms
 Imports System.Configuration
 Imports System.Security.Cryptography
 Imports System.Text
+Imports System.Text.RegularExpressions
 
 Public Class Form1
     Dim conn As New MySqlConnection
@@ -114,8 +115,8 @@ Public Class Form1
 
     Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
         Menu_Seleccionado(1)
-        'cant_reg_encon = 0
-        'z = "USUARIOS"
+        cant_reg_encon = 0
+        z = "USUARIOS"
     End Sub
     Private Sub PictureBox2_Click(sender As Object, e As EventArgs) Handles PictureBox2.Click
         Menu_Seleccionado(2)
@@ -169,6 +170,13 @@ Public Class Form1
         Esconder_tabpages_submenu()
         TabPage7.Parent = TabControl2 'Usuarios
         TabPage8.Parent = TabControl2 'Monto
+        CargarDGVMontos()
+        TabPage9.Parent = TabControl2 'Perfiles
+        CargarPerfiles()
+        Recorrer_Usuarios()
+    End Sub
+
+    Private Sub CargarDGVMontos()
         Cargar_Tabla("*", "Doag")
         Nombre_Doag.Text = Tabla1.Rows(0).ItemArray(1).ToString
         Monto_Doag.Text = Tabla1.Rows(0).ItemArray(2).ToString
@@ -178,15 +186,14 @@ Public Class Form1
         DataGridView1.ColumnHeadersVisible = False
         DataGridView1.ReadOnly = True
         DataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        DataGridView1.Columns(1).Width = 160
-        DataGridView1.Columns(2).Width = 160
-        DataGridView1.Columns(3).Width = 310
         DataGridView1.Columns(0).Visible = False
-        TabPage9.Parent = TabControl2 'Perfiles
+        Me.DataGridView1.Columns(2).DefaultCellStyle.Format = "c"
+    End Sub
+
+    Private Sub CargarPerfiles()
         Cargar_Tabla("*", "Perfiles")
         Nombre_Perfil.Text = Tabla1.Rows(0).ItemArray(1).ToString
         Nivel_Permisos.Text = Tabla1.Rows(0).ItemArray(2).ToString
-        Recorrer_Usuarios()
     End Sub
 
     Dim usuario_num As Integer = 1
@@ -198,6 +205,9 @@ Public Class Form1
         Anterior_Usuario.Visible = True
         Siguiente_Usuario.Visible = True
         Cargar_Tabla("Id_Usuario, Nombre_Usuario, Usuario, Id_Perfil, Foto, Id_Doag", "USUARIOS")
+        If usuario_num >= Tabla1.Rows.Count Then
+            usuario_num = Tabla1.Rows.Count
+        End If
         Label10.Text = "Usuario " & (usuario_num) & " de " & (Tabla1.Rows.Count)
         Id_Usuario = Tabla1.Rows(usuario_num - 1).ItemArray(0).ToString
         Nombre_Usuario.Text = Tabla1.Rows(usuario_num - 1).ItemArray(1).ToString
@@ -310,6 +320,31 @@ Public Class Form1
         End Select
     End Sub
 
+    Dim Modificar_Doag As Integer = 0
+
+    Private Sub BtnModificarDoag_Click(sender As Object, e As EventArgs) Handles BtnModificarDoag.Click
+        Agregar_Doag = 0
+        If Modificar_Doag = 1 Then
+            Modificar_Doag = 0
+        ElseIf Modificar_Doag = 0 Then
+            Modificar_Doag = 1
+        End If
+        HabilitarControlesDoag()
+
+    End Sub
+
+    Private Sub HabilitarControlesDoag()
+        If Modificar_Doag = 1 Or Agregar_Doag = 1 Then
+            Nombre_Doag.ReadOnly = False
+            Monto_Doag.ReadOnly = False
+            Comentario_Doag.ReadOnly = False
+        Else
+            Nombre_Doag.ReadOnly = True
+            Monto_Doag.ReadOnly = True
+            Comentario_Doag.ReadOnly = True
+        End If
+    End Sub
+
     Dim Modificar_Usuario As Integer = 0
 
     Private Sub BtnModificarUsuario_Click(sender As Object, e As EventArgs) Handles BtnModificarUsuario.Click
@@ -340,6 +375,17 @@ Public Class Form1
         Label10.Visible = False
         Anterior_Usuario.Visible = False
         Siguiente_Usuario.Visible = False
+    End Sub
+
+    Dim Agregar_Doag As Integer = 0
+    Private Sub Nuevo_Doag_Click(sender As Object, e As EventArgs) Handles Nuevo_Doag.Click
+        Modificar_Doag = 0
+        Agregar_Doag = 1
+        Nombre_Doag.Clear()
+        Monto_Doag.Clear()
+        Comentario_Doag.Clear()
+        Nombre_Doag.Focus()
+        HabilitarControlesDoag()
     End Sub
 
     Private Sub ActivarCamposContrasena()
@@ -377,6 +423,86 @@ Public Class Form1
         Agregar_Usuario = 0
         HabilitarControlesUsuario()
         ActivarCamposContrasena()
+    End Sub
+
+    Private Sub TabPage8_Leave(sender As Object, e As EventArgs) Handles TabPage8.Leave
+        Modificar_Doag = 0
+        Agregar_Doag = 0
+        HabilitarControlesDoag()
+    End Sub
+
+
+    Dim Id_Doag As String
+    Private Sub DataGridView1_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridView1.SelectionChanged
+        Try
+            Dim fila_actual As Integer = (DataGridView1.CurrentRow.Index)
+            If fila_actual = (DataGridView1.Rows.Count - 1) Then
+                'reg_bus_doag = "nuevo"
+                Nombre_Doag.Text = ""
+                Monto_Doag.Text = ""
+                Comentario_Doag.Text = ""
+            Else
+                Cargar_Tabla("*", "Doag")
+                Id_Doag = Tabla1.Rows(fila_actual).ItemArray(0).ToString
+                Nombre_Doag.Text = Tabla1.Rows(fila_actual).ItemArray(1).ToString
+                Monto_Doag.Text = Format(Tabla1.Rows(fila_actual).ItemArray(2).ToString, "Currency") 'Text1.Text = Format(Numero, "Currency")
+                Comentario_Doag.Text = Tabla1.Rows(fila_actual).ItemArray(3).ToString
+            End If
+        Catch ex As Exception
+            'MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+
+    Private Sub Guardar_Doag_Click(sender As Object, e As EventArgs) Handles Guardar_Doag.Click
+        If Modificar_Doag = 1 Then
+            Dim Nombre As String = Nombre_Doag.Text.Trim
+            Dim Suma As String = CType(Monto_Doag.Text.Trim, Integer).ToString
+            Dim Comentario As String = Comentario_Doag.Text.Trim
+            Try
+                conn.Open()
+                Dim query As String = "UPDATE doag SET Nombre_Doag = @Nombre, Monto = @Monto, Comentario = @Comentario
+                                       WHERE Id_Doag = @IDDoag;"
+                Dim cmd As New MySqlCommand(query, conn)
+                With cmd.Parameters
+                    .AddWithValue("Nombre", Nombre)
+                    .AddWithValue("Monto", Suma)
+                    .AddWithValue("Comentario", Comentario)
+                    .AddWithValue("IDDoag", Id_Doag)
+                End With
+                cmd.ExecuteNonQuery()
+                MsgBox("Registro modificado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+                CargarDGVMontos()
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                conn.Close()
+            End Try
+
+        ElseIf Agregar_Doag = 1 Then
+            Dim Nombre As String = Nombre_Doag.Text
+            Dim Monto As String = CType(Monto_Doag.Text, Integer).ToString
+            Dim Comentario As String = Comentario_Doag.Text.Trim
+            Try
+                conn.Open()
+                Dim query As String = "INSERT INTO doag (Nombre_Doag, Monto, Comentario) VALUES (@Nombre, @Monto, @Comentario);"
+                Dim cmd As New MySqlCommand(query, conn)
+                With cmd.Parameters
+                    .AddWithValue("Nombre", Nombre)
+                    .AddWithValue("@Monto", Monto)
+                    .AddWithValue("@Comentario", Comentario)
+                End With
+                cmd.ExecuteNonQuery()
+                MsgBox("Registro Agregado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+                CargarDGVMontos()
+            Catch ex As Exception
+                MsgBox("Error al intentar agregar el registro: " & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                conn.Close()
+            End Try
+            Agregar_Doag = 0
+            HabilitarControlesDoag()
+        End If
     End Sub
 
     Private Sub Guardar_Usuario_Click(sender As Object, e As EventArgs) Handles Guardar_Usuario.Click
@@ -502,4 +628,114 @@ Public Class Form1
         End If
         Recorrer_Usuarios()
     End Sub
+
+
+    Private Sub Eliminar_Doag_Click(sender As Object, e As EventArgs) Handles Eliminar_Doag.Click
+        If Agregar_Doag = 1 Then
+            Exit Sub
+        End If
+        If MessageBox.Show("¿Esta seguro que desea ELIMINAR este Registro?", "Alerta", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            Try
+                conn.Open()
+                Dim query As String = "Delete from doag where Id_Doag = @IdDoag;"
+                Dim cmd As New MySqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("IdDoag", Id_Doag)
+                cmd.ExecuteNonQuery()
+                MsgBox("Registro Eliminado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
+            End Try
+        End If
+        CargarDGVMontos()
+    End Sub
+
+
+    Dim cant_reg_encon As Integer = 0
+    Dim z As String 'memorioa del usuario a buscar
+
+    Private Sub Buscar_Usuario_Click(sender As Object, e As EventArgs) Handles Buscar_Usuario.Click
+        If Buscar_Us.Text.Trim = "" Then
+            Exit Sub
+        End If
+        Cargar_Tabla("Id_Usuario, Nombre_Usuario, Usuario, Id_Perfil, Foto, Id_Doag", "USUARIOS")
+        If z <> Buscar_Us.Text Then
+            cant_reg_encon = 0
+        End If
+        Try
+            conn.Open()
+            Dim consulta As String = "Select * from usuarios"
+            Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
+            Dim MysqlDset As New DataSet
+            MysqlDadap.Fill(MysqlDset)
+            conn.Close()
+            Dim i As Integer = 0
+            Dim foundRows() As Data.DataRow
+            foundRows = MysqlDset.Tables(0).Select("Nombre_Usuario Like '" & Buscar_Us.Text & "%'")
+            z = Buscar_Us.Text
+            If cant_reg_encon = 0 And foundRows.Length > 1 Then
+                cant_reg_encon = foundRows.Length
+                For Each row In Tabla1.Rows
+                    If foundRows(cant_reg_encon - 1).Item(1) = row(1) Then
+                        'MsgBox(foundRows(cant_reg_encon - 1).Item(1))
+                        usuario_num = i + 1
+                        Recorrer_Usuarios()
+                        cant_reg_encon = cant_reg_encon - 1
+                        Exit Sub
+                    End If
+                    i = i + 1
+                Next
+            Else
+                If foundRows.Length = 0 Then
+                    MsgBox("No se encontro ninguna coincidencia")
+                ElseIf cant_reg_encon = 0 Then
+                    For Each row In Tabla1.Rows
+                        If foundRows(cant_reg_encon).Item(1) = row(1) Then
+                            usuario_num = i + 1
+                            Recorrer_Usuarios()
+                            Exit Sub
+                        End If
+                        i = i + 1
+                    Next
+                Else
+                    For Each row In Tabla1.Rows
+                        If foundRows(cant_reg_encon - 1).Item(1) = row(1) Then
+                            usuario_num = i + 1
+                            Recorrer_Usuarios()
+                            cant_reg_encon = cant_reg_encon - 1
+                            Exit Sub
+                        End If
+                        i = i + 1
+                    Next
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("Error durante la busqueda: " & ex.Message, MsgBoxStyle.Critical, "Error")
+            conn.Close()
+        End Try
+    End Sub
+
+    Private Sub Buscar_Us_KeyDown(sender As Object, e As KeyEventArgs) Handles Buscar_Us.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            Buscar_Usuario.PerformClick()
+        End If
+    End Sub
+
+    Private Sub TextBox_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles Monto_Doag.KeyPress
+        If Asc(e.KeyChar) <> 8 Then
+            If Asc(e.KeyChar) < 48 Or Asc(e.KeyChar) > 57 Then
+                e.Handled = True
+            End If
+        End If
+
+    End Sub
+
+    Private Sub Monto_Doag_Leave(sender As Object, e As EventArgs) Handles Monto_Doag.Leave
+        If Monto_Doag.Text = "" Then
+            Exit Sub
+        End If
+        Monto_Doag.Text = FormatCurrency(Monto_Doag.Text)
+    End Sub
+
 End Class

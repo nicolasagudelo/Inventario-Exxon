@@ -176,6 +176,157 @@ Public Class Form1
         Recorrer_Usuarios()
     End Sub
 
+
+    Private Sub Gestion_Almacen_Click(sender As Object, e As EventArgs) Handles Gestion_Almacen.Click
+        Esconder_tabpages_submenu()
+        TabPage10.Parent = TabControl2
+        CargarCBTabCategorias()
+    End Sub
+
+    Dim Id_Ubicacion As Integer
+    Dim Categ As String
+    Dim CategLoad As Boolean = False
+    Private Sub CargarCBTabCategorias()
+        With Nombre_Categoria
+            Try
+                conn.Open()
+                Dim query As String = "Select Id_Categoria, Nombre_Categoria from categorias"
+                Dim cmd As New MySqlCommand(query, conn)
+                Dim sqlAdap As New MySqlDataAdapter(cmd)
+                Dim dtRecord As New DataTable
+                sqlAdap.Fill(dtRecord)
+                .DataSource = dtRecord
+                .DisplayMember = "Nombre_Categoria"
+                .ValueMember = "Id_Categoria"
+                .SelectedValue = dtRecord.Rows(0).Item(0)
+                Categ = .SelectedValue
+                conn.Close()
+            Catch ex As Exception
+                MsgBox("Error al cargar las categorias de la base de datos", MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
+            End Try
+        End With
+        CategLoad = True
+        CargarSubCategorias()
+        TabPage11.Parent = TabControl2
+        Cargar_Tabla("*", "Ubicaciones")
+        Id_Ubicacion = Tabla1.Rows(0).ItemArray(0)
+        Estantes.Text = Tabla1.Rows(0).ItemArray(1).ToString
+        Entrepanos.Text = Tabla1.Rows(0).ItemArray(2).ToString
+        Cajas_Colores.Text = Tabla1.Rows(0).ItemArray(3).ToString
+        Zonas.Text = Tabla1.Rows(0).ItemArray(4).ToString
+        DataGridView3.DataSource = Nothing
+        DataGridView3.DataSource = Tabla1
+        DataGridView3.ReadOnly = True
+        DataGridView3.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        DataGridView3.Columns(0).Visible = False
+    End Sub
+
+    Private Sub CargarSubCategorias()
+        Try
+            conn.Open()
+            Dim cmd As New MySqlCommand(String.Format("Select * from categorias_sub where Id_Categoria = @IDCat;"), conn)
+            Categ = Nombre_Categoria.SelectedValue
+            cmd.Parameters.AddWithValue("IDCat", Categ)
+            Dim Adaptador As New MySqlDataAdapter(cmd)
+            Dim Tabla As New DataTable
+            Adaptador.Fill(Tabla)
+            DataGridView2.DataSource = Tabla
+            DataGridView2.ReadOnly = False
+            DataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            DataGridView2.Rows(0).Selected = True
+            DataGridView2.CurrentCell = DataGridView2.Rows(0).Cells(1)
+            conn.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "ERROR")
+            conn.Close()
+        End Try
+        DataGridView2.ColumnHeadersVisible = False
+    End Sub
+
+    Private Sub Llenar_Combos_Ubicaciones()
+        With Estantes
+            Try
+                Dim conexion As New MySqlConnection(datasource)
+                conexion.Open()
+                Dim consulta As String = "Select * from datos_app"
+                Dim MysqlDadap As New MySqlDataAdapter(consulta, conexion)
+                Dim MysqlDset As New DataSet
+                MysqlDadap.Fill(MysqlDset)
+                conexion.Close()
+                .Items.Clear()
+                Dim a As String = MysqlDset.Tables(0).Rows(0).Item(2)
+                Dim i1 As Integer = 0
+                For i1 = 1 To a
+                    .Items.Add(i1)
+                Next
+                .SelectedValue = Estantes.Items(0)
+                '.Enabled = False
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
+        End With
+        With Entrepanos
+            Try
+                Dim conexion As New MySqlConnection(datasource)
+                conexion.Open()
+                Dim consulta As String = "Select * from datos_app"
+                Dim MysqlDadap As New MySqlDataAdapter(consulta, conexion)
+                Dim MysqlDset As New DataSet
+                MysqlDadap.Fill(MysqlDset)
+                conexion.Close()
+                .Items.Clear()
+                Dim a As String = MysqlDset.Tables(0).Rows(1).Item(2)
+                Dim i1 As Integer = 0
+                For i1 = 1 To a
+                    .Items.Add(i1)
+                Next
+                .SelectedValue = Entrepanos.Items(0)
+                '.Enabled = False
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
+        End With
+        With Cajas_Colores
+            Try
+                Dim conexion As New MySqlConnection(datasource)
+                conexion.Open()
+                Dim consulta As String = "Select * from datos_app"
+                Dim MysqlDadap As New MySqlDataAdapter(consulta, conexion)
+                Dim MysqlDset As New DataSet
+                MysqlDadap.Fill(MysqlDset)
+                conexion.Close()
+                .Items.Clear()
+                Dim a As String = MysqlDset.Tables(0).Rows(2).Item(2)
+                Dim i1 As Integer = 0
+                For i1 = 1 To a
+                    .Items.Add(i1)
+                Next
+                .Items.Add(MysqlDset.Tables(0).Rows(3).Item(1))
+                .Items.Add(MysqlDset.Tables(0).Rows(4).Item(1))
+                .Items.Add(MysqlDset.Tables(0).Rows(5).Item(1))
+                .Items.Add(MysqlDset.Tables(0).Rows(6).Item(1))
+                .SelectedValue = Cajas_Colores.Items(0)
+                '.Enabled = False
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
+        End With
+        With Zonas
+            Try
+                .Items.Clear()
+                .Items.Add("Bodega")
+                .Items.Add("Reactivos")
+                .Items.Add("Gases")
+                .Items.Add("Acceso Especial")
+                .SelectedValue = Zonas.Items(0)
+                '.Enabled = False
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+            End Try
+        End With
+    End Sub
+
     Private Sub CargarDGVMontos()
         Cargar_Tabla("*", "Doag")
         Nombre_Doag.Text = Tabla1.Rows(0).ItemArray(1).ToString
@@ -737,5 +888,14 @@ Public Class Form1
         End If
         Monto_Doag.Text = FormatCurrency(Monto_Doag.Text)
     End Sub
+
+    Private Sub Nombre_Categoria_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Nombre_Categoria.SelectedIndexChanged
+        If CategLoad = False Then
+            Exit Sub
+        End If
+        DataGridView2.DataSource = Nothing
+        CargarSubCategorias()
+    End Sub
+
 
 End Class

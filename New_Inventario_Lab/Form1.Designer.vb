@@ -1570,6 +1570,7 @@ Partial Class Form1
         DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.DataGridView2.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        Me.DataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView2.BackgroundColor = System.Drawing.Color.LightSteelBlue
         Me.DataGridView2.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -1616,6 +1617,7 @@ Partial Class Form1
         '
         'Nombre_Categoria
         '
+        Me.Nombre_Categoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Nombre_Categoria.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.8!)
         Me.Nombre_Categoria.FormattingEnabled = True
         Me.Nombre_Categoria.Location = New System.Drawing.Point(19, 256)
@@ -1724,6 +1726,7 @@ Partial Class Form1
         DataGridViewCellStyle6.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.8!)
         DataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.DataGridView3.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle6
+        Me.DataGridView3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView3.BackgroundColor = System.Drawing.Color.LightSteelBlue
         Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView3.GridColor = System.Drawing.SystemColors.ControlDarkDark

@@ -54,18 +54,10 @@ Partial Class Form1
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Label58 = New System.Windows.Forms.Label()
         Me.Buscar_Eq = New System.Windows.Forms.TextBox()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.Equipos_Crear = New System.Windows.Forms.PictureBox()
-        Me.Equipos_Modificar = New System.Windows.Forms.PictureBox()
         Me.Equipos_Consultar = New System.Windows.Forms.PictureBox()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Buscar_Produ = New System.Windows.Forms.TextBox()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.Label15 = New System.Windows.Forms.Label()
-        Me.Productos_Crear = New System.Windows.Forms.PictureBox()
-        Me.Productos_Modificar = New System.Windows.Forms.PictureBox()
         Me.Productos_Consultar = New System.Windows.Forms.PictureBox()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.Label16 = New System.Windows.Forms.Label()
@@ -107,7 +99,6 @@ Partial Class Form1
         Me.Nombre_Usuario = New System.Windows.Forms.TextBox()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.Monto_Doag = New System.Windows.Forms.TextBox()
-        Me.BtnModificarDoag = New System.Windows.Forms.Button()
         Me.Label79 = New System.Windows.Forms.Label()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.Label24 = New System.Windows.Forms.Label()
@@ -115,6 +106,7 @@ Partial Class Form1
         Me.Label26 = New System.Windows.Forms.Label()
         Me.Comentario_Doag = New System.Windows.Forms.TextBox()
         Me.Nombre_Doag = New System.Windows.Forms.TextBox()
+        Me.BtnModificarDoag = New System.Windows.Forms.Button()
         Me.Eliminar_Doag = New System.Windows.Forms.Button()
         Me.Nuevo_Doag = New System.Windows.Forms.Button()
         Me.Guardar_Doag = New System.Windows.Forms.Button()
@@ -127,7 +119,6 @@ Partial Class Form1
         Me.TabPage10 = New System.Windows.Forms.TabPage()
         Me.TxtBxNuevaCategoria = New System.Windows.Forms.TextBox()
         Me.LblNuevaCategoria = New System.Windows.Forms.Label()
-        Me.BtnModificarCategoria = New System.Windows.Forms.Button()
         Me.Label88 = New System.Windows.Forms.Label()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.Eliminar_SubCategoria = New System.Windows.Forms.Button()
@@ -140,6 +131,7 @@ Partial Class Form1
         Me.Label37 = New System.Windows.Forms.Label()
         Me.LblCategorias = New System.Windows.Forms.Label()
         Me.Nombre_Categoria = New System.Windows.Forms.ComboBox()
+        Me.BtnModificarCategoria = New System.Windows.Forms.Button()
         Me.TabPage11 = New System.Windows.Forms.TabPage()
         Me.Label89 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
@@ -192,6 +184,10 @@ Partial Class Form1
         Me.Tipo_Movimiento = New System.Windows.Forms.TextBox()
         Me.DataGridView4 = New System.Windows.Forms.DataGridView()
         Me.TabPage13 = New System.Windows.Forms.TabPage()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.BtnEliminarEquipo = New System.Windows.Forms.Button()
+        Me.BtnNuevoEquipo = New System.Windows.Forms.Button()
+        Me.BtnGuardarEquipo = New System.Windows.Forms.Button()
         Me.Label90 = New System.Windows.Forms.Label()
         Me.Anterior_Equipo = New System.Windows.Forms.Button()
         Me.Label60 = New System.Windows.Forms.Label()
@@ -206,9 +202,15 @@ Partial Class Form1
         Me.Nombre_Equipo = New System.Windows.Forms.TextBox()
         Me.Label42 = New System.Windows.Forms.Label()
         Me.Numero_Equipo = New System.Windows.Forms.TextBox()
+        Me.BtnModificarEquipo = New System.Windows.Forms.Button()
         Me.Modificar_Prod_Equ = New System.Windows.Forms.Button()
         Me.Foto_Equipo = New System.Windows.Forms.PictureBox()
         Me.TabPage14 = New System.Windows.Forms.TabPage()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.BtnNuevoProducto = New System.Windows.Forms.Button()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.BtnModificarProducto = New System.Windows.Forms.Button()
         Me.Label91 = New System.Windows.Forms.Label()
         Me.Activo_Producto = New System.Windows.Forms.CheckBox()
         Me.Label77 = New System.Windows.Forms.Label()
@@ -222,7 +224,7 @@ Partial Class Form1
         Me.Compra_Maxima = New System.Windows.Forms.TextBox()
         Me.Label72 = New System.Windows.Forms.Label()
         Me.Anterior_Producto = New System.Windows.Forms.Button()
-        Me.Siguiente_Productos = New System.Windows.Forms.Button()
+        Me.Siguiente_Producto = New System.Windows.Forms.Button()
         Me.Label71 = New System.Windows.Forms.Label()
         Me.Label70 = New System.Windows.Forms.Label()
         Me.Label69 = New System.Windows.Forms.Label()
@@ -307,12 +309,8 @@ Partial Class Form1
         CType(Me.Movimiento_Salida, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Movimiento_Consulta, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
-        CType(Me.Equipos_Crear, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Equipos_Modificar, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Equipos_Consultar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage4.SuspendLayout()
-        CType(Me.Productos_Crear, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Productos_Modificar, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Productos_Consultar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage5.SuspendLayout()
         CType(Me.Proveedores_Crear, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -337,8 +335,10 @@ Partial Class Form1
         Me.Datos_Movimientos.SuspendLayout()
         CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage13.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
         CType(Me.Foto_Equipo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage14.SuspendLayout()
+        Me.GroupBox6.SuspendLayout()
         CType(Me.Foto_Producto, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage15.SuspendLayout()
         Me.TabPage16.SuspendLayout()
@@ -579,10 +579,6 @@ Partial Class Form1
         Me.TabPage3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TabPage3.Controls.Add(Me.Label58)
         Me.TabPage3.Controls.Add(Me.Buscar_Eq)
-        Me.TabPage3.Controls.Add(Me.Label11)
-        Me.TabPage3.Controls.Add(Me.Label12)
-        Me.TabPage3.Controls.Add(Me.Equipos_Crear)
-        Me.TabPage3.Controls.Add(Me.Equipos_Modificar)
         Me.TabPage3.Controls.Add(Me.Equipos_Consultar)
         Me.TabPage3.Location = New System.Drawing.Point(4, 4)
         Me.TabPage3.Margin = New System.Windows.Forms.Padding(4)
@@ -595,7 +591,7 @@ Partial Class Form1
         '
         Me.Label58.AutoSize = True
         Me.Label58.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label58.Location = New System.Drawing.Point(34, 467)
+        Me.Label58.Location = New System.Drawing.Point(35, 31)
         Me.Label58.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label58.Name = "Label58"
         Me.Label58.Size = New System.Drawing.Size(127, 17)
@@ -604,67 +600,25 @@ Partial Class Form1
         '
         'Buscar_Eq
         '
-        Me.Buscar_Eq.Location = New System.Drawing.Point(4, 491)
+        Me.Buscar_Eq.Location = New System.Drawing.Point(5, 55)
         Me.Buscar_Eq.Margin = New System.Windows.Forms.Padding(4)
         Me.Buscar_Eq.Name = "Buscar_Eq"
         Me.Buscar_Eq.Size = New System.Drawing.Size(196, 23)
         Me.Buscar_Eq.TabIndex = 25
         '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label11.Location = New System.Drawing.Point(12, 334)
-        Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(151, 17)
-        Me.Label11.TabIndex = 24
-        Me.Label11.Text = "Modificar o Agregar"
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label12.Location = New System.Drawing.Point(69, 160)
-        Me.Label12.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(48, 17)
-        Me.Label12.TabIndex = 23
-        Me.Label12.Text = "Crear"
-        '
-        'Equipos_Crear
-        '
-        Me.Equipos_Crear.Image = Global.Inventario_Lab.My.Resources.Resources.Agregar1
-        Me.Equipos_Crear.Location = New System.Drawing.Point(16, 27)
-        Me.Equipos_Crear.Margin = New System.Windows.Forms.Padding(4)
-        Me.Equipos_Crear.Name = "Equipos_Crear"
-        Me.Equipos_Crear.Size = New System.Drawing.Size(166, 129)
-        Me.Equipos_Crear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.Equipos_Crear.TabIndex = 20
-        Me.Equipos_Crear.TabStop = False
-        '
-        'Equipos_Modificar
-        '
-        Me.Equipos_Modificar.Image = Global.Inventario_Lab.My.Resources.Resources.Modificar_Equipo
-        Me.Equipos_Modificar.Location = New System.Drawing.Point(16, 201)
-        Me.Equipos_Modificar.Margin = New System.Windows.Forms.Padding(4)
-        Me.Equipos_Modificar.Name = "Equipos_Modificar"
-        Me.Equipos_Modificar.Size = New System.Drawing.Size(166, 129)
-        Me.Equipos_Modificar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.Equipos_Modificar.TabIndex = 21
-        Me.Equipos_Modificar.TabStop = False
-        '
         'Equipos_Consultar
         '
         Me.Equipos_Consultar.BackColor = System.Drawing.Color.Silver
+        Me.Equipos_Consultar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Equipos_Consultar.Image = Global.Inventario_Lab.My.Resources.Resources.Buscar
-        Me.Equipos_Consultar.Location = New System.Drawing.Point(16, 543)
+        Me.Equipos_Consultar.Location = New System.Drawing.Point(17, 86)
         Me.Equipos_Consultar.Margin = New System.Windows.Forms.Padding(4)
         Me.Equipos_Consultar.Name = "Equipos_Consultar"
         Me.Equipos_Consultar.Size = New System.Drawing.Size(166, 129)
-        Me.Equipos_Consultar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.Equipos_Consultar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.Equipos_Consultar.TabIndex = 22
         Me.Equipos_Consultar.TabStop = False
+        Me.TPAdministrar.SetToolTip(Me.Equipos_Consultar, "Buscar Equipo")
         '
         'TabPage4
         '
@@ -672,10 +626,6 @@ Partial Class Form1
         Me.TabPage4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TabPage4.Controls.Add(Me.Label13)
         Me.TabPage4.Controls.Add(Me.Buscar_Produ)
-        Me.TabPage4.Controls.Add(Me.Label14)
-        Me.TabPage4.Controls.Add(Me.Label15)
-        Me.TabPage4.Controls.Add(Me.Productos_Crear)
-        Me.TabPage4.Controls.Add(Me.Productos_Modificar)
         Me.TabPage4.Controls.Add(Me.Productos_Consultar)
         Me.TabPage4.Location = New System.Drawing.Point(4, 4)
         Me.TabPage4.Margin = New System.Windows.Forms.Padding(4)
@@ -688,7 +638,7 @@ Partial Class Form1
         '
         Me.Label13.AutoSize = True
         Me.Label13.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label13.Location = New System.Drawing.Point(37, 461)
+        Me.Label13.Location = New System.Drawing.Point(31, 31)
         Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(142, 17)
@@ -697,65 +647,22 @@ Partial Class Form1
         '
         'Buscar_Produ
         '
-        Me.Buscar_Produ.Location = New System.Drawing.Point(23, 498)
+        Me.Buscar_Produ.Location = New System.Drawing.Point(5, 55)
         Me.Buscar_Produ.Margin = New System.Windows.Forms.Padding(4)
         Me.Buscar_Produ.Name = "Buscar_Produ"
-        Me.Buscar_Produ.Size = New System.Drawing.Size(202, 23)
+        Me.Buscar_Produ.Size = New System.Drawing.Size(198, 23)
         Me.Buscar_Produ.TabIndex = 38
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label14.Location = New System.Drawing.Point(37, 357)
-        Me.Label14.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(151, 17)
-        Me.Label14.TabIndex = 30
-        Me.Label14.Text = "Modificar o Agregar"
-        '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label15.Location = New System.Drawing.Point(90, 184)
-        Me.Label15.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(48, 17)
-        Me.Label15.TabIndex = 29
-        Me.Label15.Text = "Crear"
-        '
-        'Productos_Crear
-        '
-        Me.Productos_Crear.Image = Global.Inventario_Lab.My.Resources.Resources.Crear_Producto1
-        Me.Productos_Crear.Location = New System.Drawing.Point(37, 50)
-        Me.Productos_Crear.Margin = New System.Windows.Forms.Padding(4)
-        Me.Productos_Crear.Name = "Productos_Crear"
-        Me.Productos_Crear.Size = New System.Drawing.Size(166, 129)
-        Me.Productos_Crear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.Productos_Crear.TabIndex = 26
-        Me.Productos_Crear.TabStop = False
-        '
-        'Productos_Modificar
-        '
-        Me.Productos_Modificar.Image = Global.Inventario_Lab.My.Resources.Resources.Modificar_Producto
-        Me.Productos_Modificar.Location = New System.Drawing.Point(37, 224)
-        Me.Productos_Modificar.Margin = New System.Windows.Forms.Padding(4)
-        Me.Productos_Modificar.Name = "Productos_Modificar"
-        Me.Productos_Modificar.Size = New System.Drawing.Size(166, 129)
-        Me.Productos_Modificar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.Productos_Modificar.TabIndex = 27
-        Me.Productos_Modificar.TabStop = False
         '
         'Productos_Consultar
         '
         Me.Productos_Consultar.BackColor = System.Drawing.Color.Silver
+        Me.Productos_Consultar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Productos_Consultar.Image = Global.Inventario_Lab.My.Resources.Resources.Buscar
-        Me.Productos_Consultar.Location = New System.Drawing.Point(37, 541)
+        Me.Productos_Consultar.Location = New System.Drawing.Point(17, 86)
         Me.Productos_Consultar.Margin = New System.Windows.Forms.Padding(4)
         Me.Productos_Consultar.Name = "Productos_Consultar"
         Me.Productos_Consultar.Size = New System.Drawing.Size(166, 129)
-        Me.Productos_Consultar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.Productos_Consultar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.Productos_Consultar.TabIndex = 28
         Me.Productos_Consultar.TabStop = False
         '
@@ -890,7 +797,7 @@ Partial Class Form1
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("MS Reference Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Red
-        Me.Label1.Location = New System.Drawing.Point(1059, 862)
+        Me.Label1.Location = New System.Drawing.Point(226, 209)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(63, 19)
@@ -1215,7 +1122,6 @@ Partial Class Form1
         '
         Me.TabPage8.BackColor = System.Drawing.Color.LightSteelBlue
         Me.TabPage8.Controls.Add(Me.Monto_Doag)
-        Me.TabPage8.Controls.Add(Me.BtnModificarDoag)
         Me.TabPage8.Controls.Add(Me.Label79)
         Me.TabPage8.Controls.Add(Me.DataGridView1)
         Me.TabPage8.Controls.Add(Me.Label24)
@@ -1223,6 +1129,7 @@ Partial Class Form1
         Me.TabPage8.Controls.Add(Me.Label26)
         Me.TabPage8.Controls.Add(Me.Comentario_Doag)
         Me.TabPage8.Controls.Add(Me.Nombre_Doag)
+        Me.TabPage8.Controls.Add(Me.BtnModificarDoag)
         Me.TabPage8.Controls.Add(Me.Eliminar_Doag)
         Me.TabPage8.Controls.Add(Me.Nuevo_Doag)
         Me.TabPage8.Controls.Add(Me.Guardar_Doag)
@@ -1243,20 +1150,6 @@ Partial Class Form1
         Me.Monto_Doag.Size = New System.Drawing.Size(194, 24)
         Me.Monto_Doag.TabIndex = 37
         Me.Monto_Doag.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'BtnModificarDoag
-        '
-        Me.BtnModificarDoag.FlatAppearance.BorderColor = System.Drawing.Color.LightSteelBlue
-        Me.BtnModificarDoag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red
-        Me.BtnModificarDoag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.BtnModificarDoag.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnModificarDoag.Image = Global.Inventario_Lab.My.Resources.Resources.if_icon_136_document_edit_314724
-        Me.BtnModificarDoag.Location = New System.Drawing.Point(624, 8)
-        Me.BtnModificarDoag.Name = "BtnModificarDoag"
-        Me.BtnModificarDoag.Size = New System.Drawing.Size(42, 38)
-        Me.BtnModificarDoag.TabIndex = 36
-        Me.TPAdministrar.SetToolTip(Me.BtnModificarDoag, "Modificar Usuario")
-        Me.BtnModificarDoag.UseVisualStyleBackColor = True
         '
         'Label79
         '
@@ -1336,6 +1229,20 @@ Partial Class Form1
         Me.Nombre_Doag.ReadOnly = True
         Me.Nombre_Doag.Size = New System.Drawing.Size(194, 24)
         Me.Nombre_Doag.TabIndex = 9
+        '
+        'BtnModificarDoag
+        '
+        Me.BtnModificarDoag.FlatAppearance.BorderColor = System.Drawing.Color.LightSteelBlue
+        Me.BtnModificarDoag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red
+        Me.BtnModificarDoag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.BtnModificarDoag.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnModificarDoag.Image = Global.Inventario_Lab.My.Resources.Resources.if_icon_136_document_edit_314724
+        Me.BtnModificarDoag.Location = New System.Drawing.Point(624, 8)
+        Me.BtnModificarDoag.Name = "BtnModificarDoag"
+        Me.BtnModificarDoag.Size = New System.Drawing.Size(42, 38)
+        Me.BtnModificarDoag.TabIndex = 36
+        Me.TPAdministrar.SetToolTip(Me.BtnModificarDoag, "Modificar Usuario")
+        Me.BtnModificarDoag.UseVisualStyleBackColor = True
         '
         'Eliminar_Doag
         '
@@ -1447,7 +1354,6 @@ Partial Class Form1
         Me.TabPage10.BackColor = System.Drawing.Color.LightSteelBlue
         Me.TabPage10.Controls.Add(Me.TxtBxNuevaCategoria)
         Me.TabPage10.Controls.Add(Me.LblNuevaCategoria)
-        Me.TabPage10.Controls.Add(Me.BtnModificarCategoria)
         Me.TabPage10.Controls.Add(Me.Label88)
         Me.TabPage10.Controls.Add(Me.GroupBox3)
         Me.TabPage10.Controls.Add(Me.GroupBox2)
@@ -1455,6 +1361,7 @@ Partial Class Form1
         Me.TabPage10.Controls.Add(Me.Label37)
         Me.TabPage10.Controls.Add(Me.LblCategorias)
         Me.TabPage10.Controls.Add(Me.Nombre_Categoria)
+        Me.TabPage10.Controls.Add(Me.BtnModificarCategoria)
         Me.TabPage10.Location = New System.Drawing.Point(4, 25)
         Me.TabPage10.Margin = New System.Windows.Forms.Padding(4)
         Me.TabPage10.Name = "TabPage10"
@@ -1479,20 +1386,6 @@ Partial Class Form1
         Me.LblNuevaCategoria.TabIndex = 38
         Me.LblNuevaCategoria.Text = "Nueva Categoria"
         Me.LblNuevaCategoria.Visible = False
-        '
-        'BtnModificarCategoria
-        '
-        Me.BtnModificarCategoria.FlatAppearance.BorderColor = System.Drawing.Color.LightSteelBlue
-        Me.BtnModificarCategoria.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red
-        Me.BtnModificarCategoria.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.BtnModificarCategoria.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnModificarCategoria.Image = Global.Inventario_Lab.My.Resources.Resources.if_icon_136_document_edit_314724
-        Me.BtnModificarCategoria.Location = New System.Drawing.Point(744, 8)
-        Me.BtnModificarCategoria.Name = "BtnModificarCategoria"
-        Me.BtnModificarCategoria.Size = New System.Drawing.Size(48, 38)
-        Me.BtnModificarCategoria.TabIndex = 37
-        Me.TPAdministrar.SetToolTip(Me.BtnModificarCategoria, "Modificar Usuario")
-        Me.BtnModificarCategoria.UseVisualStyleBackColor = True
         '
         'Label88
         '
@@ -1663,6 +1556,20 @@ Partial Class Form1
         Me.Nombre_Categoria.Name = "Nombre_Categoria"
         Me.Nombre_Categoria.Size = New System.Drawing.Size(300, 24)
         Me.Nombre_Categoria.TabIndex = 0
+        '
+        'BtnModificarCategoria
+        '
+        Me.BtnModificarCategoria.FlatAppearance.BorderColor = System.Drawing.Color.LightSteelBlue
+        Me.BtnModificarCategoria.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red
+        Me.BtnModificarCategoria.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.BtnModificarCategoria.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnModificarCategoria.Image = Global.Inventario_Lab.My.Resources.Resources.if_icon_136_document_edit_314724
+        Me.BtnModificarCategoria.Location = New System.Drawing.Point(744, 8)
+        Me.BtnModificarCategoria.Name = "BtnModificarCategoria"
+        Me.BtnModificarCategoria.Size = New System.Drawing.Size(48, 38)
+        Me.BtnModificarCategoria.TabIndex = 37
+        Me.TPAdministrar.SetToolTip(Me.BtnModificarCategoria, "Modificar Usuario")
+        Me.BtnModificarCategoria.UseVisualStyleBackColor = True
         '
         'TabPage11
         '
@@ -2162,15 +2069,16 @@ Partial Class Form1
         Me.Label84.Location = New System.Drawing.Point(464, 26)
         Me.Label84.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label84.Name = "Label84"
-        Me.Label84.Size = New System.Drawing.Size(63, 17)
+        Me.Label84.Size = New System.Drawing.Size(52, 17)
         Me.Label84.TabIndex = 22
-        Me.Label84.Text = "Monto *"
+        Me.Label84.Text = "Monto"
         '
         'Monto_Movimiento
         '
         Me.Monto_Movimiento.Location = New System.Drawing.Point(468, 52)
         Me.Monto_Movimiento.Margin = New System.Windows.Forms.Padding(4)
         Me.Monto_Movimiento.Name = "Monto_Movimiento"
+        Me.Monto_Movimiento.ReadOnly = True
         Me.Monto_Movimiento.Size = New System.Drawing.Size(194, 24)
         Me.Monto_Movimiento.TabIndex = 21
         '
@@ -2270,6 +2178,7 @@ Partial Class Form1
         'TabPage13
         '
         Me.TabPage13.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.TabPage13.Controls.Add(Me.GroupBox5)
         Me.TabPage13.Controls.Add(Me.Label90)
         Me.TabPage13.Controls.Add(Me.Anterior_Equipo)
         Me.TabPage13.Controls.Add(Me.Label60)
@@ -2284,6 +2193,7 @@ Partial Class Form1
         Me.TabPage13.Controls.Add(Me.Nombre_Equipo)
         Me.TabPage13.Controls.Add(Me.Label42)
         Me.TabPage13.Controls.Add(Me.Numero_Equipo)
+        Me.TabPage13.Controls.Add(Me.BtnModificarEquipo)
         Me.TabPage13.Controls.Add(Me.Modificar_Prod_Equ)
         Me.TabPage13.Controls.Add(Me.Foto_Equipo)
         Me.TabPage13.Location = New System.Drawing.Point(4, 25)
@@ -2292,6 +2202,62 @@ Partial Class Form1
         Me.TabPage13.Size = New System.Drawing.Size(1108, 652)
         Me.TabPage13.TabIndex = 6
         Me.TabPage13.Text = "Equipos"
+        '
+        'GroupBox5
+        '
+        Me.GroupBox5.Controls.Add(Me.BtnEliminarEquipo)
+        Me.GroupBox5.Controls.Add(Me.BtnNuevoEquipo)
+        Me.GroupBox5.Controls.Add(Me.BtnGuardarEquipo)
+        Me.GroupBox5.Location = New System.Drawing.Point(14, 465)
+        Me.GroupBox5.Margin = New System.Windows.Forms.Padding(4)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Padding = New System.Windows.Forms.Padding(4)
+        Me.GroupBox5.Size = New System.Drawing.Size(443, 144)
+        Me.GroupBox5.TabIndex = 38
+        Me.GroupBox5.TabStop = False
+        Me.GroupBox5.Text = "Manejo de Equipo"
+        '
+        'BtnEliminarEquipo
+        '
+        Me.BtnEliminarEquipo.BackgroundImage = Global.Inventario_Lab.My.Resources.Resources.Eliminar
+        Me.BtnEliminarEquipo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.BtnEliminarEquipo.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BtnEliminarEquipo.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.BtnEliminarEquipo.Location = New System.Drawing.Point(307, 31)
+        Me.BtnEliminarEquipo.Margin = New System.Windows.Forms.Padding(4)
+        Me.BtnEliminarEquipo.Name = "BtnEliminarEquipo"
+        Me.BtnEliminarEquipo.Size = New System.Drawing.Size(116, 89)
+        Me.BtnEliminarEquipo.TabIndex = 14
+        Me.BtnEliminarEquipo.Text = "Eliminar"
+        Me.BtnEliminarEquipo.UseVisualStyleBackColor = True
+        '
+        'BtnNuevoEquipo
+        '
+        Me.BtnNuevoEquipo.BackgroundImage = Global.Inventario_Lab.My.Resources.Resources.Nuevo
+        Me.BtnNuevoEquipo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.BtnNuevoEquipo.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BtnNuevoEquipo.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.BtnNuevoEquipo.Location = New System.Drawing.Point(162, 31)
+        Me.BtnNuevoEquipo.Margin = New System.Windows.Forms.Padding(4)
+        Me.BtnNuevoEquipo.Name = "BtnNuevoEquipo"
+        Me.BtnNuevoEquipo.Size = New System.Drawing.Size(116, 89)
+        Me.BtnNuevoEquipo.TabIndex = 13
+        Me.BtnNuevoEquipo.Text = "Nuevo"
+        Me.BtnNuevoEquipo.UseVisualStyleBackColor = True
+        '
+        'BtnGuardarEquipo
+        '
+        Me.BtnGuardarEquipo.BackgroundImage = Global.Inventario_Lab.My.Resources.Resources.Guardar1
+        Me.BtnGuardarEquipo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.BtnGuardarEquipo.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BtnGuardarEquipo.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.BtnGuardarEquipo.Location = New System.Drawing.Point(21, 31)
+        Me.BtnGuardarEquipo.Margin = New System.Windows.Forms.Padding(4)
+        Me.BtnGuardarEquipo.Name = "BtnGuardarEquipo"
+        Me.BtnGuardarEquipo.Size = New System.Drawing.Size(116, 89)
+        Me.BtnGuardarEquipo.TabIndex = 12
+        Me.BtnGuardarEquipo.Text = "Guardar"
+        Me.BtnGuardarEquipo.UseVisualStyleBackColor = True
         '
         'Label90
         '
@@ -2341,6 +2307,7 @@ Partial Class Form1
         'Activo_Equipo
         '
         Me.Activo_Equipo.AutoSize = True
+        Me.Activo_Equipo.Enabled = False
         Me.Activo_Equipo.Location = New System.Drawing.Point(266, 326)
         Me.Activo_Equipo.Margin = New System.Windows.Forms.Padding(4)
         Me.Activo_Equipo.Name = "Activo_Equipo"
@@ -2374,6 +2341,7 @@ Partial Class Form1
         Me.Serie_Equipo.Location = New System.Drawing.Point(266, 92)
         Me.Serie_Equipo.Margin = New System.Windows.Forms.Padding(4)
         Me.Serie_Equipo.Name = "Serie_Equipo"
+        Me.Serie_Equipo.ReadOnly = True
         Me.Serie_Equipo.Size = New System.Drawing.Size(220, 24)
         Me.Serie_Equipo.TabIndex = 6
         '
@@ -2392,6 +2360,7 @@ Partial Class Form1
         Me.Marca_Equipo.Location = New System.Drawing.Point(14, 323)
         Me.Marca_Equipo.Margin = New System.Windows.Forms.Padding(4)
         Me.Marca_Equipo.Name = "Marca_Equipo"
+        Me.Marca_Equipo.ReadOnly = True
         Me.Marca_Equipo.Size = New System.Drawing.Size(220, 24)
         Me.Marca_Equipo.TabIndex = 4
         '
@@ -2410,6 +2379,7 @@ Partial Class Form1
         Me.Nombre_Equipo.Location = New System.Drawing.Point(14, 208)
         Me.Nombre_Equipo.Margin = New System.Windows.Forms.Padding(4)
         Me.Nombre_Equipo.Name = "Nombre_Equipo"
+        Me.Nombre_Equipo.ReadOnly = True
         Me.Nombre_Equipo.Size = New System.Drawing.Size(220, 24)
         Me.Nombre_Equipo.TabIndex = 2
         '
@@ -2428,8 +2398,23 @@ Partial Class Form1
         Me.Numero_Equipo.Location = New System.Drawing.Point(14, 92)
         Me.Numero_Equipo.Margin = New System.Windows.Forms.Padding(4)
         Me.Numero_Equipo.Name = "Numero_Equipo"
+        Me.Numero_Equipo.ReadOnly = True
         Me.Numero_Equipo.Size = New System.Drawing.Size(220, 24)
         Me.Numero_Equipo.TabIndex = 0
+        '
+        'BtnModificarEquipo
+        '
+        Me.BtnModificarEquipo.FlatAppearance.BorderColor = System.Drawing.Color.LightSteelBlue
+        Me.BtnModificarEquipo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red
+        Me.BtnModificarEquipo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.BtnModificarEquipo.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnModificarEquipo.Image = Global.Inventario_Lab.My.Resources.Resources.if_icon_136_document_edit_314724
+        Me.BtnModificarEquipo.Location = New System.Drawing.Point(788, 6)
+        Me.BtnModificarEquipo.Name = "BtnModificarEquipo"
+        Me.BtnModificarEquipo.Size = New System.Drawing.Size(42, 38)
+        Me.BtnModificarEquipo.TabIndex = 37
+        Me.TPAdministrar.SetToolTip(Me.BtnModificarEquipo, "Modificar Equipo")
+        Me.BtnModificarEquipo.UseVisualStyleBackColor = True
         '
         'Modificar_Prod_Equ
         '
@@ -2459,6 +2444,8 @@ Partial Class Form1
         'TabPage14
         '
         Me.TabPage14.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.TabPage14.Controls.Add(Me.GroupBox6)
+        Me.TabPage14.Controls.Add(Me.BtnModificarProducto)
         Me.TabPage14.Controls.Add(Me.Label91)
         Me.TabPage14.Controls.Add(Me.Activo_Producto)
         Me.TabPage14.Controls.Add(Me.Label77)
@@ -2472,7 +2459,7 @@ Partial Class Form1
         Me.TabPage14.Controls.Add(Me.Compra_Maxima)
         Me.TabPage14.Controls.Add(Me.Label72)
         Me.TabPage14.Controls.Add(Me.Anterior_Producto)
-        Me.TabPage14.Controls.Add(Me.Siguiente_Productos)
+        Me.TabPage14.Controls.Add(Me.Siguiente_Producto)
         Me.TabPage14.Controls.Add(Me.Label71)
         Me.TabPage14.Controls.Add(Me.Label70)
         Me.TabPage14.Controls.Add(Me.Label69)
@@ -2501,6 +2488,76 @@ Partial Class Form1
         Me.TabPage14.TabIndex = 7
         Me.TabPage14.Text = "Productos"
         '
+        'GroupBox6
+        '
+        Me.GroupBox6.Controls.Add(Me.Button2)
+        Me.GroupBox6.Controls.Add(Me.BtnNuevoProducto)
+        Me.GroupBox6.Controls.Add(Me.Button4)
+        Me.GroupBox6.Location = New System.Drawing.Point(661, 499)
+        Me.GroupBox6.Margin = New System.Windows.Forms.Padding(4)
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.Padding = New System.Windows.Forms.Padding(4)
+        Me.GroupBox6.Size = New System.Drawing.Size(443, 144)
+        Me.GroupBox6.TabIndex = 60
+        Me.GroupBox6.TabStop = False
+        Me.GroupBox6.Text = "Manejo de Producto"
+        '
+        'Button2
+        '
+        Me.Button2.BackgroundImage = Global.Inventario_Lab.My.Resources.Resources.Eliminar
+        Me.Button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.Button2.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.Button2.Location = New System.Drawing.Point(307, 31)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(4)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(116, 89)
+        Me.Button2.TabIndex = 14
+        Me.Button2.Text = "Eliminar"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'BtnNuevoProducto
+        '
+        Me.BtnNuevoProducto.BackgroundImage = Global.Inventario_Lab.My.Resources.Resources.Nuevo
+        Me.BtnNuevoProducto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.BtnNuevoProducto.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BtnNuevoProducto.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.BtnNuevoProducto.Location = New System.Drawing.Point(162, 31)
+        Me.BtnNuevoProducto.Margin = New System.Windows.Forms.Padding(4)
+        Me.BtnNuevoProducto.Name = "BtnNuevoProducto"
+        Me.BtnNuevoProducto.Size = New System.Drawing.Size(116, 89)
+        Me.BtnNuevoProducto.TabIndex = 13
+        Me.BtnNuevoProducto.Text = "Nuevo"
+        Me.BtnNuevoProducto.UseVisualStyleBackColor = True
+        '
+        'Button4
+        '
+        Me.Button4.BackgroundImage = Global.Inventario_Lab.My.Resources.Resources.Guardar1
+        Me.Button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.Button4.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.Button4.Location = New System.Drawing.Point(21, 31)
+        Me.Button4.Margin = New System.Windows.Forms.Padding(4)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(116, 89)
+        Me.Button4.TabIndex = 12
+        Me.Button4.Text = "Guardar"
+        Me.Button4.UseVisualStyleBackColor = True
+        '
+        'BtnModificarProducto
+        '
+        Me.BtnModificarProducto.FlatAppearance.BorderColor = System.Drawing.Color.LightSteelBlue
+        Me.BtnModificarProducto.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red
+        Me.BtnModificarProducto.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.BtnModificarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnModificarProducto.Image = Global.Inventario_Lab.My.Resources.Resources.if_icon_136_document_edit_314724
+        Me.BtnModificarProducto.Location = New System.Drawing.Point(976, 3)
+        Me.BtnModificarProducto.Name = "BtnModificarProducto"
+        Me.BtnModificarProducto.Size = New System.Drawing.Size(42, 38)
+        Me.BtnModificarProducto.TabIndex = 59
+        Me.TPAdministrar.SetToolTip(Me.BtnModificarProducto, "Modificar Equipo")
+        Me.BtnModificarProducto.UseVisualStyleBackColor = True
+        '
         'Label91
         '
         Me.Label91.AutoSize = True
@@ -2516,6 +2573,7 @@ Partial Class Form1
         'Activo_Producto
         '
         Me.Activo_Producto.AutoSize = True
+        Me.Activo_Producto.Enabled = False
         Me.Activo_Producto.Location = New System.Drawing.Point(14, 358)
         Me.Activo_Producto.Margin = New System.Windows.Forms.Padding(4)
         Me.Activo_Producto.Name = "Activo_Producto"
@@ -2536,6 +2594,8 @@ Partial Class Form1
         '
         'Unidades_Producto
         '
+        Me.Unidades_Producto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Unidades_Producto.Enabled = False
         Me.Unidades_Producto.FormattingEnabled = True
         Me.Unidades_Producto.Location = New System.Drawing.Point(219, 536)
         Me.Unidades_Producto.Margin = New System.Windows.Forms.Padding(4)
@@ -2588,6 +2648,7 @@ Partial Class Form1
         Me.Stock_Maximo.Location = New System.Drawing.Point(259, 465)
         Me.Stock_Maximo.Margin = New System.Windows.Forms.Padding(4)
         Me.Stock_Maximo.Name = "Stock_Maximo"
+        Me.Stock_Maximo.ReadOnly = True
         Me.Stock_Maximo.Size = New System.Drawing.Size(99, 24)
         Me.Stock_Maximo.TabIndex = 50
         '
@@ -2596,6 +2657,7 @@ Partial Class Form1
         Me.Stock_Minimo.Location = New System.Drawing.Point(136, 465)
         Me.Stock_Minimo.Margin = New System.Windows.Forms.Padding(4)
         Me.Stock_Minimo.Name = "Stock_Minimo"
+        Me.Stock_Minimo.ReadOnly = True
         Me.Stock_Minimo.Size = New System.Drawing.Size(99, 24)
         Me.Stock_Minimo.TabIndex = 49
         '
@@ -2604,6 +2666,7 @@ Partial Class Form1
         Me.Compra_Maxima.Location = New System.Drawing.Point(11, 538)
         Me.Compra_Maxima.Margin = New System.Windows.Forms.Padding(4)
         Me.Compra_Maxima.Name = "Compra_Maxima"
+        Me.Compra_Maxima.ReadOnly = True
         Me.Compra_Maxima.Size = New System.Drawing.Size(190, 24)
         Me.Compra_Maxima.TabIndex = 48
         '
@@ -2628,17 +2691,17 @@ Partial Class Form1
         Me.Anterior_Producto.Text = "Anterior"
         Me.Anterior_Producto.UseVisualStyleBackColor = True
         '
-        'Siguiente_Productos
+        'Siguiente_Producto
         '
-        Me.Siguiente_Productos.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.Siguiente_Productos.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Siguiente_Productos.Location = New System.Drawing.Point(925, 440)
-        Me.Siguiente_Productos.Margin = New System.Windows.Forms.Padding(4)
-        Me.Siguiente_Productos.Name = "Siguiente_Productos"
-        Me.Siguiente_Productos.Size = New System.Drawing.Size(132, 44)
-        Me.Siguiente_Productos.TabIndex = 45
-        Me.Siguiente_Productos.Text = "Siguiente"
-        Me.Siguiente_Productos.UseVisualStyleBackColor = True
+        Me.Siguiente_Producto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.Siguiente_Producto.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.Siguiente_Producto.Location = New System.Drawing.Point(925, 440)
+        Me.Siguiente_Producto.Margin = New System.Windows.Forms.Padding(4)
+        Me.Siguiente_Producto.Name = "Siguiente_Producto"
+        Me.Siguiente_Producto.Size = New System.Drawing.Size(132, 44)
+        Me.Siguiente_Producto.TabIndex = 45
+        Me.Siguiente_Producto.Text = "Siguiente"
+        Me.Siguiente_Producto.UseVisualStyleBackColor = True
         '
         'Label71
         '
@@ -2672,6 +2735,8 @@ Partial Class Form1
         '
         'SubCategoria_Producto
         '
+        Me.SubCategoria_Producto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.SubCategoria_Producto.Enabled = False
         Me.SubCategoria_Producto.FormattingEnabled = True
         Me.SubCategoria_Producto.Location = New System.Drawing.Point(387, 174)
         Me.SubCategoria_Producto.Margin = New System.Windows.Forms.Padding(4)
@@ -2691,6 +2756,8 @@ Partial Class Form1
         '
         'Categoria_Producto
         '
+        Me.Categoria_Producto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Categoria_Producto.Enabled = False
         Me.Categoria_Producto.FormattingEnabled = True
         Me.Categoria_Producto.Location = New System.Drawing.Point(387, 92)
         Me.Categoria_Producto.Margin = New System.Windows.Forms.Padding(4)
@@ -2724,6 +2791,7 @@ Partial Class Form1
         Me.Stock_Existente.Location = New System.Drawing.Point(11, 465)
         Me.Stock_Existente.Margin = New System.Windows.Forms.Padding(4)
         Me.Stock_Existente.Name = "Stock_Existente"
+        Me.Stock_Existente.ReadOnly = True
         Me.Stock_Existente.Size = New System.Drawing.Size(99, 24)
         Me.Stock_Existente.TabIndex = 22
         '
@@ -2742,6 +2810,7 @@ Partial Class Form1
         Me.Serie_Producto.Location = New System.Drawing.Point(14, 316)
         Me.Serie_Producto.Margin = New System.Windows.Forms.Padding(4)
         Me.Serie_Producto.Name = "Serie_Producto"
+        Me.Serie_Producto.ReadOnly = True
         Me.Serie_Producto.Size = New System.Drawing.Size(224, 24)
         Me.Serie_Producto.TabIndex = 20
         '
@@ -2760,6 +2829,7 @@ Partial Class Form1
         Me.Marca_Producto.Location = New System.Drawing.Point(14, 239)
         Me.Marca_Producto.Margin = New System.Windows.Forms.Padding(4)
         Me.Marca_Producto.Name = "Marca_Producto"
+        Me.Marca_Producto.ReadOnly = True
         Me.Marca_Producto.Size = New System.Drawing.Size(224, 24)
         Me.Marca_Producto.TabIndex = 18
         '
@@ -2778,6 +2848,7 @@ Partial Class Form1
         Me.Nombre_Producto.Location = New System.Drawing.Point(14, 160)
         Me.Nombre_Producto.Margin = New System.Windows.Forms.Padding(4)
         Me.Nombre_Producto.Name = "Nombre_Producto"
+        Me.Nombre_Producto.ReadOnly = True
         Me.Nombre_Producto.Size = New System.Drawing.Size(224, 24)
         Me.Nombre_Producto.TabIndex = 16
         '
@@ -2796,6 +2867,7 @@ Partial Class Form1
         Me.Codigo_Producto.Location = New System.Drawing.Point(14, 78)
         Me.Codigo_Producto.Margin = New System.Windows.Forms.Padding(4)
         Me.Codigo_Producto.Name = "Codigo_Producto"
+        Me.Codigo_Producto.ReadOnly = True
         Me.Codigo_Producto.Size = New System.Drawing.Size(224, 24)
         Me.Codigo_Producto.TabIndex = 14
         '
@@ -3422,7 +3494,7 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.DarkSlateGray
-        Me.ClientSize = New System.Drawing.Size(1413, 873)
+        Me.ClientSize = New System.Drawing.Size(1481, 873)
         Me.Controls.Add(Me.Label34)
         Me.Controls.Add(Me.Label33)
         Me.Controls.Add(Me.Label32)
@@ -3458,13 +3530,9 @@ Partial Class Form1
         CType(Me.Movimiento_Consulta, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
-        CType(Me.Equipos_Crear, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Equipos_Modificar, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Equipos_Consultar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage4.ResumeLayout(False)
         Me.TabPage4.PerformLayout()
-        CType(Me.Productos_Crear, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Productos_Modificar, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Productos_Consultar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage5.PerformLayout()
@@ -3498,9 +3566,11 @@ Partial Class Form1
         CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage13.ResumeLayout(False)
         Me.TabPage13.PerformLayout()
+        Me.GroupBox5.ResumeLayout(False)
         CType(Me.Foto_Equipo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage14.ResumeLayout(False)
         Me.TabPage14.PerformLayout()
+        Me.GroupBox6.ResumeLayout(False)
         CType(Me.Foto_Producto, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage15.ResumeLayout(False)
         Me.TabPage15.PerformLayout()
@@ -3546,15 +3616,7 @@ Partial Class Form1
     Friend WithEvents Movimiento_Ingreso As PictureBox
     Friend WithEvents Movimiento_Salida As PictureBox
     Friend WithEvents Movimiento_Consulta As PictureBox
-    Friend WithEvents Label11 As Label
-    Friend WithEvents Label12 As Label
-    Friend WithEvents Equipos_Crear As PictureBox
-    Friend WithEvents Equipos_Modificar As PictureBox
     Friend WithEvents Equipos_Consultar As PictureBox
-    Friend WithEvents Label14 As Label
-    Friend WithEvents Label15 As Label
-    Friend WithEvents Productos_Crear As PictureBox
-    Friend WithEvents Productos_Modificar As PictureBox
     Friend WithEvents Productos_Consultar As PictureBox
     Friend WithEvents Label16 As Label
     Friend WithEvents Label17 As Label
@@ -3691,7 +3753,7 @@ Partial Class Form1
     Friend WithEvents Buscar_Produ As TextBox
     Friend WithEvents Label72 As Label
     Friend WithEvents Anterior_Producto As Button
-    Friend WithEvents Siguiente_Productos As Button
+    Friend WithEvents Siguiente_Producto As Button
     Friend WithEvents Proveedor_Producto As Button
     Friend WithEvents Equipo_Producto As Button
     Friend WithEvents Ubicacion_Producto As Button
@@ -3780,4 +3842,14 @@ Partial Class Form1
     Friend WithEvents TxtBxNuevaCategoria As TextBox
     Friend WithEvents LblNuevaCategoria As Label
     Friend WithEvents BtnModificarCategoria As Button
+    Friend WithEvents GroupBox5 As GroupBox
+    Friend WithEvents BtnEliminarEquipo As Button
+    Friend WithEvents BtnNuevoEquipo As Button
+    Friend WithEvents BtnGuardarEquipo As Button
+    Friend WithEvents BtnModificarEquipo As Button
+    Friend WithEvents BtnModificarProducto As Button
+    Friend WithEvents GroupBox6 As GroupBox
+    Friend WithEvents Button2 As Button
+    Friend WithEvents BtnNuevoProducto As Button
+    Friend WithEvents Button4 As Button
 End Class

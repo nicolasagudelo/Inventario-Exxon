@@ -124,25 +124,148 @@ Public Class Form1
         TabPage12.Parent = TabControl2
     End Sub
 
-    Dim reg_bus_equ As String
     Private Sub PictureBox3_Click(sender As Object, e As EventArgs) Handles PictureBox3.Click
         Menu_Seleccionado(3)
         Esconder_tabpages_submenu()
         TabPage13.Parent = TabControl2
-        'cant_reg_encon = 0
-        'z = "EQUIPOS"
-        'Recorrer_Equipos()
+        cant_reg_encon = 0
+        z = "EQUIPOS"
+        Modificar_Equipo = 0
+        Agregar_Equipo = 0
+        HabilitarControlesEquipo()
+        Recorrer_Equipos()
     End Sub
 
-    Dim reg_bus_produ As String
+    Dim Equipo_num As Integer = 1
+    Dim Id_Equipo As String
+    Private Sub Recorrer_Equipos()
+        Label60.Visible = True
+        Anterior_Equipo.Visible = True
+        Siguiente_Equipo.Visible = True
+        Cargar_Tabla("*", "Equipos")
+        If Equipo_num >= Tabla1.Rows.Count Then
+            Equipo_num = Tabla1.Rows.Count
+        End If
+        Label60.Text = "Equipo " & (Equipo_num) & " de " & (Tabla1.Rows.Count)
+        Id_Equipo = Tabla1.Rows(Equipo_num - 1).ItemArray(0).ToString
+        Numero_Equipo.Text = Tabla1.Rows(Equipo_num - 1).ItemArray(1).ToString
+        Nombre_Equipo.Text = Tabla1.Rows(Equipo_num - 1).ItemArray(2).ToString
+        Marca_Equipo.Text = Tabla1.Rows(Equipo_num - 1).ItemArray(3).ToString
+        Serie_Equipo.Text = Tabla1.Rows(Equipo_num - 1).ItemArray(4).ToString
+        Activo_Equipo.Checked = Tabla1.Rows(Equipo_num - 1).ItemArray(6).ToString
+        Try
+            Dim b64str As String = Tabla1.Rows(Equipo_num - 1).ItemArray(5).ToString
+            Dim binarydata() As Byte = Convert.FromBase64String(b64str)
+            Dim stream As New MemoryStream(binarydata)
+            Foto_Equipo.Image = Image.FromStream(stream)
+        Catch ex As Exception
+            Foto_Equipo.Image = My.Resources.NoMachine
+        End Try
+    End Sub
+
     Private Sub PictureBox4_Click(sender As Object, e As EventArgs) Handles PictureBox4.Click
         Menu_Seleccionado(4)
         Esconder_tabpages_submenu()
         TabPage14.Parent = TabControl2
-        'cant_reg_encon = 0
-        'z = "PRODUCTOS"
-        'Recorrer_Productos()
+        cant_reg_encon = 0
+        z = "PRODUCTOS"
+        Recorrer_Productos()
     End Sub
+
+    Dim Id_Prod As String
+    Dim Prod_Num As Integer = 1
+    Dim Stock_producto As Integer
+    Private Sub Recorrer_Productos()
+        Label72.Visible = True
+        Anterior_Producto.Visible = True
+        Siguiente_Producto.Visible = True
+        Cargar_Tabla("*", "Productos")
+        If Prod_Num >= Tabla1.Rows.Count Then
+            Prod_Num = Tabla1.Rows.Count
+        End If
+        Label72.Text = "Producto " & (Prod_Num) & " de " & (Tabla1.Rows.Count)
+        Id_Prod = Tabla1.Rows(Prod_Num - 1).ItemArray(0).ToString
+        Codigo_Producto.Text = Tabla1.Rows(Prod_Num - 1).ItemArray(1).ToString
+        Nombre_Producto.Text = Tabla1.Rows(Prod_Num - 1).ItemArray(2).ToString
+        Marca_Producto.Text = Tabla1.Rows(Prod_Num - 1).ItemArray(5).ToString
+        Serie_Producto.Text = Tabla1.Rows(Prod_Num - 1).ItemArray(6).ToString
+        Stock_producto = Tabla1.Rows(Prod_Num - 1).ItemArray(8).ToString
+        Activo_Producto.Checked = Tabla1.Rows(Prod_Num - 1).ItemArray(9).ToString
+        Unidades_Producto.Items.Clear()
+        With Unidades_Producto
+            .Items.Add("Uni")
+            .Items.Add("Kg")
+            .Items.Add("Lb")
+            .Items.Add("L")
+            .Items.Add("Gal")
+        End With
+        Try
+            Dim b64str As String = Tabla1.Rows(Prod_Num - 1).ItemArray(7).ToString
+            Dim binarydata() As Byte = Convert.FromBase64String(b64str)
+            Dim stream As New MemoryStream(binarydata)
+            Foto_Equipo.Image = Image.FromStream(stream)
+        Catch ex As Exception
+            Foto_Equipo.Image = My.Resources.NoMachine
+        End Try
+        CargarCBTabProductos(Prod_Num - 1)
+        Try
+            conn.Open()
+            Dim consulta As String = "Select * from stock where Id_Stock='" & Stock_producto & "'"
+            Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
+            Dim MysqlDset As New DataSet
+            MysqlDadap.Fill(MysqlDset)
+            conn.Close()
+            '.DataSource = MysqlDset.Tables(0)
+            Stock_Minimo.Text = MysqlDset.Tables(0).Rows(0).Item(1).ToString
+            Stock_Maximo.Text = MysqlDset.Tables(0).Rows(0).Item(2).ToString
+            Stock_Existente.Text = MysqlDset.Tables(0).Rows(0).Item(3).ToString
+            Unidades_Producto.SelectedItem = MysqlDset.Tables(0).Rows(0).Item(4).ToString
+            Compra_Maxima.Text = MysqlDset.Tables(0).Rows(0).Item(5).ToString
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            conn.Close()
+        End Try
+    End Sub
+
+    Private Sub CargarCBTabProductos(ByVal numero_Producto As Integer)
+        With Categoria_Producto
+            Try
+                conn.Open()
+                Dim consulta As String = "Select * from categorias"
+                Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
+                Dim MysqlDset As New DataSet
+                MysqlDadap.Fill(MysqlDset)
+                conn.Close()
+                .DataSource = MysqlDset.Tables(0)
+                .DisplayMember = "Nombre_Categoria" 'elnombre de tu columna de tu base de datos q deseas mostrar
+                .ValueMember = "Id_Categoria" 'el ide de tu tabla relacionada con el nombre que muestras muy importante para saber el ide de quien seleccionas en tu combobox
+                .SelectedValue = Tabla1.Rows(numero_Producto).ItemArray(3)
+                '.Enabled = False
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+                conn.Close()
+            End Try
+        End With
+        With SubCategoria_Producto
+            Try
+                conn.Open()
+                Dim consulta As String = "Select * from categorias_sub where Id_Categoria='" & Tabla1.Rows(numero_Producto).ItemArray(3) & "'"
+                Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
+                Dim MysqlDset As New DataSet
+                MysqlDadap.Fill(MysqlDset)
+                conn.Close()
+                .DataSource = MysqlDset.Tables(0)
+                .DisplayMember = "Nombre_SubCategoria" 'elnombre de tu columna de tu base de datos q deseas mostrar
+                .ValueMember = "Id_SubCategoria" 'el ide de tu tabla relacionada con el nombre que muestras muy importante para saber el ide de quien seleccionas en tu combobox
+                .SelectedValue = Tabla1.Rows(numero_Producto).ItemArray(4)
+                '.Enabled = False
+            Catch ex As Exception
+                MessageBox.Show(ex.Message)
+                conn.Close()
+            End Try
+        End With
+    End Sub
+
     Private Sub PictureBox5_Click(sender As Object, e As EventArgs) Handles PictureBox5.Click
         Menu_Seleccionado(5)
         Esconder_tabpages_submenu()
@@ -402,6 +525,48 @@ Public Class Form1
 
     End Sub
 
+    Private Sub Siguiente_Equipo_Click(sender As Object, e As EventArgs) Handles Siguiente_Equipo.Click
+        Equipo_num += 1
+        If Equipo_num > (Tabla1.Rows.Count) Then
+            Equipo_num = 1
+            Recorrer_Equipos()
+            Exit Sub
+        End If
+        Recorrer_Equipos()
+    End Sub
+
+    Private Sub Anterior_Equipo_Click(sender As Object, e As EventArgs) Handles Anterior_Equipo.Click
+        Equipo_num -= 1
+        Dim a = Tabla1.Rows.Count
+        If Equipo_num = 0 Then
+            Equipo_num = Tabla1.Rows.Count
+            Recorrer_Equipos()
+            Exit Sub
+        End If
+        Recorrer_Equipos()
+    End Sub
+
+    Private Sub Siguiente_producto_Click(sender As Object, e As EventArgs) Handles Siguiente_Producto.Click
+        Prod_Num += 1
+        If Prod_Num > (Tabla1.Rows.Count) Then
+            Prod_Num = 1
+            Recorrer_Productos()
+            Exit Sub
+        End If
+        Recorrer_Productos()
+    End Sub
+
+    Private Sub Anterior_Producto_Click(sender As Object, e As EventArgs) Handles Anterior_Producto.Click
+        Prod_Num -= 1
+        Dim a = Tabla1.Rows.Count
+        If Prod_Num = 0 Then
+            Prod_Num = Tabla1.Rows.Count
+            Recorrer_Productos()
+            Exit Sub
+        End If
+        Recorrer_Productos()
+    End Sub
+
     Private Sub Cargar_Tabla(ByVal Columns As String, ByVal Nombre_Tabla As String)
         Try
             conn.Open()
@@ -447,6 +612,36 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub Foto_Equipo_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles Foto_Equipo.DragEnter
+        If Agregar_Equipo = 1 Then
+            Exit Sub
+        End If
+        'DataFormats.FileDrop nos devuelve el array de rutas de archivos
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            'Los archivos son externos a nuestra aplicación por lo que de indicaremos All ya que dará lo mismo.
+            e.Effect = DragDropEffects.All
+        End If
+    End Sub
+    Private Sub Foto_Equipo_DragDrop(ByVal sender As Object, e As DragEventArgs) Handles Foto_Equipo.DragDrop
+        If Agregar_Equipo = 1 Then
+            Exit Sub
+        End If
+
+        If MessageBox.Show("¿Esta seguro que desea CAMBIAR la foto?" & vbCrLf & "Esta accion no se puede deshacer", "Alerta", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+                Dim strRutaArchivoImagen As String
+                strRutaArchivoImagen = e.Data.GetData(DataFormats.FileDrop)(0)
+                If Path.GetExtension(strRutaArchivoImagen) = ".jpg" Or Path.GetExtension(strRutaArchivoImagen) = ".png" Or Path.GetExtension(strRutaArchivoImagen) = ".bmp" Then
+
+                    CambiarImagenBD(strRutaArchivoImagen, "Equipos")
+                Else
+
+                    MsgBox("El formato (" & Path.GetExtension(strRutaArchivoImagen) & ") no es soportado", MsgBoxStyle.Critical, "Error")
+                End If
+            End If
+        End If
+    End Sub
+
     Private Sub CambiarImagenBD(ByVal strRutaArchivoImagen As String, ByVal Tabla As String)
         Select Case Tabla
             Case "Usuarios"
@@ -468,6 +663,30 @@ Public Class Form1
                     cmd.ExecuteNonQuery()
                     conn.Close()
                     Foto_Usuario.Image = Image.FromFile(strRutaArchivoImagen)
+                Catch ex As Exception
+                    MsgBox("Error al cambiar la imagen, revise el estado del archivo y su conexion a la base de datos" & vbCrLf & "Error:" & ex.Message, MsgBoxStyle.Exclamation, "Error")
+                    conn.Close()
+                End Try
+                Exit Sub
+            Case "Equipos"
+                Try
+                    Foto_Equipo.Image.Dispose()
+                    Foto_Equipo.Image = Nothing
+                    Dim FileSize As UInt32
+                    Dim rawData() As Byte
+                    Dim fs As FileStream
+                    fs = New FileStream(strRutaArchivoImagen, FileMode.Open, FileAccess.Read)
+                    FileSize = fs.Length - 1
+
+                    rawData = New Byte(FileSize) {}
+                    fs.Read(rawData, 0, FileSize)
+                    fs.Close()
+                    conn.Open()
+                    Dim foto As String = Convert.ToBase64String(rawData)
+                    Dim cmd As New MySqlCommand(String.Format("UPDATE Equipos set `Foto` = '" & foto & "' where ID_Equipo = '" & Id_Equipo & "';"), conn)
+                    cmd.ExecuteNonQuery()
+                    conn.Close()
+                    Foto_Equipo.Image = Image.FromFile(strRutaArchivoImagen)
                 Catch ex As Exception
                     MsgBox("Error al cambiar la imagen, revise el estado del archivo y su conexion a la base de datos" & vbCrLf & "Error:" & ex.Message, MsgBoxStyle.Exclamation, "Error")
                     conn.Close()
@@ -506,7 +725,6 @@ Public Class Form1
             LblNuevaCategoria.Visible = True
             TxtBxNuevaCategoria.Location = New Point(15, 240)
             TxtBxNuevaCategoria.Visible = True
-        ElseIf Agregar_Categoria = 1 Then
         Else
             LblCategorias.Visible = True
             Nombre_Categoria.Visible = True
@@ -537,6 +755,121 @@ Public Class Form1
             Nombre_Doag.ReadOnly = True
             Monto_Doag.ReadOnly = True
             Comentario_Doag.ReadOnly = True
+        End If
+    End Sub
+
+    Dim Modificar_Equipo As Integer = 0
+    Private Sub BtnModificarEquipo_Click(sender As Object, e As EventArgs) Handles BtnModificarEquipo.Click
+        Agregar_Equipo = 0
+        If Modificar_Equipo = 1 Then
+            Modificar_Equipo = 0
+        ElseIf Modificar_Equipo = 0 Then
+            Modificar_Equipo = 1
+        End If
+        HabilitarControlesEquipo()
+        Label60.Visible = True
+        Anterior_Equipo.Visible = True
+        Siguiente_Equipo.Visible = True
+        Recorrer_Equipos()
+    End Sub
+
+    Dim Agregar_Equipo As Integer = 0
+    Private Sub BtnNuevoEquipo_Click(sender As Object, e As EventArgs) Handles BtnNuevoEquipo.Click
+        Modificar_Equipo = 0
+        Agregar_Equipo = 1
+        HabilitarControlesEquipo()
+        Numero_Equipo.Clear()
+        Numero_Equipo.Focus()
+        Serie_Equipo.Clear()
+        Nombre_Equipo.Clear()
+        Marca_Equipo.Clear()
+        Activo_Equipo.Checked = True
+        Foto_Equipo.Image = My.Resources.NoImage
+        Label60.Visible = False
+        Anterior_Equipo.Visible = False
+        Siguiente_Equipo.Visible = False
+    End Sub
+
+    Private Sub HabilitarControlesEquipo()
+        If Modificar_Equipo = 1 Or Agregar_Equipo = 1 Then
+            Numero_Equipo.ReadOnly = False
+            Serie_Equipo.ReadOnly = False
+            Nombre_Equipo.ReadOnly = False
+            Marca_Equipo.ReadOnly = False
+            Activo_Equipo.Enabled = True
+        Else
+            Numero_Equipo.ReadOnly = True
+            Serie_Equipo.ReadOnly = True
+            Nombre_Equipo.ReadOnly = True
+            Marca_Equipo.ReadOnly = True
+            Activo_Equipo.Enabled = False
+        End If
+    End Sub
+
+    Dim Modificar_Producto As Integer = 0
+    Private Sub BtnModificarProducto_Click(sender As Object, e As EventArgs) Handles BtnModificarProducto.Click
+        Agregar_Producto = 0
+        If Modificar_Producto = 1 Then
+            Modificar_Producto = 0
+        ElseIf Modificar_Producto = 0 Then
+            Modificar_Producto = 1
+        End If
+        HabilitarControlesProducto()
+        Label72.Visible = True
+        Anterior_Equipo.Visible = True
+        Siguiente_Equipo.Visible = True
+        Recorrer_Productos()
+    End Sub
+
+    Dim Agregar_Producto As Integer = 0
+
+    Private Sub BtnNuevoProducto_Click(sender As Object, e As EventArgs) Handles BtnNuevoProducto.Click
+        Modificar_Producto = 0
+        Agregar_Producto = 1
+        HabilitarControlesProducto()
+        Codigo_Producto.Clear()
+        Codigo_Producto.Focus()
+        Serie_Producto.Clear()
+        Nombre_Producto.Clear()
+        Marca_Producto.Clear()
+        Stock_Existente.Clear()
+        Stock_Minimo.Clear()
+        Stock_Maximo.Clear()
+        Compra_Maxima.Clear()
+        Activo_Producto.Checked = True
+        Foto_Producto.Image = My.Resources.NoImage
+        Label60.Visible = False
+        Anterior_Producto.Visible = False
+        Siguiente_Producto.Visible = False
+    End Sub
+
+    Private Sub HabilitarControlesProducto()
+        If Modificar_Producto = 1 Or Agregar_Producto = 1 Then
+            Codigo_Producto.ReadOnly = False
+            Serie_Producto.ReadOnly = False
+            Nombre_Producto.ReadOnly = False
+            Marca_Producto.ReadOnly = False
+            Stock_Existente.ReadOnly = False
+            Stock_Minimo.ReadOnly = False
+            Stock_Maximo.ReadOnly = False
+            Compra_Maxima.ReadOnly = False
+            Activo_Producto.Enabled = True
+            Categoria_Producto.Enabled = True
+            SubCategoria_Producto.Enabled = True
+            Unidades_Producto.Enabled = True
+        Else
+            Codigo_Producto.ReadOnly = True
+            Serie_Producto.ReadOnly = True
+            Nombre_Producto.ReadOnly = True
+            Marca_Producto.ReadOnly = True
+            Stock_Existente.ReadOnly = True
+            Stock_Minimo.ReadOnly = True
+            Stock_Maximo.ReadOnly = True
+            Compra_Maxima.ReadOnly = True
+            Activo_Producto.Enabled = False
+            Categoria_Producto.Enabled = False
+            SubCategoria_Producto.Enabled = False
+            Unidades_Producto.Enabled = False
         End If
     End Sub
 
@@ -639,7 +972,17 @@ Public Class Form1
         HabilitarControlesCategorias()
     End Sub
 
+    Private Sub TabPage13_Leave(sender As Object, e As EventArgs) Handles TabPage13.Leave
+        Modificar_Equipo = 0
+        Agregar_Equipo = 0
+        HabilitarControlesEquipo()
+    End Sub
 
+    Private Sub TabPage14_Leave(Sender As Object, e As EventArgs) Handles TabPage14.Leave
+        Modificar_Producto = 0
+        Agregar_Producto = 0
+        HabilitarControlesProducto()
+    End Sub
 
     Dim Id_Doag As String
     Private Sub DataGridView1_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridView1.SelectionChanged
@@ -831,6 +1174,75 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub BtnGuardarEquipo_Click(sender As Object, e As EventArgs) Handles BtnGuardarEquipo.Click
+        If Modificar_Equipo = 1 Then
+            Dim reader As MySqlDataReader
+            Dim Numero As String = Numero_Equipo.Text.Trim
+            Dim Serie As String = Serie_Equipo.Text.Trim
+            Dim Nombre As String = Nombre_Equipo.Text.Trim
+            Dim Marca As String = Marca_Equipo.Text.Trim
+            Dim Activo As Boolean = Activo_Equipo.Checked
+
+            Try
+                conn.Open()
+                Dim query As String = "UPDATE equipos SET Cod_Equipo = @Numero, Nombre_Equipo = @Nombre
+                                , Marca = @Marca, Serie = @Serie, Activo = @Activo WHERE Id_Equipo= @IDEquipo;"
+                Dim cmd As New MySqlCommand(query, conn)
+                With cmd.Parameters
+                    .AddWithValue("Numero", Numero)
+                    .AddWithValue("Nombre", Nombre)
+                    .AddWithValue("Marca", Marca)
+                    .AddWithValue("Serie", Serie)
+                    .AddWithValue("Activo", Activo)
+                    .AddWithValue("IDEquipo", Id_Equipo)
+                End With
+                reader = cmd.ExecuteReader
+                MsgBox("Equipo modificado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                conn.Close()
+            End Try
+
+        ElseIf Agregar_Equipo = 1 Then
+
+            Dim reader As MySqlDataReader
+            Dim Numero As String = Numero_Equipo.Text.Trim
+            Dim Serie As String = Serie_Equipo.Text.Trim
+            Dim Nombre As String = Nombre_Equipo.Text.Trim
+            Dim Marca As String = Marca_Equipo.Text.Trim
+            Dim Activo As Boolean = Activo_Equipo.Checked
+
+            If Nombre = "" Or Numero = "" Or Serie = "" Or Marca = "" Then
+                MsgBox("Todos los campos son obligatorios", MsgBoxStyle.Exclamation, "Error")
+                Exit Sub
+            End If
+
+            Try
+                conn.Open()
+                Dim query As String = "INSERT into Equipos (Cod_Equipo, Nombre_Equipo, Marca, Serie, Activo)
+                                      VALUES (@Numero, @Nombre, @Marca, @Serie, @Activo);"
+                Dim cmd As New MySqlCommand(query, conn)
+                With cmd.Parameters
+                    .AddWithValue("Numero", Numero)
+                    .AddWithValue("Nombre", Nombre)
+                    .AddWithValue("Marca", Marca)
+                    .AddWithValue("Serie", Serie)
+                    .AddWithValue("Activo", Activo)
+                End With
+                reader = cmd.ExecuteReader
+                MsgBox("Equipo Agregado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                conn.Close()
+            End Try
+            Agregar_Equipo = 0
+            HabilitarControlesEquipo()
+            Recorrer_Equipos()
+        End If
+    End Sub
+
     Public Function ComputeHashOfString(Of T As HashAlgorithm)(ByVal str As String,
                                                                              Optional ByVal enc As Encoding = Nothing) As String
         If (enc Is Nothing) Then
@@ -878,7 +1290,26 @@ Public Class Form1
         End If
         Recorrer_Usuarios()
     End Sub
-
+    Private Sub BtnEliminarEquipo_Click(sender As Object, e As EventArgs) Handles BtnEliminarEquipo.Click
+        If Agregar_Equipo = 1 Then
+            Exit Sub
+        End If
+        If MessageBox.Show("¿Esta seguro que desea ELIMINAR este Equipo?", "Alerta", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            Try
+                conn.Open()
+                Dim query As String = "Delete from Equipos where Id_Equipo = @IdEquipo;"
+                Dim cmd As New MySqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("IdEquipo", Id_Equipo)
+                cmd.ExecuteNonQuery()
+                MsgBox("Equipo Eliminado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
+            End Try
+        End If
+        Recorrer_Equipos()
+    End Sub
 
     Private Sub Eliminar_Doag_Click(sender As Object, e As EventArgs) Handles Eliminar_Doag.Click
         If Agregar_Doag = 1 Then
@@ -1010,9 +1441,76 @@ Public Class Form1
         End Try
     End Sub
 
+    Private Sub Equipos_Consultar_Click(sender As Object, e As EventArgs) Handles Equipos_Consultar.Click
+        If Buscar_Eq.Text.Trim = "" Then
+            Exit Sub
+        End If
+        Cargar_Tabla("*", "EQUIPOS")
+        If z <> Buscar_Eq.Text Then
+            cant_reg_encon = 0
+        End If
+        Try
+            conn.Open()
+            Dim consulta As String = "Select * from Equipos"
+            Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
+            Dim MysqlDset As New DataSet
+            MysqlDadap.Fill(MysqlDset)
+            conn.Close()
+            Dim i As Integer = 0
+            Dim foundRows() As Data.DataRow
+            foundRows = MysqlDset.Tables(0).Select("Nombre_Equipo Like '" & Buscar_Eq.Text & "%'")
+            z = Buscar_Eq.Text
+            If cant_reg_encon = 0 And foundRows.Length > 1 Then
+                cant_reg_encon = foundRows.Length
+                For Each row In Tabla1.Rows
+                    If foundRows(cant_reg_encon - 1).Item(1) = row(1) Then
+                        'MsgBox(foundRows(cant_reg_encon - 1).Item(1))
+                        Equipo_num = i + 1
+                        Recorrer_Equipos()
+                        cant_reg_encon = cant_reg_encon - 1
+                        Exit Sub
+                    End If
+                    i = i + 1
+                Next
+            Else
+                If foundRows.Length = 0 Then
+                    MsgBox("No se encontro ninguna coincidencia")
+                ElseIf cant_reg_encon = 0 Then
+                    For Each row In Tabla1.Rows
+                        If foundRows(cant_reg_encon).Item(1) = row(1) Then
+                            Equipo_num = i + 1
+                            Recorrer_Equipos()
+                            Exit Sub
+                        End If
+                        i = i + 1
+                    Next
+                Else
+                    For Each row In Tabla1.Rows
+                        If foundRows(cant_reg_encon - 1).Item(1) = row(1) Then
+                            Equipo_num = i + 1
+                            Recorrer_Equipos()
+                            cant_reg_encon = cant_reg_encon - 1
+                            Exit Sub
+                        End If
+                        i = i + 1
+                    Next
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("Error durante la busqueda: " & ex.Message, MsgBoxStyle.Critical, "Error")
+            conn.Close()
+        End Try
+    End Sub
+
     Private Sub Buscar_Us_KeyDown(sender As Object, e As KeyEventArgs) Handles Buscar_Us.KeyDown
         If e.KeyCode = Keys.Enter Then
             Buscar_Usuario.PerformClick()
+        End If
+    End Sub
+
+    Private Sub Buscar_Eq_KeyDown(sender As Object, e As KeyEventArgs) Handles Buscar_Eq.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            Equipos_Consultar_Click(Me.Equipos_Consultar, Nothing)
         End If
     End Sub
 
@@ -1287,7 +1785,7 @@ Public Class Form1
         Try
             Dim fila_actual As Integer = (DataGridView3.CurrentRow.Index)
             If fila_actual = (DataGridView1.Rows.Count - 1) Then
-                IDUbicacion = "nuevo"
+                IDUbicacion = -1
                 Nombre_Doag.Text = ""
                 Monto_Doag.Text = ""
                 Comentario_Doag.Text = ""
@@ -1446,4 +1944,252 @@ Public Class Form1
         Datos_Movimientos.Visible = True
         Confirmar_Transaccion.Visible = True
     End Sub
+
+    Dim Ord_Movimiento_num = 0
+    Dim Id_Ord_Movimiento As Integer
+    Private Sub Confirmar_Transaccion_Click(sender As Object, e As EventArgs) Handles Confirmar_Transaccion.Click
+        If Tipo_Movimiento.Text = "INGRESO" Then
+            If N_Orden_Movimiento.Text.Trim = "" Or N_Referencia_Movimiento.Text.Trim = "" Then
+                MsgBox("Los campos con * son obligatorios")
+                Exit Sub
+            End If
+            Try
+                conn.Open()
+                Dim cmd As New MySqlCommand("INSERT INTO orden_movimientos (N_Orden_Compra, N_Referencia, Tipo, Fecha, Observaciones, Nit_Proveedor)
+                                            VALUES (@NumOrden, @NumRef, @Tipo, @Fecha, @Obs, @NitProv);", conn)
+                With cmd.Parameters
+                    .AddWithValue("NumOrden", UCase(N_Orden_Movimiento.Text.Trim))
+                    .AddWithValue("NumRef", UCase(N_Referencia_Movimiento.Text.Trim))
+                    .AddWithValue("Tipo", UCase(Tipo_Movimiento.Text.Trim))
+                    .AddWithValue("Fecha", UCase(Fecha_Movimiento.Text.Trim))
+                    .AddWithValue("Obs", UCase(Observaciones_Movimiento.Text.Trim))
+                    .AddWithValue("NitProv", UCase(Proveedor_Movimiento.SelectedValue))
+                End With
+                cmd.ExecuteNonQuery()
+                conn.Close()
+            Catch ex As Exception
+                MsgBox("No se pudo registrar el movimiento:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                Exit Sub
+            End Try
+            Gru_Movimiento.Visible = True
+            Producto_Movimiento.SelectedItem = -1
+            Usuario_Movimiento.SelectedItem = -1
+            Label95.Text = "Precio"
+            Try
+                conn.Open()
+                Dim cmd As New MySqlCommand("SELECT * FROM rel_productos_proveedores INNER JOIN productos 
+                                            ON (rel_productos_proveedores.Id_Producto = productos.Id_Producto) 
+                                            INNER JOIN proveedores ON (rel_productos_proveedores.Nit_Proveedor= proveedores.Nit_Proveedor)
+                                            WHERE rel_productos_proveedores.Nit_Proveedor= @NitProv;", conn)
+                cmd.Parameters.AddWithValue("NitProv", Proveedor_Movimiento.SelectedValue)
+                Dim adaptador As New MySqlDataAdapter(cmd)
+                Dim tabla As New DataTable
+                Try
+                    adaptador.Fill(tabla)
+                Catch ex As Exception
+                    MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                    Exit Sub
+                End Try
+                conn.Close()
+                Tabla1 = tabla
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                Exit Sub
+            End Try
+            With Producto_Movimiento
+                .DataSource = Tabla1
+                .DisplayMember = "Nombre_Producto" 'elnombre de tu columna de tu base de datos q deseas mostrar
+                .ValueMember = "Id_Producto" 'el ide de tu tabla relacionada con el nombre que muestras muy importante para saber el ide de quien seleccionas en tu combobox
+                '.Enabled = False
+            End With
+        End If
+        Movimiento_Ingreso.Enabled = False
+        Movimiento_Salida.Enabled = False
+        Generar_Movimientos.Visible = True
+        Confirmar_Transaccion.Visible = False
+        N_Orden_Movimiento.Enabled = False
+        N_Referencia_Movimiento.Enabled = False
+        Monto_Movimiento.Enabled = False
+        Observaciones_Movimiento.Enabled = False
+        Proveedor_Movimiento.Enabled = False
+        Cargar_Tabla("*", "orden_movimientos")
+        Ord_Movimiento_num = Tabla1.Rows.Count - 1
+        Id_Ord_Movimiento = Tabla1.Rows(Ord_Movimiento_num).ItemArray(0).ToString
+        N_Orden_Movimiento.Text = Tabla1.Rows(Ord_Movimiento_num).ItemArray(2).ToString
+        N_Referencia_Movimiento.Text = Tabla1.Rows(Ord_Movimiento_num).ItemArray(3).ToString
+        Observaciones_Movimiento.Text = Tabla1.Rows(Ord_Movimiento_num).ItemArray(5).ToString
+        Monto_Movimiento.Text = Tabla1.Rows(Ord_Movimiento_num).ItemArray(6).ToString
+        Proveedor_Movimiento.SelectedValue = Tabla1.Rows(Ord_Movimiento_num).ItemArray(7).ToString
+    End Sub
+
+
+
+
+
+
+
+
+    '    Private Sub Generar_Movimientos_Click(sender As Object, e As EventArgs) Handles Generar_Movimientos.Click
+    '        DataGridView4.Visible = True
+    '        Dim consulta_movimientos As String = ""
+    '        Dim stock As Integer
+    '        If IsNumeric(Cantidad_Movimiento.Text) Then
+    '            Cantidad_a_mover = Cantidad_Movimiento.Text
+    '            Tipo_Movi = Tipo_Movimiento.Text
+    '            Try
+    '                conn.Open()
+    '                Dim Comando As New MySqlCommand("SELECT * FROM stock " &
+    '                        "INNER JOIN productos " &
+    '                        "ON (stock.Id_Stock = productos.Id_Stock) " &
+    '                        "WHERE Id_Producto= @IdProd;", conn)
+    '                Comando.Parameters.AddWithValue("IdProd", Producto_Movimiento.SelectedValue)
+    '                Dim Adaptador As New MySqlDataAdapter(Comando)
+    '                Dim Tabla As New DataTable
+    '                Adaptador.Fill(Tabla)
+    '                conn.Close()
+    '                Tabla1 = Tabla
+    '            Catch ex As Exception
+    '                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error.")
+    '            End Try
+    '            'DataGridView4.DataSource = Tabla1
+    '            id_stock = Tabla1.Rows(0).ItemArray(0).ToString
+    '            If Tipo_Movimiento.Text = "SALIDA" Then
+    '                'If Descripcion_Movimiento.Text = "" Or Producto_Movimiento.Text = "" Or Usuario_Movimiento.Text = "" Then
+    '                '    MsgBox("Faltan algunos datos para generar el movimiento")
+    '                '    GoTo err
+    '                'End If
+    '                'If Convert.ToInt16(Tabla1.Rows(0).ItemArray(3).ToString) < Convert.ToInt16(Cantidad_Movimiento.Text) Then
+    '                '    MsgBox("Atencion NO puede realizar el movimiento, porque no posee esa cantidad en su inventario")
+    '                '    GoTo err
+    '                'End If
+    '                'stock = Convert.ToInt16(Tabla1.Rows(0).ItemArray(3).ToString) - Convert.ToInt16(Cantidad_Movimiento.Text)
+    '            Else
+    '                If Descripcion_Movimiento.Text = "" Or Producto_Movimiento.Text = "" Or Precio_Movimiento.Text = "" Then
+    '                    MsgBox("Todos los datos son obligatorios")
+    '                    Exit Sub
+    '                End If
+    '                If Tabla1.Rows(0).ItemArray(1).ToString <> 0 Then
+    '                    stock = Convert.ToInt16(Tabla1.Rows(0).ItemArray(3).ToString) + Convert.ToInt16(Cantidad_Movimiento.Text)
+    '                    If Convert.ToInt16(Tabla1.Rows(0).ItemArray(2).ToString) < stock) Then
+    '                        MsgBox("Atencion NO puede realizar el movimiento, porque su movimiento supera el máximo permitido")
+    '                        Exit Sub
+    '                    End If
+    '                ElseIf Tabla1.Rows(0).ItemArray(1).ToString = 0 Then
+    '                    stock = Convert.ToInt16(Tabla1.Rows(0).ItemArray(3).ToString) + Convert.ToInt16(Cantidad_Movimiento.Text)
+    '                End If
+    '            End If
+    '            Using conexion As New MySqlConnection(datasource)
+    '                Dim Comando As New MySqlCommand("SELECT Estante,Entrepano,Caja_Color,Zona,Cantidad,Aforo FROM rel_ubicaciones_productos " &
+    '                            "INNER JOIN productos " &
+    '                            "ON (rel_ubicaciones_productos.Id_Producto = productos.Id_Producto) " &
+    '                            "INNER JOIN ubicaciones " &
+    '                            "ON (rel_ubicaciones_productos.Id_Ubicacion = ubicaciones.Id_Ubicacion) " &
+    '                            "WHERE rel_ubicaciones_productos.Id_Producto='" & Producto_Movimiento.SelectedValue & "'", conexion)
+    '                Dim Adaptador As New MySqlDataAdapter(Comando)
+    '                Dim Tabla As New DataTable
+    '                Try
+    '                    Adaptador.Fill(Tabla)
+    '                Catch ex As Exception
+    '                Finally
+    '                    If conexion.State = ConnectionState.Open Then
+    '                        conexion.Close()
+    '                    End If
+    '                End Try
+    '                Tabla1 = Tabla
+    '            End Using
+    '            If Tabla1.Rows.Count >= 1 Then
+    '                Bandera_Rel = 4
+    '                Consulta_rel = "SELECT Estante,Entrepano,Caja_Color,Zona,Cantidad,Aforo,IdRel_Ubicaciones_Productos FROM rel_ubicaciones_productos " &
+    '                "INNER JOIN productos " &
+    '                "ON (rel_ubicaciones_productos.Id_Producto = productos.Id_Producto) " &
+    '                "INNER JOIN ubicaciones " &
+    '                "ON (rel_ubicaciones_productos.Id_Ubicacion = ubicaciones.Id_Ubicacion) " &
+    '                "WHERE rel_ubicaciones_productos.Id_Producto='" & Producto_Movimiento.SelectedValue & "'"
+    '                Id_elem = Producto_Movimiento.SelectedValue
+    '                'Tabla_Rel = "Ubicaciones"
+    '                'Elemento_rel = Nombre_Producto.Text
+    '                Try
+    '                    Using conn As New MySqlConnection(datasource)
+    '                        conn.Open()
+    '                        Dim cmd As New MySqlCommand("UPDATE stock SET Stock_Existente = '" & stock &
+    '                        "' WHERE Id_Stock = '" & id_stock & "'", conn)
+    '                        cmd.ExecuteNonQuery()
+    '                        'MessageBox.Show("Registro MODIFICADO")
+    '                        conn.Close()
+    '                    End Using
+    '                Catch ex As Exception
+    '                    MsgBox("El registro no pudo Modificarse por: " & vbCrLf & ex.Message)
+    '                End Try
+    '                Nueva_Transaccion.Visible = True
+    '                If Tipo_Movimiento.Text = "SALIDA" Then
+    '                    Try
+    '                        Using conn As New MySqlConnection(datasource)
+    '                            conn.Open()
+    '                            Dim cmd As New MySqlCommand("INSERT INTO movimientos (IdOrden_Movimiento, Id_Producto, Cantidad, Id_Usuario, Fecha, Descripcion, Id_Usuario_Final)" &
+    '                                "VALUES ('" & UCase(Id_Ord_Movimiento) & "', '" & Producto_Movimiento.SelectedValue & "', '" & Cantidad_Movimiento.Text &
+    '                                "', '" & id_Usuar_Per & "', '" & Fecha_Movimiento.Text & "', '" & UCase(Descripcion_Movimiento.Text) & "', '" & Usuario_Movimiento.SelectedValue & "')", conn)
+    '                            cmd.ExecuteNonQuery()
+    '                            'MessageBox.Show("Registro MODIFICADO")
+    '                            conn.Close()
+    '                        End Using
+    '                    Catch ex As Exception
+    '                        MsgBox("El registro no pudo Modificarse por: " & vbCrLf & ex.Message)
+    '                    End Try
+    '                Else
+    '                    Try
+    '                        Using conn As New MySqlConnection(datasource)
+    '                            conn.Open()
+    '                            Dim cmd As New MySqlCommand("INSERT INTO movimientos (IdOrden_Movimiento, Id_Producto, Cantidad, Precio_Compra, Id_Usuario, Fecha, Descripcion)" &
+    '                                "VALUES ('" & UCase(Id_Ord_Movimiento) & "', '" & Producto_Movimiento.SelectedValue & "', '" & Cantidad_Movimiento.Text &
+    '                                "', '" & Precio_Movimiento.Text & "', '" & id_Usuar_Per & "', '" & Fecha_Movimiento.Text & "', '" & UCase(Descripcion_Movimiento.Text) & "')", conn)
+    '                            cmd.ExecuteNonQuery()
+    '                            'MessageBox.Show("Registro MODIFICADO")
+    '                            conn.Close()
+    '                        End Using
+    '                    Catch ex As Exception
+    '                        MsgBox("El registro no pudo Modificarse por: " & vbCrLf & ex.Message)
+    '                    End Try
+    '                End If
+
+    '                If Tipo_Movimiento.Text = "SALIDA" Then
+    '                    consulta_movimientos = "SELECT Nombre_Producto,Cantidad,Descripcion,Nombre_Usuario FROM movimientos " & 'Nombre_Producto,Cantidad,Precio_Compra,Descripcion,Nombre_Usuario
+    '                        "INNER JOIN productos " &
+    '                        "ON (movimientos.Id_Producto = productos.Id_Producto) " &
+    '                        "INNER JOIN usuarios " &
+    '                        "ON (movimientos.Id_Usuario_Final = usuarios.Id_Usuario) " &
+    '                        "WHERE IdOrden_Movimiento='" & Id_Ord_Movimiento & "'"
+    '                Else
+    '                    consulta_movimientos = "SELECT Nombre_Producto,Cantidad,Precio_Compra,Descripcion FROM movimientos " & 'Nombre_Producto,Cantidad,Precio_Compra,Descripcion,Nombre_Usuario
+    '                                "INNER JOIN productos " &
+    '                                "ON (movimientos.Id_Producto = productos.Id_Producto) " &
+    '                                "WHERE IdOrden_Movimiento='" & Id_Ord_Movimiento & "'"
+    '                End If
+    '                Using conexion As New MySqlConnection(datasource)
+    '                    Dim Comando As New MySqlCommand(consulta_movimientos, conexion)
+    '                    Dim Adaptador As New MySqlDataAdapter(Comando)
+    '                    Dim Tabla As New DataTable
+    '                    Try
+    '                        Adaptador.Fill(Tabla)
+    '                    Catch ex As Exception
+    '                    Finally
+    '                        If conexion.State = ConnectionState.Open Then
+    '                            conexion.Close()
+    '                        End If
+    '                    End Try
+    '                    DataGridView4.DataSource = Tabla
+    '                End Using
+    '                Descripcion_Movimiento.Text = ""
+    '                Precio_Movimiento.Text = ""
+    '                Cantidad_Movimiento.Text = ""
+    '                Form3.ShowDialog()
+    '            Else
+    '                MsgBox("Atencion NO puede realizar el movimiento, porque el producto no cuenta con ubicaciones")
+    '                GoTo err
+    '            End If
+    '        Else
+    '            MsgBox("El campo de cantidad solo acepta valores numéricos")
+    '        End If
+    '    End Sub
+
+
 End Class

@@ -182,6 +182,11 @@ Inventario_Lab
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="P:Inventario_Lab.My.Resources.Resources.NoMachine">
+<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:Inventario_Lab.My.Resources.Resources.Nuev_Equ">
 <summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.

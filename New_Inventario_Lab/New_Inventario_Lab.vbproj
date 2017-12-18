@@ -260,6 +260,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\if_female_628285.png" />
+    <None Include="Resources\NoMachine.png" />
+    <None Include="Resources\NoMachine.bmp" />
     <None Include="Resources\if_icon-136-document-edit_314834.png" />
     <None Include="Resources\if_icon-136-document-edit_314724.png" />
     <Content Include="Resources\if_log-in_2561252.ico" />

@@ -178,14 +178,17 @@ Public Class Form1
 
 
     Private Sub Gestion_Almacen_Click(sender As Object, e As EventArgs) Handles Gestion_Almacen.Click
+        Modificar_Categorias = 0
+        Agregar_Categoria = 0
+        HabilitarControlesCategorias()
         Esconder_tabpages_submenu()
         TabPage10.Parent = TabControl2
         CargarCBTabCategorias()
     End Sub
 
     Dim Id_Ubicacion As Integer
-    Dim Categ As String
     Dim CategLoad As Boolean = False
+    Dim FirtsLoad As Boolean = True
     Private Sub CargarCBTabCategorias()
         With Nombre_Categoria
             Try
@@ -199,7 +202,6 @@ Public Class Form1
                 .DisplayMember = "Nombre_Categoria"
                 .ValueMember = "Id_Categoria"
                 .SelectedValue = dtRecord.Rows(0).Item(0)
-                Categ = .SelectedValue
                 conn.Close()
             Catch ex As Exception
                 MsgBox("Error al cargar las categorias de la base de datos", MsgBoxStyle.Exclamation, "Error")
@@ -208,6 +210,7 @@ Public Class Form1
         End With
         CategLoad = True
         CargarSubCategorias()
+        CargarCBTabUbicaciones()
         TabPage11.Parent = TabControl2
         Cargar_Tabla("*", "Ubicaciones")
         Id_Ubicacion = Tabla1.Rows(0).ItemArray(0)
@@ -222,38 +225,14 @@ Public Class Form1
         DataGridView3.Columns(0).Visible = False
     End Sub
 
-    Private Sub CargarSubCategorias()
-        Try
-            conn.Open()
-            Dim cmd As New MySqlCommand(String.Format("Select * from categorias_sub where Id_Categoria = @IDCat;"), conn)
-            Categ = Nombre_Categoria.SelectedValue
-            cmd.Parameters.AddWithValue("IDCat", Categ)
-            Dim Adaptador As New MySqlDataAdapter(cmd)
-            Dim Tabla As New DataTable
-            Adaptador.Fill(Tabla)
-            DataGridView2.DataSource = Tabla
-            DataGridView2.ReadOnly = False
-            DataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-            DataGridView2.Rows(0).Selected = True
-            DataGridView2.CurrentCell = DataGridView2.Rows(0).Cells(1)
-            conn.Close()
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "ERROR")
-            conn.Close()
-        End Try
-        DataGridView2.ColumnHeadersVisible = False
-    End Sub
-
-    Private Sub Llenar_Combos_Ubicaciones()
+    Private Sub CargarCBTabUbicaciones()
         With Estantes
             Try
-                Dim conexion As New MySqlConnection(datasource)
-                conexion.Open()
+                conn.Open()
                 Dim consulta As String = "Select * from datos_app"
-                Dim MysqlDadap As New MySqlDataAdapter(consulta, conexion)
+                Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
                 Dim MysqlDset As New DataSet
                 MysqlDadap.Fill(MysqlDset)
-                conexion.Close()
                 .Items.Clear()
                 Dim a As String = MysqlDset.Tables(0).Rows(0).Item(2)
                 Dim i1 As Integer = 0
@@ -261,20 +240,19 @@ Public Class Form1
                     .Items.Add(i1)
                 Next
                 .SelectedValue = Estantes.Items(0)
-                '.Enabled = False
+                conn.Close()
             Catch ex As Exception
-                MessageBox.Show(ex.Message)
+                MsgBox("Error al cargar los estantes de la base de datos", MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
             End Try
         End With
         With Entrepanos
             Try
-                Dim conexion As New MySqlConnection(datasource)
-                conexion.Open()
+                conn.Open()
                 Dim consulta As String = "Select * from datos_app"
-                Dim MysqlDadap As New MySqlDataAdapter(consulta, conexion)
+                Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
                 Dim MysqlDset As New DataSet
                 MysqlDadap.Fill(MysqlDset)
-                conexion.Close()
                 .Items.Clear()
                 Dim a As String = MysqlDset.Tables(0).Rows(1).Item(2)
                 Dim i1 As Integer = 0
@@ -282,20 +260,19 @@ Public Class Form1
                     .Items.Add(i1)
                 Next
                 .SelectedValue = Entrepanos.Items(0)
-                '.Enabled = False
+                conn.Close()
             Catch ex As Exception
-                MessageBox.Show(ex.Message)
+                MsgBox("Error al cargar los entrepaños de la base de datos", MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
             End Try
         End With
         With Cajas_Colores
             Try
-                Dim conexion As New MySqlConnection(datasource)
-                conexion.Open()
+                conn.Open()
                 Dim consulta As String = "Select * from datos_app"
-                Dim MysqlDadap As New MySqlDataAdapter(consulta, conexion)
+                Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
                 Dim MysqlDset As New DataSet
                 MysqlDadap.Fill(MysqlDset)
-                conexion.Close()
                 .Items.Clear()
                 Dim a As String = MysqlDset.Tables(0).Rows(2).Item(2)
                 Dim i1 As Integer = 0
@@ -307,9 +284,10 @@ Public Class Form1
                 .Items.Add(MysqlDset.Tables(0).Rows(5).Item(1))
                 .Items.Add(MysqlDset.Tables(0).Rows(6).Item(1))
                 .SelectedValue = Cajas_Colores.Items(0)
-                '.Enabled = False
+                conn.Close()
             Catch ex As Exception
-                MessageBox.Show(ex.Message)
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
             End Try
         End With
         With Zonas
@@ -325,6 +303,33 @@ Public Class Form1
                 MessageBox.Show(ex.Message)
             End Try
         End With
+    End Sub
+
+    Private Sub CargarSubCategorias()
+        If conn.State = ConnectionState.Open Then
+            conn.Close()
+        End If
+        Try
+            conn.Open()
+            Dim cmd As New MySqlCommand(String.Format("Select * from categorias_sub where Id_Categoria = @IDCat;"), conn)
+            Dim Id_Cat As Integer = Nombre_Categoria.SelectedValue
+            cmd.Parameters.AddWithValue("IDCat", Id_Cat)
+            Dim Adaptador As New MySqlDataAdapter(cmd)
+            Dim Tabla As New DataTable
+            Adaptador.Fill(Tabla)
+            DataGridView2.DataSource = Tabla
+            DataGridView2.ReadOnly = False
+            DataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            DataGridView2.Columns(0).Visible = False
+            DataGridView2.Columns(2).Visible = False
+            DataGridView2.Rows(0).Selected = True
+            DataGridView2.CurrentCell = DataGridView2.Rows(0).Cells(1)
+            conn.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "ERROR")
+            conn.Close()
+        End Try
+        DataGridView2.ColumnHeadersVisible = False
     End Sub
 
     Private Sub CargarDGVMontos()
@@ -471,6 +476,45 @@ Public Class Form1
         End Select
     End Sub
 
+    Dim Modificar_Categorias As Integer = 0
+
+    Private Sub BtnModificarCategoria_Click(sender As Object, e As EventArgs) Handles BtnModificarCategoria.Click
+        Agregar_Categoria = 0
+        If Modificar_Categorias = 1 Then
+            Modificar_Categorias = 0
+        ElseIf Modificar_Categorias = 0 Then
+            Modificar_Categorias = 1
+        End If
+        HabilitarControlesCategorias()
+    End Sub
+
+    Private Sub HabilitarControlesCategorias()
+        TxtBxNuevaCategoria.Clear()
+        If Modificar_Categorias = 1 Then
+            LblCategorias.Visible = True
+            Nombre_Categoria.Visible = True
+            LblNuevaCategoria.Text = "Nuevo nombre de la Categoria"
+            LblNuevaCategoria.Location = New Point(15, 288)
+            LblNuevaCategoria.Visible = True
+            TxtBxNuevaCategoria.Location = New Point(15, 328)
+            TxtBxNuevaCategoria.Visible = True
+        ElseIf Agregar_Categoria = 1 Then
+            LblNuevaCategoria.Text = "Nueva Categoria"
+            LblCategorias.Visible = False
+            Nombre_Categoria.Visible = False
+            LblNuevaCategoria.Location = New Point(15, 207)
+            LblNuevaCategoria.Visible = True
+            TxtBxNuevaCategoria.Location = New Point(15, 240)
+            TxtBxNuevaCategoria.Visible = True
+        ElseIf Agregar_Categoria = 1 Then
+        Else
+            LblCategorias.Visible = True
+            Nombre_Categoria.Visible = True
+            LblNuevaCategoria.Visible = False
+            TxtBxNuevaCategoria.Visible = False
+        End If
+    End Sub
+
     Dim Modificar_Doag As Integer = 0
 
     Private Sub BtnModificarDoag_Click(sender As Object, e As EventArgs) Handles BtnModificarDoag.Click
@@ -539,6 +583,13 @@ Public Class Form1
         HabilitarControlesDoag()
     End Sub
 
+    Dim Agregar_Categoria As Integer = 0
+    Private Sub Nueva_Categoria_Click(sender As Object, e As EventArgs) Handles Nueva_Categoria.Click
+        Modificar_Categorias = 0
+        Agregar_Categoria = 1
+        HabilitarControlesCategorias()
+    End Sub
+
     Private Sub ActivarCamposContrasena()
         If Agregar_Usuario = 1 Then
             Label21.Visible = True
@@ -582,6 +633,13 @@ Public Class Form1
         HabilitarControlesDoag()
     End Sub
 
+    Private Sub TabPage10_Leave(sender As Object, e As EventArgs) Handles TabPage10.Leave
+        Modificar_Categorias = 0
+        Agregar_Categoria = 0
+        HabilitarControlesCategorias()
+    End Sub
+
+
 
     Dim Id_Doag As String
     Private Sub DataGridView1_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridView1.SelectionChanged
@@ -602,6 +660,47 @@ Public Class Form1
         Catch ex As Exception
             'MessageBox.Show(ex.Message)
         End Try
+    End Sub
+
+    Private Sub Guardar_Categoria_Click(sender As Object, e As EventArgs) Handles Guardar_Categoria.Click
+        If Modificar_Categorias = 1 Then
+            Dim Nombre As String = TxtBxNuevaCategoria.Text.Trim
+            Dim Id_cat As Integer = Nombre_Categoria.SelectedValue
+            Try
+                conn.Open()
+                Dim query As String = "UPDATE categorias SET Nombre_Categoria = @Nombre WHERE Id_Categoria = @IdCat;"
+                Dim cmd As New MySqlCommand(query, conn)
+                With cmd.Parameters
+                    .AddWithValue("Nombre", Nombre)
+                    .AddWithValue("IdCat", Id_cat)
+                End With
+                cmd.ExecuteNonQuery()
+                MsgBox("Categoria Modificada", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+                CargarCBTabCategorias()
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "ERROR.")
+                conn.Close()
+            End Try
+
+        ElseIf Agregar_Categoria = 1 Then
+            Dim nombre As String = TxtBxNuevaCategoria.Text.Trim
+            Try
+                conn.Open()
+                Dim query As String = "INSERT INTO categorias(Nombre_Categoria) values (@Nombre);"
+                Dim cmd As New MySqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("Nombre", nombre)
+                cmd.ExecuteNonQuery()
+                MsgBox("Categoria Agregada", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+                CargarCBTabCategorias()
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                conn.Close()
+            End Try
+            Agregar_Categoria = 0
+            HabilitarControlesCategorias()
+        End If
     End Sub
 
 
@@ -802,6 +901,50 @@ Public Class Form1
         CargarDGVMontos()
     End Sub
 
+    Private Sub Eliminar_Categoria_Click(sender As Object, e As EventArgs) Handles Eliminar_Categoria.Click
+        If Agregar_Categoria = 1 Then
+            Exit Sub
+        End If
+        Dim Id_Cat As Integer = Nombre_Categoria.SelectedValue
+        If MessageBox.Show("¿Esta seguro que desea ELIMINAR esta Categoria?", "Alerta", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            Try
+                conn.Open()
+                Dim query As String = "Delete from categorias where Id_Categoria = @IdCat;"
+                Dim cmd As New MySqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("IdCat", Id_Cat)
+                cmd.ExecuteNonQuery()
+                MsgBox("Categoria Eliminada", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
+            End Try
+        End If
+        CargarCBTabCategorias()
+    End Sub
+
+
+    Private Sub Eliminar_SubCategoria_Click(sender As Object, e As EventArgs) Handles Eliminar_SubCategoria.Click
+        Dim fila As Integer
+        If DataGridView2.CurrentRow.Index.ToString <> Nothing Then
+            fila = DataGridView2.CurrentRow.Index
+        Else
+            fila = 0
+        End If
+        Try
+            conn.Open()
+            Dim query As String = "DELETE from categorias_sub WHERE Id_SubCategoria = @IdSubCat;"
+            Dim cmd As New MySqlCommand(query, conn)
+            cmd.Parameters.AddWithValue("IdSubCat", DataGridView2.Item(0, fila).FormattedValue)
+            cmd.ExecuteNonQuery()
+            MsgBox("Subcategoria Eliminada", MsgBoxStyle.Information, "Info.")
+            conn.Close()
+        Catch ex As Exception
+            MsgBox("Error durante la eliminacion: " & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "ERROR.")
+            conn.Close()
+        End Try
+        CargarCBTabCategorias()
+    End Sub
 
     Dim cant_reg_encon As Integer = 0
     Dim z As String 'memorioa del usuario a buscar
@@ -897,5 +1040,410 @@ Public Class Form1
         CargarSubCategorias()
     End Sub
 
+    Private Sub Guardar_SubCategoria_Click(sender As Object, e As EventArgs) Handles Guardar_SubCategoria.Click
+        Dim fila As Integer = (DataGridView2.Rows.Count - 2)
+        For i = 0 To fila
+            Dim NombreSubCat As String = DataGridView2.Item(1, i).FormattedValue
+            Dim IdCat As Integer = Nombre_Categoria.SelectedValue
+            If DataGridView2.Item(0, i).FormattedValue = "" Then
+                Try
+                    conn.Open()
+                    Dim cmd As New MySqlCommand("INSERT INTO categorias_sub (Nombre_SubCategoria, Id_Categoria) " &
+                            "VALUES (@NombreSubCat, @IdCat)", conn)
+                    With cmd.Parameters
+                        .AddWithValue("NombreSubCat", NombreSubCat)
+                        .AddWithValue("IdCat", IdCat)
+                    End With
+                    cmd.ExecuteNonQuery()
+                    'MessageBox.Show("Registro AGREGADO")
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("El registro no pudo Agregarse por: " & vbCrLf & ex.Message)
+                End Try
+            Else
+                Dim Id_SubCat As Integer = DataGridView2.Item(0, i).FormattedValue
+                Dim var As String = DataGridView2.Item(1, i).FormattedValue
+                Try
+                    conn.Open()
+                    Dim cmd As New MySqlCommand("UPDATE categorias_sub SET Nombre_SubCategoria = @NombreSubCat WHERE Id_SubCategoria = @Id_SubCat", conn)
+                    With cmd.Parameters
+                        .AddWithValue("NombreSubCat", NombreSubCat)
+                        .AddWithValue("Id_SubCat", Id_SubCat)
+                    End With
+                    cmd.ExecuteNonQuery()
+                    'MessageBox.Show("Registro MODIFICADO")
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("El registro no pudo Modificarse por: " & vbCrLf & ex.Message)
+                End Try
+            End If
 
+        Next
+        MessageBox.Show("SubCategorias Actualizadas")
+        CargarCBTabCategorias()
+    End Sub
+
+    Private Sub Agregar_Estante_Click(sender As Object, e As EventArgs) Handles Agregar_Estante.Click
+        Dim NumeroEstantes As Integer = 0
+        Dim IDDatosApp As String = ""
+        Try
+            conn.Open()
+            Dim consulta As String = "Select * from datos_app"
+            Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
+            Dim MysqlDset As New DataSet
+            MysqlDadap.Fill(MysqlDset)
+            NumeroEstantes = Convert.ToInt32(MysqlDset.Tables(0).Rows(0).Item(2))
+            IDDatosApp = MysqlDset.Tables(0).Rows(0).Item(0)
+            Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (NumeroEstantes + 1) & "' " &
+                        "WHERE IdDatos_App = '" & IDDatosApp & "'", conn)
+            cmd.ExecuteNonQuery()
+            conn.Close()
+        Catch ex As Exception
+            MsgBox("El registro no pudo Modificarse por: " & vbCrLf & ex.Message)
+            conn.Close()
+        End Try
+        CargarCBTabUbicaciones()
+    End Sub
+
+    Private Sub Eliminar_Estante_Click(sender As Object, e As EventArgs) Handles Eliminar_Estante.Click
+        Dim NumeroEstantes As Integer = 0
+        Dim IDDatosApp As String = ""
+        Try
+            conn.Open()
+            Dim consulta As String = "Select * from datos_app"
+            Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
+            Dim MysqlDset As New DataSet
+            MysqlDadap.Fill(MysqlDset)
+            conn.Close()
+            NumeroEstantes = Convert.ToInt32(MysqlDset.Tables(0).Rows(0).Item(2))
+            IDDatosApp = MysqlDset.Tables(0).Rows(0).Item(0)
+            '.Enabled = False
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            conn.Close()
+        End Try
+        Dim Num_men As Integer = 0
+        For Each row As DataGridViewRow In Me.DataGridView3.Rows
+            'obtenemos el valor de la columna en la variable declarada
+            If Convert.ToInt32(row.Cells(1).Value) > Num_men Then
+                Num_men = row.Cells(1).Value 'donde (0) es la columna a recorrer
+            End If
+        Next
+        If Num_men < NumeroEstantes Then
+            Try
+
+                conn.Open()
+                    Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (NumeroEstantes - 1) & "' " &
+                                "WHERE IdDatos_App = '" & IDDatosApp & "'", conn)
+                    cmd.ExecuteNonQuery()
+                'MessageBox.Show("Registro MODIFICADO")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox("El registro no pudo Modificarse por: " & vbCrLf & ex.Message)
+                conn.Close()
+            End Try
+        Else
+            MsgBox("Su numero minimo de estantes: " & NumeroEstantes)
+        End If
+        CargarCBTabUbicaciones()
+    End Sub
+
+    Private Sub Agregar_Entrepano_Click(sender As Object, e As EventArgs) Handles Agregar_Entrepano.Click
+        Dim a As Integer = 0
+        Dim b As String = ""
+        Try
+            conn.Open()
+            Dim consulta As String = "Select * from datos_app"
+            Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
+            Dim MysqlDset As New DataSet
+            MysqlDadap.Fill(MysqlDset)
+            a = Convert.ToInt16(MysqlDset.Tables(0).Rows(1).Item(2))
+            b = MysqlDset.Tables(0).Rows(1).Item(0)
+            Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (a + 1) & "' " &
+                            "WHERE IdDatos_App = '" & b & "'", conn)
+            cmd.ExecuteNonQuery()
+            'MessageBox.Show("Registro MODIFICADO")
+            conn.Close()
+        Catch ex As Exception
+            MsgBox("El registro no pudo Modificarse por: " & vbCrLf & ex.Message)
+            conn.Close()
+        End Try
+        CargarCBTabUbicaciones()
+    End Sub
+
+    Private Sub Eliminar_Entrepano_Click(sender As Object, e As EventArgs) Handles Eliminar_Entrepano.Click
+        Dim a As Integer = 0
+        Dim b As String = ""
+        Try
+            conn.Open()
+            Dim consulta As String = "Select * from datos_app"
+            Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
+            Dim MysqlDset As New DataSet
+            MysqlDadap.Fill(MysqlDset)
+            conn.Close()
+            a = Convert.ToInt16(MysqlDset.Tables(0).Rows(1).Item(2))
+            b = MysqlDset.Tables(0).Rows(1).Item(0)
+            '.Enabled = False
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            conn.Close()
+        End Try
+        Dim Num_men As Integer = 0
+        For Each row As DataGridViewRow In Me.DataGridView3.Rows
+            'obtenemos el valor de la columna en la variable declarada
+            If Convert.ToInt16(row.Cells(2).Value) > Num_men Then
+                Num_men = row.Cells(2).Value 'donde (0) es la columna a recorrer
+            End If
+        Next
+        If Num_men < a Then
+            Try
+                conn.Open()
+                Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (a - 1) & "' " &
+                            "WHERE IdDatos_App = '" & b & "'", conn)
+                cmd.ExecuteNonQuery()
+                'MessageBox.Show("Registro MODIFICADO")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox("El registro no pudo Modificarse por: " & vbCrLf & ex.Message)
+                conn.Close()
+            End Try
+        Else
+            MsgBox("Su numero minimo de entrepaños es: " & a)
+        End If
+        CargarCBTabUbicaciones()
+    End Sub
+
+    Private Sub Agregar_Caja_Click(sender As Object, e As EventArgs) Handles Agregar_Caja.Click
+        Dim a As Integer = 0
+        Dim b As String = ""
+        Try
+            conn.Open()
+            Dim consulta As String = "Select * from datos_app"
+            Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
+            Dim MysqlDset As New DataSet
+            MysqlDadap.Fill(MysqlDset)
+            a = Convert.ToInt16(MysqlDset.Tables(0).Rows(2).Item(2))
+            b = MysqlDset.Tables(0).Rows(2).Item(0)
+            Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (a + 1) & "' " &
+                            "WHERE IdDatos_App = '" & b & "'", conn)
+                cmd.ExecuteNonQuery()
+            'MessageBox.Show("Registro MODIFICADO")
+            conn.Close()
+        Catch ex As Exception
+            MsgBox("El registro no pudo Modificarse por: " & vbCrLf & ex.Message)
+            conn.Close()
+        End Try
+        CargarCBTabUbicaciones()
+    End Sub
+
+    Private Sub Eliminar_Caja_Click(sender As Object, e As EventArgs) Handles Eliminar_Caja.Click
+        Dim a As Integer = 0
+        Dim b As String = ""
+        Try
+            conn.Open()
+            Dim consulta As String = "Select * from datos_app"
+            Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
+            Dim MysqlDset As New DataSet
+            MysqlDadap.Fill(MysqlDset)
+            conn.Close()
+            a = Convert.ToInt16(MysqlDset.Tables(0).Rows(2).Item(2))
+            b = MysqlDset.Tables(0).Rows(2).Item(0)
+            '.Enabled = False
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            conn.Close()
+        End Try
+        Dim Num_men As Integer = 0
+        For Each row As DataGridViewRow In Me.DataGridView3.Rows
+            'obtenemos el valor de la columna en la variable declarada
+            If row.Cells(3).Value = "Azul" Or row.Cells(3).Value = "Rojo" Or row.Cells(3).Value = "Amarillo" Or row.Cells(3).Value = "Blanco" Then
+            Else
+                If Convert.ToInt16(row.Cells(3).Value) > Num_men Then
+                    Num_men = row.Cells(3).Value 'donde (0) es la columna a recorrer
+                End If
+            End If
+
+        Next
+        If Num_men < a Then
+            Try
+                conn.Open()
+                Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (a - 1) & "' " &
+                            "WHERE IdDatos_App = '" & b & "'", conn)
+                cmd.ExecuteNonQuery()
+                'MessageBox.Show("Registro MODIFICADO")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox("El registro no pudo Modificarse por: " & vbCrLf & ex.Message)
+                conn.Close()
+            End Try
+        Else
+            MsgBox("Su numero minimo de cajas es: " & a)
+        End If
+        CargarCBTabUbicaciones()
+    End Sub
+
+    Dim IDUbicacion As Integer
+    Private Sub DataGridView3_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridView3.SelectionChanged
+        Try
+            Dim fila_actual As Integer = (DataGridView3.CurrentRow.Index)
+            If fila_actual = (DataGridView1.Rows.Count - 1) Then
+                IDUbicacion = "nuevo"
+                Nombre_Doag.Text = ""
+                Monto_Doag.Text = ""
+                Comentario_Doag.Text = ""
+            Else
+                Cargar_Tabla("*", "Ubicaciones")
+                IDUbicacion = Tabla1.Rows(fila_actual).ItemArray(0)
+                Estantes.Text = Tabla1.Rows(fila_actual).ItemArray(1).ToString
+                Entrepanos.Text = Tabla1.Rows(fila_actual).ItemArray(2).ToString
+                Cajas_Colores.Text = Tabla1.Rows(fila_actual).ItemArray(3).ToString
+                Zonas.Text = Tabla1.Rows(fila_actual).ItemArray(4).ToString
+            End If
+        Catch ex As Exception
+            'MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub Guardar_Ubicacion_Click(sender As Object, e As EventArgs) Handles Guardar_Ubicacion.Click
+        Cargar_Tabla("*", "ubicaciones")
+        If Estantes.SelectedIndex = (-1) Or Entrepanos.SelectedIndex = (-1) Or Cajas_Colores.SelectedIndex = (-1) Or Zonas.SelectedIndex = (-1) Then
+            MsgBox("Ningun campo puede ser vacio")
+            Exit Sub
+        End If
+        Dim a As Integer
+        Dim consulta As New MySqlCommand(“select * from ubicaciones where Id_Ubicacion=@IdUbicacion;", conn)
+        consulta.Parameters.AddWithValue("IdUbicacion", IDUbicacion)
+        conn.Open()
+        Dim leerbd As MySqlDataReader = consulta.ExecuteReader()
+        If leerbd.Read <> False Then
+            leerbd.Close()
+            Try
+                Dim query As String = "UPDATE ubicaciones SET Estante = @Estante, Entrepano = @Entrepano, Caja_Color = @Caja, Zona = @Zona
+                                       where Id_ubicacion = @IdUbicacion;"
+                Dim cmd As New MySqlCommand(query, conn)
+                With cmd.Parameters
+                    .AddWithValue("Estante", Estantes.Text.Trim)
+                    .AddWithValue("Entrepano", Entrepanos.Text.Trim)
+                    .AddWithValue("Caja", Cajas_Colores.Text.Trim)
+                    .AddWithValue("Zona", Zonas.Text.Trim)
+                    .AddWithValue("IdUbicacion", IDUbicacion)
+                End With
+                cmd.ExecuteNonQuery()
+                a = IDUbicacion
+                conn.Close()
+                MsgBox("Registro Modificado", MsgBoxStyle.Information, "Info.")
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                conn.Close()
+            End Try
+        Else
+            leerbd.Close()
+            Try
+                Dim query As String = "INSERT INTO ubicaciones (Estante, Entrepano, Caja_Color, Zona)
+                                       VALUES(@Estante, @Entrepano, @Caja, @Zona);"
+                Dim cmd As New MySqlCommand(query, conn)
+                With cmd.Parameters
+                    .AddWithValue("Estante", Estantes.Text.Trim)
+                    .AddWithValue("Entrepano", Entrepanos.Text.Trim)
+                    .AddWithValue("Caja", Cajas_Colores.Text.Trim)
+                    .AddWithValue("Zona", Zonas.Text.Trim)
+                    .AddWithValue("IdDatos", IDUbicacion)
+                End With
+                cmd.ExecuteNonQuery()
+                a = IDUbicacion
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                conn.Close()
+            End Try
+            Cargar_Tabla("*", "ubicaciones")
+            a = Tabla1.Rows((Tabla1.Rows.Count - 1)).ItemArray(0)
+        End If
+
+        DataGridView3.DataSource = Nothing
+        DataGridView3.DataSource = Tabla1
+        DataGridView3.ReadOnly = True
+        DataGridView3.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        DataGridView3.Columns(0).Visible = False
+        For Each row As DataGridViewRow In Me.DataGridView3.Rows
+            'obtenemos el valor de la columna en la variable declarada
+            If Convert.ToInt16(row.Cells(0).Value) = a Then
+                DataGridView3.CurrentCell = DataGridView3(1, row.Index)
+            End If
+        Next
+    End Sub
+
+    Private Sub Nueva_Ubicacion_Click(sender As Object, e As EventArgs) Handles Nueva_Ubicacion.Click
+        IDUbicacion = -1
+        CargarCBTabUbicaciones()
+        Estantes.SelectedIndex = -1
+        Entrepanos.SelectedItem = -1
+        Cajas_Colores.SelectedItem = -1
+        Zonas.SelectedItem = -1
+    End Sub
+
+    Private Sub Eliminar_Ubicacion_Click(sender As Object, e As EventArgs) Handles Eliminar_Ubicacion.Click
+        If MessageBox.Show("¿Esta seguro que desea ELIMINAR este registro?" & vbCrLf & "Esta accion no se puede deshacer", "Alerta", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            Try
+                conn.Open()
+                Dim query As String = "DELETE FROM ubicaciones WHERE `Id_Ubicacion`=@IdUbicacion;"
+                Dim cmd As New MySqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("IdUbicacion", IDUbicacion)
+                cmd.ExecuteNonQuery()
+                conn.Close()
+                MsgBox("Registro Eliminado", MsgBoxStyle.Information, "Info.")
+            Catch ex As Exception
+                MsgBox("Error al eliminar el registro:" & vbCrLf & ex.Message, MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            End Try
+            Dim a = Tabla1.Rows((Tabla1.Rows.Count - 1)).ItemArray(0)
+            Cargar_Tabla("*", "ubicaciones")
+            DataGridView3.DataSource = Nothing
+            DataGridView3.DataSource = Tabla1
+            DataGridView3.ReadOnly = True
+            DataGridView3.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            DataGridView3.Columns(0).Visible = False
+            For Each row As DataGridViewRow In Me.DataGridView3.Rows
+                'obtenemos el valor de la columna en la variable declarada
+                If Convert.ToInt16(row.Cells(0).Value) = a Then
+                    DataGridView3.CurrentCell = DataGridView3(1, row.Index)
+                End If
+            Next
+        Else
+            Exit Sub
+        End If
+    End Sub
+
+    Private Sub Movimiento_Ingreso_Click(sender As Object, e As EventArgs) Handles Movimiento_Ingreso.Click
+        Try
+            conn.Open()
+            Dim cmd As New MySqlCommand(String.Format("SELECT NOW();"), conn)
+            Dim fecha_servidor As DateTime = cmd.ExecuteScalar()
+            Fecha_Movimiento.Text = fecha_servidor.ToString("yyyy-MM-dd")
+            conn.Close()
+        Catch
+            MsgBox("No se puede recuperar la fecha de la base de datos", MsgBoxStyle.Exclamation, "Error")
+            conn.Close()
+        End Try
+        Label86.Text = "Proveedor *"
+        Tipo_Movimiento.Text = "INGRESO"
+        Label84.Visible = True
+        Monto_Movimiento.Visible = True
+        N_Referencia_Movimiento.Visible = True
+        N_Referencia_Movimiento.Enabled = True
+        Proveedor_Movimiento.Visible = True
+        N_Orden_Movimiento.Enabled = True
+        N_Orden_Movimiento.Text = ""
+        N_Referencia_Movimiento.Text = ""
+        Cargar_Tabla("*", "Proveedores")
+        With Proveedor_Movimiento
+            '.Items.Clear()
+            .Text = ""
+            .DataSource = Tabla1
+            .DisplayMember = "Nombre_Proveedor" 'elnombre de tu columna de tu base de datos q deseas mostrar
+            .ValueMember = "Nit_Proveedor"
+        End With
+        Datos_Movimientos.Visible = True
+        Confirmar_Transaccion.Visible = True
+    End Sub
 End Class

@@ -6,8 +6,6 @@ Imports System.Security.Cryptography
 
 Module Module1
 
-
-    Public datasource = "Server=localhost; Database=bd_inventario; Userid=root; Password=dm900494665; Allow Zero Datetime=True; CHARSET=latin1"
     Public Usuario_Perfil = ""
     Public Bandera_Rel As Integer = 0
     Public Consulta_rel = ""

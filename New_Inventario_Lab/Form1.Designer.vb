@@ -125,6 +125,9 @@ Partial Class Form1
         Me.Nivel_Permisos = New System.Windows.Forms.TextBox()
         Me.Nombre_Perfil = New System.Windows.Forms.TextBox()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
+        Me.TxtBxNuevaCategoria = New System.Windows.Forms.TextBox()
+        Me.LblNuevaCategoria = New System.Windows.Forms.Label()
+        Me.BtnModificarCategoria = New System.Windows.Forms.Button()
         Me.Label88 = New System.Windows.Forms.Label()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.Eliminar_SubCategoria = New System.Windows.Forms.Button()
@@ -135,7 +138,7 @@ Partial Class Form1
         Me.Guardar_Categoria = New System.Windows.Forms.Button()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
         Me.Label37 = New System.Windows.Forms.Label()
-        Me.Label36 = New System.Windows.Forms.Label()
+        Me.LblCategorias = New System.Windows.Forms.Label()
         Me.Nombre_Categoria = New System.Windows.Forms.ComboBox()
         Me.TabPage11 = New System.Windows.Forms.TabPage()
         Me.Label89 = New System.Windows.Forms.Label()
@@ -357,7 +360,7 @@ Partial Class Form1
         Me.TabControl1.Controls.Add(Me.TabPage5)
         Me.TabControl1.Controls.Add(Me.TabPage6)
         Me.TabControl1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TabControl1.Location = New System.Drawing.Point(5, 192)
+        Me.TabControl1.Location = New System.Drawing.Point(5, 196)
         Me.TabControl1.Margin = New System.Windows.Forms.Padding(0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
@@ -887,7 +890,7 @@ Partial Class Form1
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("MS Reference Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Red
-        Me.Label1.Location = New System.Drawing.Point(1059, 890)
+        Me.Label1.Location = New System.Drawing.Point(1059, 862)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(63, 19)
@@ -907,7 +910,7 @@ Partial Class Form1
         Me.TabControl2.Controls.Add(Me.TabPage15)
         Me.TabControl2.Controls.Add(Me.TabPage16)
         Me.TabControl2.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.8!)
-        Me.TabControl2.Location = New System.Drawing.Point(226, 192)
+        Me.TabControl2.Location = New System.Drawing.Point(226, 232)
         Me.TabControl2.Margin = New System.Windows.Forms.Padding(4)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
@@ -1442,12 +1445,15 @@ Partial Class Form1
         'TabPage10
         '
         Me.TabPage10.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.TabPage10.Controls.Add(Me.TxtBxNuevaCategoria)
+        Me.TabPage10.Controls.Add(Me.LblNuevaCategoria)
+        Me.TabPage10.Controls.Add(Me.BtnModificarCategoria)
         Me.TabPage10.Controls.Add(Me.Label88)
         Me.TabPage10.Controls.Add(Me.GroupBox3)
         Me.TabPage10.Controls.Add(Me.GroupBox2)
         Me.TabPage10.Controls.Add(Me.DataGridView2)
         Me.TabPage10.Controls.Add(Me.Label37)
-        Me.TabPage10.Controls.Add(Me.Label36)
+        Me.TabPage10.Controls.Add(Me.LblCategorias)
         Me.TabPage10.Controls.Add(Me.Nombre_Categoria)
         Me.TabPage10.Location = New System.Drawing.Point(4, 25)
         Me.TabPage10.Margin = New System.Windows.Forms.Padding(4)
@@ -1455,6 +1461,38 @@ Partial Class Form1
         Me.TabPage10.Size = New System.Drawing.Size(1108, 652)
         Me.TabPage10.TabIndex = 3
         Me.TabPage10.Text = "Categorias"
+        '
+        'TxtBxNuevaCategoria
+        '
+        Me.TxtBxNuevaCategoria.Location = New System.Drawing.Point(15, 328)
+        Me.TxtBxNuevaCategoria.Name = "TxtBxNuevaCategoria"
+        Me.TxtBxNuevaCategoria.Size = New System.Drawing.Size(300, 24)
+        Me.TxtBxNuevaCategoria.TabIndex = 39
+        Me.TxtBxNuevaCategoria.Visible = False
+        '
+        'LblNuevaCategoria
+        '
+        Me.LblNuevaCategoria.AutoSize = True
+        Me.LblNuevaCategoria.Location = New System.Drawing.Point(15, 288)
+        Me.LblNuevaCategoria.Name = "LblNuevaCategoria"
+        Me.LblNuevaCategoria.Size = New System.Drawing.Size(130, 17)
+        Me.LblNuevaCategoria.TabIndex = 38
+        Me.LblNuevaCategoria.Text = "Nueva Categoria"
+        Me.LblNuevaCategoria.Visible = False
+        '
+        'BtnModificarCategoria
+        '
+        Me.BtnModificarCategoria.FlatAppearance.BorderColor = System.Drawing.Color.LightSteelBlue
+        Me.BtnModificarCategoria.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red
+        Me.BtnModificarCategoria.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.BtnModificarCategoria.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnModificarCategoria.Image = Global.Inventario_Lab.My.Resources.Resources.if_icon_136_document_edit_314724
+        Me.BtnModificarCategoria.Location = New System.Drawing.Point(744, 8)
+        Me.BtnModificarCategoria.Name = "BtnModificarCategoria"
+        Me.BtnModificarCategoria.Size = New System.Drawing.Size(48, 38)
+        Me.BtnModificarCategoria.TabIndex = 37
+        Me.TPAdministrar.SetToolTip(Me.BtnModificarCategoria, "Modificar Usuario")
+        Me.BtnModificarCategoria.UseVisualStyleBackColor = True
         '
         'Label88
         '
@@ -1604,23 +1642,23 @@ Partial Class Form1
         Me.Label37.TabIndex = 3
         Me.Label37.Text = "SubCategorias"
         '
-        'Label36
+        'LblCategorias
         '
-        Me.Label36.AutoSize = True
-        Me.Label36.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.8!)
-        Me.Label36.Location = New System.Drawing.Point(15, 207)
-        Me.Label36.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label36.Name = "Label36"
-        Me.Label36.Size = New System.Drawing.Size(80, 17)
-        Me.Label36.TabIndex = 1
-        Me.Label36.Text = "Categoria"
+        Me.LblCategorias.AutoSize = True
+        Me.LblCategorias.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.8!)
+        Me.LblCategorias.Location = New System.Drawing.Point(15, 207)
+        Me.LblCategorias.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LblCategorias.Name = "LblCategorias"
+        Me.LblCategorias.Size = New System.Drawing.Size(88, 17)
+        Me.LblCategorias.TabIndex = 1
+        Me.LblCategorias.Text = "Categorias"
         '
         'Nombre_Categoria
         '
         Me.Nombre_Categoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Nombre_Categoria.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.8!)
         Me.Nombre_Categoria.FormattingEnabled = True
-        Me.Nombre_Categoria.Location = New System.Drawing.Point(19, 256)
+        Me.Nombre_Categoria.Location = New System.Drawing.Point(15, 240)
         Me.Nombre_Categoria.Margin = New System.Windows.Forms.Padding(4)
         Me.Nombre_Categoria.Name = "Nombre_Categoria"
         Me.Nombre_Categoria.Size = New System.Drawing.Size(300, 24)
@@ -1832,6 +1870,7 @@ Partial Class Form1
         Me.Eliminar_Caja.Name = "Eliminar_Caja"
         Me.Eliminar_Caja.Size = New System.Drawing.Size(32, 30)
         Me.Eliminar_Caja.TabIndex = 23
+        Me.TPAdministrar.SetToolTip(Me.Eliminar_Caja, "Eliminar Caja")
         Me.Eliminar_Caja.UseVisualStyleBackColor = True
         '
         'Eliminar_Entrepano
@@ -1846,6 +1885,7 @@ Partial Class Form1
         Me.Eliminar_Entrepano.Name = "Eliminar_Entrepano"
         Me.Eliminar_Entrepano.Size = New System.Drawing.Size(32, 30)
         Me.Eliminar_Entrepano.TabIndex = 22
+        Me.TPAdministrar.SetToolTip(Me.Eliminar_Entrepano, "Eliminar Entrepaño")
         Me.Eliminar_Entrepano.UseVisualStyleBackColor = True
         '
         'Eliminar_Estante
@@ -1860,6 +1900,7 @@ Partial Class Form1
         Me.Eliminar_Estante.Name = "Eliminar_Estante"
         Me.Eliminar_Estante.Size = New System.Drawing.Size(32, 30)
         Me.Eliminar_Estante.TabIndex = 21
+        Me.TPAdministrar.SetToolTip(Me.Eliminar_Estante, "Eliminar Estante")
         Me.Eliminar_Estante.UseVisualStyleBackColor = True
         '
         'Agregar_Caja
@@ -1874,6 +1915,7 @@ Partial Class Form1
         Me.Agregar_Caja.Name = "Agregar_Caja"
         Me.Agregar_Caja.Size = New System.Drawing.Size(32, 30)
         Me.Agregar_Caja.TabIndex = 20
+        Me.TPAdministrar.SetToolTip(Me.Agregar_Caja, "Agregar Caja")
         Me.Agregar_Caja.UseVisualStyleBackColor = True
         '
         'Agregar_Entrepano
@@ -1888,6 +1930,7 @@ Partial Class Form1
         Me.Agregar_Entrepano.Name = "Agregar_Entrepano"
         Me.Agregar_Entrepano.Size = New System.Drawing.Size(32, 30)
         Me.Agregar_Entrepano.TabIndex = 19
+        Me.TPAdministrar.SetToolTip(Me.Agregar_Entrepano, "Agregar Entrepaño")
         Me.Agregar_Entrepano.UseVisualStyleBackColor = True
         '
         'Agregar_Estante
@@ -1902,6 +1945,7 @@ Partial Class Form1
         Me.Agregar_Estante.Name = "Agregar_Estante"
         Me.Agregar_Estante.Size = New System.Drawing.Size(32, 30)
         Me.Agregar_Estante.TabIndex = 18
+        Me.TPAdministrar.SetToolTip(Me.Agregar_Estante, "Agregar Estante")
         Me.Agregar_Estante.UseVisualStyleBackColor = True
         '
         'TabPage12
@@ -2077,6 +2121,7 @@ Partial Class Form1
         '
         'Proveedor_Movimiento
         '
+        Me.Proveedor_Movimiento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Proveedor_Movimiento.FormattingEnabled = True
         Me.Proveedor_Movimiento.Location = New System.Drawing.Point(716, 52)
         Me.Proveedor_Movimiento.Margin = New System.Windows.Forms.Padding(4)
@@ -2096,7 +2141,7 @@ Partial Class Form1
         'Label85
         '
         Me.Label85.AutoSize = True
-        Me.Label85.Location = New System.Drawing.Point(497, 92)
+        Me.Label85.Location = New System.Drawing.Point(464, 96)
         Me.Label85.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label85.Name = "Label85"
         Me.Label85.Size = New System.Drawing.Size(118, 17)
@@ -3297,7 +3342,7 @@ Partial Class Form1
         '
         Me.PictureBox6.Cursor = System.Windows.Forms.Cursors.Hand
         Me.PictureBox6.Image = Global.Inventario_Lab.My.Resources.Resources.Reportes
-        Me.PictureBox6.Location = New System.Drawing.Point(1048, 15)
+        Me.PictureBox6.Location = New System.Drawing.Point(1048, 8)
         Me.PictureBox6.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox6.Name = "PictureBox6"
         Me.PictureBox6.Size = New System.Drawing.Size(164, 141)
@@ -3310,7 +3355,7 @@ Partial Class Form1
         '
         Me.PictureBox5.Cursor = System.Windows.Forms.Cursors.Hand
         Me.PictureBox5.Image = Global.Inventario_Lab.My.Resources.Resources.Proveedores1
-        Me.PictureBox5.Location = New System.Drawing.Point(856, 15)
+        Me.PictureBox5.Location = New System.Drawing.Point(856, 8)
         Me.PictureBox5.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox5.Name = "PictureBox5"
         Me.PictureBox5.Size = New System.Drawing.Size(164, 141)
@@ -3323,7 +3368,7 @@ Partial Class Form1
         '
         Me.PictureBox4.Cursor = System.Windows.Forms.Cursors.Hand
         Me.PictureBox4.Image = Global.Inventario_Lab.My.Resources.Resources.Productos
-        Me.PictureBox4.Location = New System.Drawing.Point(664, 15)
+        Me.PictureBox4.Location = New System.Drawing.Point(664, 8)
         Me.PictureBox4.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(164, 141)
@@ -3336,7 +3381,7 @@ Partial Class Form1
         '
         Me.PictureBox3.Cursor = System.Windows.Forms.Cursors.Hand
         Me.PictureBox3.Image = Global.Inventario_Lab.My.Resources.Resources.Equipo1
-        Me.PictureBox3.Location = New System.Drawing.Point(472, 15)
+        Me.PictureBox3.Location = New System.Drawing.Point(472, 8)
         Me.PictureBox3.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(164, 141)
@@ -3349,7 +3394,7 @@ Partial Class Form1
         '
         Me.PictureBox2.Cursor = System.Windows.Forms.Cursors.Hand
         Me.PictureBox2.Image = Global.Inventario_Lab.My.Resources.Resources.Movimiento1
-        Me.PictureBox2.Location = New System.Drawing.Point(280, 15)
+        Me.PictureBox2.Location = New System.Drawing.Point(280, 8)
         Me.PictureBox2.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(164, 141)
@@ -3362,7 +3407,7 @@ Partial Class Form1
         '
         Me.PictureBox1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.PictureBox1.Image = Global.Inventario_Lab.My.Resources.Resources.Admin_User
-        Me.PictureBox1.Location = New System.Drawing.Point(110, 15)
+        Me.PictureBox1.Location = New System.Drawing.Point(110, 8)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(164, 141)
@@ -3557,7 +3602,7 @@ Partial Class Form1
     Friend WithEvents Eliminar_Doag As Button
     Friend WithEvents Nuevo_Doag As Button
     Friend WithEvents Guardar_Doag As Button
-    Friend WithEvents Label36 As Label
+    Friend WithEvents LblCategorias As Label
     Friend WithEvents Nombre_Categoria As ComboBox
     Friend WithEvents Label37 As Label
     Friend WithEvents DataGridView2 As DataGridView
@@ -3732,4 +3777,7 @@ Partial Class Form1
     Friend WithEvents Contrasena_Usuario As TextBox
     Friend WithEvents BtnModificarDoag As Button
     Friend WithEvents Monto_Doag As TextBox
+    Friend WithEvents TxtBxNuevaCategoria As TextBox
+    Friend WithEvents LblNuevaCategoria As Label
+    Friend WithEvents BtnModificarCategoria As Button
 End Class

@@ -62,10 +62,6 @@ Partial Class Form1
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Buscar_Prov = New System.Windows.Forms.TextBox()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.Proveedores_Crear = New System.Windows.Forms.PictureBox()
-        Me.Proveedores_Modificar = New System.Windows.Forms.PictureBox()
         Me.Proveedores_Consultar = New System.Windows.Forms.PictureBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.MonthCalendar1 = New System.Windows.Forms.MonthCalendar()
@@ -247,6 +243,11 @@ Partial Class Form1
         Me.Ubicacion_Producto = New System.Windows.Forms.Button()
         Me.Foto_Producto = New System.Windows.Forms.PictureBox()
         Me.TabPage15 = New System.Windows.Forms.TabPage()
+        Me.BtnModificarProveedor = New System.Windows.Forms.Button()
+        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
+        Me.BtnEliminarProveedor = New System.Windows.Forms.Button()
+        Me.BtnAgregarProveedor = New System.Windows.Forms.Button()
+        Me.BtnGuardarProveedor = New System.Windows.Forms.Button()
         Me.Label92 = New System.Windows.Forms.Label()
         Me.Label61 = New System.Windows.Forms.Label()
         Me.Label59 = New System.Windows.Forms.Label()
@@ -313,8 +314,6 @@ Partial Class Form1
         Me.TabPage4.SuspendLayout()
         CType(Me.Productos_Consultar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage5.SuspendLayout()
-        CType(Me.Proveedores_Crear, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Proveedores_Modificar, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Proveedores_Consultar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
         Me.TabPage7.SuspendLayout()
@@ -341,6 +340,7 @@ Partial Class Form1
         Me.GroupBox6.SuspendLayout()
         CType(Me.Foto_Producto, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage15.SuspendLayout()
+        Me.GroupBox7.SuspendLayout()
         Me.TabPage16.SuspendLayout()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -672,10 +672,6 @@ Partial Class Form1
         Me.TabPage5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TabPage5.Controls.Add(Me.Label16)
         Me.TabPage5.Controls.Add(Me.Buscar_Prov)
-        Me.TabPage5.Controls.Add(Me.Label17)
-        Me.TabPage5.Controls.Add(Me.Label18)
-        Me.TabPage5.Controls.Add(Me.Proveedores_Crear)
-        Me.TabPage5.Controls.Add(Me.Proveedores_Modificar)
         Me.TabPage5.Controls.Add(Me.Proveedores_Consultar)
         Me.TabPage5.Location = New System.Drawing.Point(4, 4)
         Me.TabPage5.Margin = New System.Windows.Forms.Padding(4)
@@ -688,7 +684,7 @@ Partial Class Form1
         '
         Me.Label16.AutoSize = True
         Me.Label16.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label16.Location = New System.Drawing.Point(33, 472)
+        Me.Label16.Location = New System.Drawing.Point(24, 31)
         Me.Label16.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(152, 17)
@@ -697,65 +693,22 @@ Partial Class Form1
         '
         'Buscar_Prov
         '
-        Me.Buscar_Prov.Location = New System.Drawing.Point(18, 506)
+        Me.Buscar_Prov.Location = New System.Drawing.Point(3, 56)
         Me.Buscar_Prov.Margin = New System.Windows.Forms.Padding(4)
         Me.Buscar_Prov.Name = "Buscar_Prov"
         Me.Buscar_Prov.Size = New System.Drawing.Size(202, 23)
         Me.Buscar_Prov.TabIndex = 27
         '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label17.Location = New System.Drawing.Point(34, 357)
-        Me.Label17.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(151, 17)
-        Me.Label17.TabIndex = 36
-        Me.Label17.Text = "Modificar o Agregar"
-        '
-        'Label18
-        '
-        Me.Label18.AutoSize = True
-        Me.Label18.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label18.Location = New System.Drawing.Point(92, 183)
-        Me.Label18.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(48, 17)
-        Me.Label18.TabIndex = 35
-        Me.Label18.Text = "Crear"
-        '
-        'Proveedores_Crear
-        '
-        Me.Proveedores_Crear.Image = Global.Inventario_Lab.My.Resources.Resources.Preoveedores_Crear
-        Me.Proveedores_Crear.Location = New System.Drawing.Point(37, 50)
-        Me.Proveedores_Crear.Margin = New System.Windows.Forms.Padding(4)
-        Me.Proveedores_Crear.Name = "Proveedores_Crear"
-        Me.Proveedores_Crear.Size = New System.Drawing.Size(166, 129)
-        Me.Proveedores_Crear.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.Proveedores_Crear.TabIndex = 32
-        Me.Proveedores_Crear.TabStop = False
-        '
-        'Proveedores_Modificar
-        '
-        Me.Proveedores_Modificar.Image = Global.Inventario_Lab.My.Resources.Resources.Proveedores_Modificar
-        Me.Proveedores_Modificar.Location = New System.Drawing.Point(37, 224)
-        Me.Proveedores_Modificar.Margin = New System.Windows.Forms.Padding(4)
-        Me.Proveedores_Modificar.Name = "Proveedores_Modificar"
-        Me.Proveedores_Modificar.Size = New System.Drawing.Size(166, 129)
-        Me.Proveedores_Modificar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.Proveedores_Modificar.TabIndex = 33
-        Me.Proveedores_Modificar.TabStop = False
-        '
         'Proveedores_Consultar
         '
         Me.Proveedores_Consultar.BackColor = System.Drawing.Color.Silver
+        Me.Proveedores_Consultar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Proveedores_Consultar.Image = Global.Inventario_Lab.My.Resources.Resources.Buscar
-        Me.Proveedores_Consultar.Location = New System.Drawing.Point(37, 541)
+        Me.Proveedores_Consultar.Location = New System.Drawing.Point(20, 87)
         Me.Proveedores_Consultar.Margin = New System.Windows.Forms.Padding(4)
         Me.Proveedores_Consultar.Name = "Proveedores_Consultar"
         Me.Proveedores_Consultar.Size = New System.Drawing.Size(166, 129)
-        Me.Proveedores_Consultar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.Proveedores_Consultar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.Proveedores_Consultar.TabIndex = 34
         Me.Proveedores_Consultar.TabStop = False
         '
@@ -2927,6 +2880,8 @@ Partial Class Form1
         'TabPage15
         '
         Me.TabPage15.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.TabPage15.Controls.Add(Me.BtnModificarProveedor)
+        Me.TabPage15.Controls.Add(Me.GroupBox7)
         Me.TabPage15.Controls.Add(Me.Label92)
         Me.TabPage15.Controls.Add(Me.Label61)
         Me.TabPage15.Controls.Add(Me.Label59)
@@ -2964,6 +2919,76 @@ Partial Class Form1
         Me.TabPage15.TabIndex = 8
         Me.TabPage15.Text = "Proveedores"
         '
+        'BtnModificarProveedor
+        '
+        Me.BtnModificarProveedor.FlatAppearance.BorderColor = System.Drawing.Color.LightSteelBlue
+        Me.BtnModificarProveedor.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red
+        Me.BtnModificarProveedor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.BtnModificarProveedor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnModificarProveedor.Image = Global.Inventario_Lab.My.Resources.Resources.if_icon_136_document_edit_314724
+        Me.BtnModificarProveedor.Location = New System.Drawing.Point(929, 7)
+        Me.BtnModificarProveedor.Name = "BtnModificarProveedor"
+        Me.BtnModificarProveedor.Size = New System.Drawing.Size(42, 38)
+        Me.BtnModificarProveedor.TabIndex = 62
+        Me.TPAdministrar.SetToolTip(Me.BtnModificarProveedor, "Modificar Equipo")
+        Me.BtnModificarProveedor.UseVisualStyleBackColor = True
+        '
+        'GroupBox7
+        '
+        Me.GroupBox7.Controls.Add(Me.BtnEliminarProveedor)
+        Me.GroupBox7.Controls.Add(Me.BtnAgregarProveedor)
+        Me.GroupBox7.Controls.Add(Me.BtnGuardarProveedor)
+        Me.GroupBox7.Location = New System.Drawing.Point(661, 522)
+        Me.GroupBox7.Margin = New System.Windows.Forms.Padding(4)
+        Me.GroupBox7.Name = "GroupBox7"
+        Me.GroupBox7.Padding = New System.Windows.Forms.Padding(4)
+        Me.GroupBox7.Size = New System.Drawing.Size(443, 126)
+        Me.GroupBox7.TabIndex = 61
+        Me.GroupBox7.TabStop = False
+        Me.GroupBox7.Text = "Manejo de Proveedores"
+        '
+        'BtnEliminarProveedor
+        '
+        Me.BtnEliminarProveedor.BackgroundImage = Global.Inventario_Lab.My.Resources.Resources.Eliminar
+        Me.BtnEliminarProveedor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.BtnEliminarProveedor.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BtnEliminarProveedor.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.BtnEliminarProveedor.Location = New System.Drawing.Point(307, 31)
+        Me.BtnEliminarProveedor.Margin = New System.Windows.Forms.Padding(4)
+        Me.BtnEliminarProveedor.Name = "BtnEliminarProveedor"
+        Me.BtnEliminarProveedor.Size = New System.Drawing.Size(116, 89)
+        Me.BtnEliminarProveedor.TabIndex = 14
+        Me.BtnEliminarProveedor.Text = "Eliminar"
+        Me.BtnEliminarProveedor.UseVisualStyleBackColor = True
+        '
+        'BtnAgregarProveedor
+        '
+        Me.BtnAgregarProveedor.BackgroundImage = Global.Inventario_Lab.My.Resources.Resources.Nuevo
+        Me.BtnAgregarProveedor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.BtnAgregarProveedor.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BtnAgregarProveedor.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.BtnAgregarProveedor.Location = New System.Drawing.Point(162, 31)
+        Me.BtnAgregarProveedor.Margin = New System.Windows.Forms.Padding(4)
+        Me.BtnAgregarProveedor.Name = "BtnAgregarProveedor"
+        Me.BtnAgregarProveedor.Size = New System.Drawing.Size(116, 89)
+        Me.BtnAgregarProveedor.TabIndex = 13
+        Me.BtnAgregarProveedor.Text = "Nuevo"
+        Me.BtnAgregarProveedor.UseVisualStyleBackColor = True
+        '
+        'BtnGuardarProveedor
+        '
+        Me.BtnGuardarProveedor.BackgroundImage = Global.Inventario_Lab.My.Resources.Resources.Guardar1
+        Me.BtnGuardarProveedor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.BtnGuardarProveedor.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BtnGuardarProveedor.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.BtnGuardarProveedor.Location = New System.Drawing.Point(21, 31)
+        Me.BtnGuardarProveedor.Margin = New System.Windows.Forms.Padding(4)
+        Me.BtnGuardarProveedor.Name = "BtnGuardarProveedor"
+        Me.BtnGuardarProveedor.Size = New System.Drawing.Size(116, 89)
+        Me.BtnGuardarProveedor.TabIndex = 12
+        Me.BtnGuardarProveedor.Text = "Guardar"
+        Me.BtnGuardarProveedor.UseVisualStyleBackColor = True
+        '
         'Label92
         '
         Me.Label92.AutoSize = True
@@ -2989,7 +3014,7 @@ Partial Class Form1
         'Label59
         '
         Me.Label59.AutoSize = True
-        Me.Label59.Location = New System.Drawing.Point(392, 462)
+        Me.Label59.Location = New System.Drawing.Point(392, 458)
         Me.Label59.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label59.Name = "Label59"
         Me.Label59.Size = New System.Drawing.Size(0, 17)
@@ -2999,7 +3024,7 @@ Partial Class Form1
         '
         Me.Anterior_Proveedor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.Anterior_Proveedor.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Anterior_Proveedor.Location = New System.Drawing.Point(315, 488)
+        Me.Anterior_Proveedor.Location = New System.Drawing.Point(315, 484)
         Me.Anterior_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Anterior_Proveedor.Name = "Anterior_Proveedor"
         Me.Anterior_Proveedor.Size = New System.Drawing.Size(132, 44)
@@ -3011,7 +3036,7 @@ Partial Class Form1
         '
         Me.Siguiente_Proveedor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.Siguiente_Proveedor.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Siguiente_Proveedor.Location = New System.Drawing.Point(513, 488)
+        Me.Siguiente_Proveedor.Location = New System.Drawing.Point(513, 484)
         Me.Siguiente_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Siguiente_Proveedor.Name = "Siguiente_Proveedor"
         Me.Siguiente_Proveedor.Size = New System.Drawing.Size(132, 44)
@@ -3115,9 +3140,9 @@ Partial Class Form1
         Me.Label48.Location = New System.Drawing.Point(10, 134)
         Me.Label48.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label48.Name = "Label48"
-        Me.Label48.Size = New System.Drawing.Size(94, 17)
+        Me.Label48.Size = New System.Drawing.Size(85, 17)
         Me.Label48.TabIndex = 14
-        Me.Label48.Text = "Proeveedor"
+        Me.Label48.Text = "Proveedor"
         '
         'Label47
         '
@@ -3132,6 +3157,7 @@ Partial Class Form1
         'Activo_Proveedor
         '
         Me.Activo_Proveedor.AutoSize = True
+        Me.Activo_Proveedor.Enabled = False
         Me.Activo_Proveedor.Location = New System.Drawing.Point(883, 75)
         Me.Activo_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Activo_Proveedor.Name = "Activo_Proveedor"
@@ -3143,6 +3169,7 @@ Partial Class Form1
         'Aprovado_Proveedor
         '
         Me.Aprovado_Proveedor.AutoSize = True
+        Me.Aprovado_Proveedor.Enabled = False
         Me.Aprovado_Proveedor.Location = New System.Drawing.Point(738, 75)
         Me.Aprovado_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Aprovado_Proveedor.Name = "Aprovado_Proveedor"
@@ -3156,6 +3183,7 @@ Partial Class Form1
         Me.Clasificacion_Proveedor.Location = New System.Drawing.Point(738, 159)
         Me.Clasificacion_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Clasificacion_Proveedor.Name = "Clasificacion_Proveedor"
+        Me.Clasificacion_Proveedor.ReadOnly = True
         Me.Clasificacion_Proveedor.Size = New System.Drawing.Size(231, 24)
         Me.Clasificacion_Proveedor.TabIndex = 10
         '
@@ -3164,6 +3192,7 @@ Partial Class Form1
         Me.Detalle_Proveedor.Location = New System.Drawing.Point(337, 412)
         Me.Detalle_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Detalle_Proveedor.Name = "Detalle_Proveedor"
+        Me.Detalle_Proveedor.ReadOnly = True
         Me.Detalle_Proveedor.Size = New System.Drawing.Size(634, 24)
         Me.Detalle_Proveedor.TabIndex = 9
         '
@@ -3172,6 +3201,7 @@ Partial Class Form1
         Me.Web_Proveedor.Location = New System.Drawing.Point(336, 329)
         Me.Web_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Web_Proveedor.Name = "Web_Proveedor"
+        Me.Web_Proveedor.ReadOnly = True
         Me.Web_Proveedor.Size = New System.Drawing.Size(634, 24)
         Me.Web_Proveedor.TabIndex = 8
         '
@@ -3180,6 +3210,7 @@ Partial Class Form1
         Me.Fax_Proveedor.Location = New System.Drawing.Point(336, 243)
         Me.Fax_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Fax_Proveedor.Name = "Fax_Proveedor"
+        Me.Fax_Proveedor.ReadOnly = True
         Me.Fax_Proveedor.Size = New System.Drawing.Size(274, 24)
         Me.Fax_Proveedor.TabIndex = 7
         '
@@ -3188,6 +3219,7 @@ Partial Class Form1
         Me.Email_Proveedor.Location = New System.Drawing.Point(336, 159)
         Me.Email_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Email_Proveedor.Name = "Email_Proveedor"
+        Me.Email_Proveedor.ReadOnly = True
         Me.Email_Proveedor.Size = New System.Drawing.Size(353, 24)
         Me.Email_Proveedor.TabIndex = 6
         '
@@ -3196,6 +3228,7 @@ Partial Class Form1
         Me.Telefono_Proveedor.Location = New System.Drawing.Point(336, 75)
         Me.Telefono_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Telefono_Proveedor.Name = "Telefono_Proveedor"
+        Me.Telefono_Proveedor.ReadOnly = True
         Me.Telefono_Proveedor.Size = New System.Drawing.Size(274, 24)
         Me.Telefono_Proveedor.TabIndex = 5
         '
@@ -3204,6 +3237,7 @@ Partial Class Form1
         Me.Ciudad_Proveedor.Location = New System.Drawing.Point(15, 412)
         Me.Ciudad_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Ciudad_Proveedor.Name = "Ciudad_Proveedor"
+        Me.Ciudad_Proveedor.ReadOnly = True
         Me.Ciudad_Proveedor.Size = New System.Drawing.Size(224, 24)
         Me.Ciudad_Proveedor.TabIndex = 4
         '
@@ -3212,6 +3246,7 @@ Partial Class Form1
         Me.Direccion_Proveedor.Location = New System.Drawing.Point(14, 329)
         Me.Direccion_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Direccion_Proveedor.Name = "Direccion_Proveedor"
+        Me.Direccion_Proveedor.ReadOnly = True
         Me.Direccion_Proveedor.Size = New System.Drawing.Size(224, 24)
         Me.Direccion_Proveedor.TabIndex = 3
         '
@@ -3220,6 +3255,7 @@ Partial Class Form1
         Me.Contacto_Proveedor.Location = New System.Drawing.Point(14, 243)
         Me.Contacto_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Contacto_Proveedor.Name = "Contacto_Proveedor"
+        Me.Contacto_Proveedor.ReadOnly = True
         Me.Contacto_Proveedor.Size = New System.Drawing.Size(224, 24)
         Me.Contacto_Proveedor.TabIndex = 2
         '
@@ -3228,6 +3264,7 @@ Partial Class Form1
         Me.Nombre_Proveedor.Location = New System.Drawing.Point(14, 159)
         Me.Nombre_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Nombre_Proveedor.Name = "Nombre_Proveedor"
+        Me.Nombre_Proveedor.ReadOnly = True
         Me.Nombre_Proveedor.Size = New System.Drawing.Size(224, 24)
         Me.Nombre_Proveedor.TabIndex = 1
         '
@@ -3236,6 +3273,7 @@ Partial Class Form1
         Me.Nit_Proveedor.Location = New System.Drawing.Point(14, 77)
         Me.Nit_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Nit_Proveedor.Name = "Nit_Proveedor"
+        Me.Nit_Proveedor.ReadOnly = True
         Me.Nit_Proveedor.Size = New System.Drawing.Size(224, 24)
         Me.Nit_Proveedor.TabIndex = 0
         '
@@ -3494,7 +3532,7 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.DarkSlateGray
-        Me.ClientSize = New System.Drawing.Size(1481, 873)
+        Me.ClientSize = New System.Drawing.Size(1481, 865)
         Me.Controls.Add(Me.Label34)
         Me.Controls.Add(Me.Label33)
         Me.Controls.Add(Me.Label32)
@@ -3536,8 +3574,6 @@ Partial Class Form1
         CType(Me.Productos_Consultar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage5.PerformLayout()
-        CType(Me.Proveedores_Crear, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Proveedores_Modificar, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Proveedores_Consultar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl2.ResumeLayout(False)
         Me.TabPage7.ResumeLayout(False)
@@ -3574,6 +3610,7 @@ Partial Class Form1
         CType(Me.Foto_Producto, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage15.ResumeLayout(False)
         Me.TabPage15.PerformLayout()
+        Me.GroupBox7.ResumeLayout(False)
         Me.TabPage16.ResumeLayout(False)
         Me.TabPage16.PerformLayout()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3619,10 +3656,6 @@ Partial Class Form1
     Friend WithEvents Equipos_Consultar As PictureBox
     Friend WithEvents Productos_Consultar As PictureBox
     Friend WithEvents Label16 As Label
-    Friend WithEvents Label17 As Label
-    Friend WithEvents Label18 As Label
-    Friend WithEvents Proveedores_Crear As PictureBox
-    Friend WithEvents Proveedores_Modificar As PictureBox
     Friend WithEvents Proveedores_Consultar As PictureBox
     Friend WithEvents TabControl2 As TabControl
     Friend WithEvents TabPage7 As TabPage
@@ -3852,4 +3885,9 @@ Partial Class Form1
     Friend WithEvents BtnEliminarProducto As Button
     Friend WithEvents BtnNuevoProducto As Button
     Friend WithEvents BtnGuardarProducto As Button
+    Friend WithEvents GroupBox7 As GroupBox
+    Friend WithEvents BtnEliminarProveedor As Button
+    Friend WithEvents BtnAgregarProveedor As Button
+    Friend WithEvents BtnGuardarProveedor As Button
+    Friend WithEvents BtnModificarProveedor As Button
 End Class

@@ -7,6 +7,7 @@ Imports System.Configuration
 Imports System.Security.Cryptography
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports System.Net.Mail
 
 Public Class Form1
     Dim conn As New MySqlConnection
@@ -260,6 +261,35 @@ Public Class Form1
         z = "PROVEEDORES"
         Recorrer_Proveedores()
     End Sub
+
+
+    Dim Proveedor_Num As Integer = 1
+    Dim ID_Prov As String
+    Private Sub Recorrer_Proveedores()
+        Label59.Visible = True
+        Anterior_Proveedor.Visible = True
+        Siguiente_Proveedor.Visible = True
+        Cargar_Tabla("*", "Proveedores")
+        If Proveedor_Num >= Tabla1.Rows.Count Then
+            Proveedor_Num = Tabla1.Rows.Count
+        End If
+        Label59.Text = "Proveedor " & (Proveedor_Num) & " de " & (Tabla1.Rows.Count)
+        ID_Prov = Tabla1.Rows(Proveedor_Num - 1).ItemArray(0).ToString
+        Nit_Proveedor.Text = Tabla1.Rows(Proveedor_Num - 1).ItemArray(0).ToString
+        Nombre_Proveedor.Text = Tabla1.Rows(Proveedor_Num - 1).ItemArray(1).ToString
+        Contacto_Proveedor.Text = Tabla1.Rows(Proveedor_Num - 1).ItemArray(2).ToString
+        Direccion_Proveedor.Text = Tabla1.Rows(Proveedor_Num - 1).ItemArray(3).ToString
+        Ciudad_Proveedor.Text = Tabla1.Rows(Proveedor_Num - 1).ItemArray(4).ToString
+        Telefono_Proveedor.Text = Tabla1.Rows(Proveedor_Num - 1).ItemArray(5).ToString
+        Email_Proveedor.Text = Tabla1.Rows(Proveedor_Num - 1).ItemArray(6).ToString
+        Fax_Proveedor.Text = Tabla1.Rows(Proveedor_Num - 1).ItemArray(7).ToString
+        Web_Proveedor.Text = Tabla1.Rows(Proveedor_Num - 1).ItemArray(8).ToString
+        Detalle_Proveedor.Text = Tabla1.Rows(Proveedor_Num - 1).ItemArray(9).ToString
+        Clasificacion_Proveedor.Text = Tabla1.Rows(Proveedor_Num - 1).ItemArray(10).ToString
+        Aprovado_Proveedor.Checked = Tabla1.Rows(Proveedor_Num - 1).ItemArray(11).ToString
+        Activo_Proveedor.Checked = Tabla1.Rows(Proveedor_Num - 1).ItemArray(13).ToString
+    End Sub
+
     Private Sub PictureBox6_Click(sender As Object, e As EventArgs) Handles PictureBox6.Click
         Menu_Seleccionado(6)
         Esconder_tabpages_submenu()
@@ -551,6 +581,28 @@ Public Class Form1
             Exit Sub
         End If
         Recorrer_Productos()
+    End Sub
+
+
+    Private Sub Anterior_Proveedor_Click(sender As Object, e As EventArgs) Handles Anterior_Proveedor.Click
+        Proveedor_Num -= 1
+        Dim a = Tabla1.Rows.Count
+        If Proveedor_Num = 0 Then
+            Proveedor_Num = Tabla1.Rows.Count
+            Recorrer_Proveedores()
+            Exit Sub
+        End If
+        Recorrer_Proveedores()
+    End Sub
+
+    Private Sub Siguiente_Proveedor_Click(sender As Object, e As EventArgs) Handles Siguiente_Proveedor.Click
+        Proveedor_Num += 1
+        If Proveedor_Num > (Tabla1.Rows.Count) Then
+            Proveedor_Num = 1
+            Recorrer_Proveedores()
+            Exit Sub
+        End If
+        Recorrer_Proveedores()
     End Sub
 
     Private Sub Cargar_Tabla(ByVal Columns As String, ByVal Nombre_Tabla As String)
@@ -845,6 +897,78 @@ Public Class Form1
             Activo_Equipo.Enabled = False
         End If
     End Sub
+
+    Dim Modificar_Proveedor As Integer = 0
+    Private Sub BtnModificarProveedor_Click(sender As Object, e As EventArgs) Handles BtnModificarProveedor.Click
+        Agregar_Proveedor = 0
+        If Modificar_Proveedor = 1 Then
+            Modificar_Proveedor = 0
+        ElseIf Modificar_Proveedor = 0 Then
+            Modificar_Proveedor = 1
+        End If
+        HabilitarControlesProveedor()
+        Label59.Visible = True
+        Anterior_Proveedor.Visible = True
+        Siguiente_Proveedor.Visible = True
+        Recorrer_Proveedores()
+    End Sub
+
+    Dim Agregar_Proveedor As Integer = 0
+    Private Sub BtnAgregarProveedor_Click(sender As Object, e As EventArgs) Handles BtnAgregarProveedor.Click
+        Modificar_Proveedor = 0
+        Agregar_Proveedor = 1
+        HabilitarControlesProveedor()
+        Nit_Proveedor.Clear()
+        Nit_Proveedor.Focus()
+        Nombre_Proveedor.Clear()
+        Contacto_Proveedor.Clear()
+        Direccion_Proveedor.Clear()
+        Ciudad_Proveedor.Clear()
+        Telefono_Proveedor.Clear()
+        Email_Proveedor.Clear()
+        Fax_Proveedor.Clear()
+        Web_Proveedor.Clear()
+        Detalle_Proveedor.Clear()
+        Clasificacion_Proveedor.Clear()
+        Activo_Proveedor.Checked = True
+        Aprovado_Proveedor.Checked = True
+        Label59.Visible = False
+        Anterior_Proveedor.Visible = False
+        Siguiente_Proveedor.Visible = False
+    End Sub
+
+    Private Sub HabilitarControlesProveedor()
+        If Modificar_Proveedor = 1 Or Agregar_Proveedor = 1 Then
+            Nit_Proveedor.ReadOnly = False
+            Nombre_Proveedor.ReadOnly = False
+            Contacto_Proveedor.ReadOnly = False
+            Direccion_Proveedor.ReadOnly = False
+            Ciudad_Proveedor.ReadOnly = False
+            Telefono_Proveedor.ReadOnly = False
+            Email_Proveedor.ReadOnly = False
+            Fax_Proveedor.ReadOnly = False
+            Web_Proveedor.ReadOnly = False
+            Detalle_Proveedor.ReadOnly = False
+            Clasificacion_Proveedor.ReadOnly = False
+            Activo_Proveedor.Enabled = True
+            Aprovado_Proveedor.Enabled = True
+        Else
+            Nit_Proveedor.ReadOnly = True
+            Nombre_Proveedor.ReadOnly = True
+            Contacto_Proveedor.ReadOnly = True
+            Direccion_Proveedor.ReadOnly = True
+            Ciudad_Proveedor.ReadOnly = True
+            Telefono_Proveedor.ReadOnly = True
+            Email_Proveedor.ReadOnly = True
+            Fax_Proveedor.ReadOnly = True
+            Web_Proveedor.ReadOnly = True
+            Detalle_Proveedor.ReadOnly = True
+            Clasificacion_Proveedor.ReadOnly = True
+            Activo_Proveedor.Enabled = False
+            Aprovado_Proveedor.Enabled = False
+        End If
+    End Sub
+
 
     Dim Modificar_Producto As Integer = 0
     Private Sub BtnModificarProducto_Click(sender As Object, e As EventArgs) Handles BtnModificarProducto.Click
@@ -1427,6 +1551,130 @@ Public Class Form1
         End If
     End Sub
 
+    Private Function IsValidWebFormat(ByVal s As String) As Boolean
+        Return (Regex.IsMatch(s, "((((http[s]?|ftp)[:]//)([a-zA-Z0-9.-]+([:][a-zA-Z0-9.&amp;%$-]+)*@)?[a-zA-Z][a-zA-Z0-9.-]+|[a-zA-Z][a-zA-Z0-9]+[.][a-zA-Z][a-zA-Z0-9.-]+)[.](com|edu|gov|mil|net|org|biz|pro|info|name|museum|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|az|ax|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)([:][0-9]+)*(/[a-zA-Z0-9.,;?'\\+&amp;%$#=~_-]+)*)"))
+    End Function
+
+
+    Private Sub BtnGuardarProveedor_Click(sender As Object, e As EventArgs) Handles BtnGuardarProveedor.Click
+        If Modificar_Proveedor = 1 Then
+            Dim reader As MySqlDataReader
+            Dim Nit As String = Nit_Proveedor.Text.Trim
+            Dim Nombre As String = Nombre_Proveedor.Text.Trim
+            Dim Contacto As String = Contacto_Proveedor.Text.Trim
+            Dim Direccion As String = Direccion_Proveedor.Text.Trim
+            Dim Ciudad As String = Ciudad_Proveedor.Text.Trim
+            Dim Telefono As String = Telefono_Proveedor.Text.Trim
+            Dim Email As String = Email_Proveedor.Text.Trim
+            Try
+                Dim em As New MailAddress(Email)
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                Exit Sub
+            End Try
+            Dim Fax As String = Fax_Proveedor.Text.Trim
+            Dim Web As String = Web_Proveedor.Text.Trim
+            If IsValidWebFormat(LCase(Web)) = False Then
+                MsgBox("El formato de la pagina web no es valido", MsgBoxStyle.Exclamation, "Error")
+                Exit Sub
+            End If
+            Dim Detalle As String = Detalle_Proveedor.Text.Trim
+            Dim Clasificacion As String = Clasificacion_Proveedor.Text.Trim
+            Dim Aprovado As Boolean = Aprovado_Proveedor.Checked
+            Dim Activo As Boolean = Activo_Proveedor.Checked
+
+            Try
+                conn.Open()
+                Dim query As String = "UPDATE proveedores SET Nit_Proveedor = @NIT, Nombre_Proveedor = @Nombre,
+                                Nombre_Contacto = @Contacto, Direccion = @Direccion, Ciudad = @Ciudad, Numero_Telefono = @Telefono,
+                                Email_Contacto = @Email, Numero_Fax = @Fax, Pagina_Web = @Web, Detalle = @Detalle, 
+                                Clasificacion_OIMS = @Clasificacion, Aprovado = @Aprovado, Activo = @Activo 
+                                WHERE Nit_Proveedor = @Id_Prov"
+                Dim cmd As New MySqlCommand(query, conn)
+                With cmd.Parameters
+                    .AddWithValue("NIT", Nit)
+                    .AddWithValue("Nombre", Nombre)
+                    .AddWithValue("Contacto", Contacto)
+                    .AddWithValue("Direccion", Direccion)
+                    .AddWithValue("Ciudad", Ciudad)
+                    .AddWithValue("Telefono", Telefono)
+                    .AddWithValue("Email", Email)
+                    .AddWithValue("Fax", Fax)
+                    .AddWithValue("Web", Web)
+                    .AddWithValue("Detalle", Detalle)
+                    .AddWithValue("Clasificacion", Clasificacion)
+                    .AddWithValue("Aprovado", Aprovado)
+                    .AddWithValue("Activo", Activo)
+                    .AddWithValue("Id_Prov", ID_Prov)
+                End With
+                reader = cmd.ExecuteReader
+                MsgBox("Proveedor modificado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                conn.Close()
+            End Try
+        ElseIf Agregar_Proveedor = 1 Then
+
+            Dim reader As MySqlDataReader
+            Dim Nit As String = Nit_Proveedor.Text.Trim
+            Dim Nombre As String = Nombre_Proveedor.Text.Trim
+            Dim Contacto As String = Contacto_Proveedor.Text.Trim
+            Dim Direccion As String = Direccion_Proveedor.Text.Trim
+            Dim Ciudad As String = Ciudad_Proveedor.Text.Trim
+            Dim Telefono As String = Telefono_Proveedor.Text.Trim
+            Dim Email As String = Email_Proveedor.Text.Trim
+            Try
+                Dim em As New MailAddress(Email)
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                Exit Sub
+            End Try
+            Dim Fax As String = Fax_Proveedor.Text.Trim
+            Dim Web As String = Web_Proveedor.Text.Trim
+            If IsValidWebFormat(LCase(Web)) = False Then
+                MsgBox("El formato de la pagina web no es valido", MsgBoxStyle.Exclamation, "Error")
+                Exit Sub
+            End If
+            Dim Detalle As String = Detalle_Proveedor.Text.Trim
+            Dim Clasificacion As String = Clasificacion_Proveedor.Text.Trim
+            Dim Aprovado As Boolean = Aprovado_Proveedor.Checked
+            Dim Activo As Boolean = Activo_Proveedor.Checked
+
+            Try
+                conn.Open()
+                Dim query As String = "INSERT INTO proveedores (Nit_Proveedor, Nombre_Proveedor, Nombre_Contacto, Direccion, Ciudad, Numero_Telefono, Email_Contacto, Numero_Fax, Pagina_Web, Detalle, Clasificacion_OIMS, Aprovado,  Activo)
+                                      VALUES (@NIT, @Nombre, @Contacto, @Direccion, @Ciudad, @Telefono, @Email, @Fax, @Web, @Detalle, @Clasificacion, @Aprovado, @Activo);"
+                Dim cmd As New MySqlCommand(query, conn)
+                With cmd.Parameters
+                    .AddWithValue("NIT", Nit)
+                    .AddWithValue("Nombre", Nombre)
+                    .AddWithValue("Contacto", Contacto)
+                    .AddWithValue("Direccion", Direccion)
+                    .AddWithValue("Ciudad", Ciudad)
+                    .AddWithValue("Telefono", Telefono)
+                    .AddWithValue("Email", Email)
+                    .AddWithValue("Fax", Fax)
+                    .AddWithValue("Web", Web)
+                    .AddWithValue("Detalle", Detalle)
+                    .AddWithValue("Clasificacion", Clasificacion)
+                    .AddWithValue("Aprovado", Aprovado)
+                    .AddWithValue("Activo", Activo)
+                End With
+                reader = cmd.ExecuteReader
+                MsgBox("Proveedor Agregado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                conn.Close()
+            End Try
+
+            Agregar_Proveedor = 0
+            HabilitarControlesProveedor()
+            Recorrer_Proveedores()
+        End If
+    End Sub
+
 
     Public Function ComputeHashOfString(Of T As HashAlgorithm)(ByVal str As String,
                                                                              Optional ByVal enc As Encoding = Nothing) As String
@@ -1515,6 +1763,27 @@ Public Class Form1
             End Try
         End If
         Recorrer_Productos()
+    End Sub
+
+    Private Sub BtnEliminarProveedor_Click(sender As Object, e As EventArgs) Handles BtnEliminarProveedor.Click
+        If Agregar_Proveedor = 1 Then
+            Exit Sub
+        End If
+        If MessageBox.Show("¿Esta seguro que desea ELIMINAR este Proveedor?", "Alerta", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            Try
+                conn.Open()
+                Dim query As String = "Delete from Proveedores where Nit_Proveedor = @NIT;"
+                Dim cmd As New MySqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("NIT", ID_Prov)
+                cmd.ExecuteNonQuery()
+                MsgBox("Proveedor Eliminado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
+            End Try
+        End If
+        Recorrer_Proveedores()
     End Sub
 
 
@@ -1770,6 +2039,67 @@ Public Class Form1
         End Try
     End Sub
 
+    Private Sub Proveedores_Consultar_Click(sender As Object, e As EventArgs) Handles Proveedores_Consultar.Click
+        If Buscar_Prov.Text.Trim = "" Then
+            Exit Sub
+        End If
+        Cargar_Tabla("*", "PROVEEDORES")
+        If z <> Buscar_Prov.Text Then
+            cant_reg_encon = 0
+        End If
+        Try
+            conn.Open()
+            Dim consulta As String = "Select * from proveedores"
+            Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
+            Dim MysqlDset As New DataSet
+            MysqlDadap.Fill(MysqlDset)
+            conn.Close()
+            Dim i As Integer = 0
+            Dim foundRows() As Data.DataRow
+            foundRows = MysqlDset.Tables(0).Select("Nombre_Proveedor Like '" & Buscar_Prov.Text & "%'")
+            z = Buscar_Prov.Text
+            If cant_reg_encon = 0 And foundRows.Length > 1 Then
+                cant_reg_encon = foundRows.Length
+                For Each row In Tabla1.Rows
+                    If foundRows(cant_reg_encon - 1).Item(1) = row(1) Then
+                        'MsgBox(foundRows(cant_reg_encon - 1).Item(1))
+                        Proveedor_Num = i + 1
+                        Recorrer_Proveedores()
+                        cant_reg_encon = cant_reg_encon - 1
+                        Exit Sub
+                    End If
+                    i = i + 1
+                Next
+            Else
+                If foundRows.Length = 0 Then
+                    MsgBox("No se encontro ninguna coincidencia")
+                ElseIf cant_reg_encon = 0 Then
+                    For Each row In Tabla1.Rows
+                        If foundRows(cant_reg_encon).Item(1) = row(1) Then
+                            Proveedor_Num = i + 1
+                            Recorrer_Proveedores()
+                            Exit Sub
+                        End If
+                        i = i + 1
+                    Next
+                Else
+                    For Each row In Tabla1.Rows
+                        If foundRows(cant_reg_encon - 1).Item(1) = row(1) Then
+                            Proveedor_Num = i + 1
+                            Recorrer_Proveedores()
+                            cant_reg_encon = cant_reg_encon - 1
+                            Exit Sub
+                        End If
+                        i = i + 1
+                    Next
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("Error durante la busqueda: " & ex.Message, MsgBoxStyle.Critical, "Error")
+            conn.Close()
+        End Try
+    End Sub
+
     Private Sub Buscar_Us_KeyDown(sender As Object, e As KeyEventArgs) Handles Buscar_Us.KeyDown
         If e.KeyCode = Keys.Enter Then
             Buscar_Usuario.PerformClick()
@@ -1794,7 +2124,17 @@ Public Class Form1
                 e.Handled = True
             End If
         End If
+    End Sub
 
+    Private Sub TextBoxPhone_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) Handles Telefono_Proveedor.KeyPress, Fax_Proveedor.KeyPress
+        If Asc(e.KeyChar) <> 8 Then
+            If Asc(e.KeyChar) < 48 Or Asc(e.KeyChar) > 57 Then
+                If Asc(e.KeyChar) = 40 Or Asc(e.KeyChar) = 41 Or Asc(e.KeyChar) = 43 Or Asc(e.KeyChar) = 45 Then
+                    Exit Sub
+                End If
+                e.Handled = True
+            End If
+        End If
     End Sub
 
     Private Sub Monto_Doag_Leave(sender As Object, e As EventArgs) Handles Monto_Doag.Leave

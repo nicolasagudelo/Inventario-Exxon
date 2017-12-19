@@ -207,9 +207,9 @@ Partial Class Form1
         Me.Foto_Equipo = New System.Windows.Forms.PictureBox()
         Me.TabPage14 = New System.Windows.Forms.TabPage()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
-        Me.Button2 = New System.Windows.Forms.Button()
+        Me.BtnEliminarProducto = New System.Windows.Forms.Button()
         Me.BtnNuevoProducto = New System.Windows.Forms.Button()
-        Me.Button4 = New System.Windows.Forms.Button()
+        Me.BtnGuardarProducto = New System.Windows.Forms.Button()
         Me.BtnModificarProducto = New System.Windows.Forms.Button()
         Me.Label91 = New System.Windows.Forms.Label()
         Me.Activo_Producto = New System.Windows.Forms.CheckBox()
@@ -2490,9 +2490,9 @@ Partial Class Form1
         '
         'GroupBox6
         '
-        Me.GroupBox6.Controls.Add(Me.Button2)
+        Me.GroupBox6.Controls.Add(Me.BtnEliminarProducto)
         Me.GroupBox6.Controls.Add(Me.BtnNuevoProducto)
-        Me.GroupBox6.Controls.Add(Me.Button4)
+        Me.GroupBox6.Controls.Add(Me.BtnGuardarProducto)
         Me.GroupBox6.Location = New System.Drawing.Point(661, 499)
         Me.GroupBox6.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox6.Name = "GroupBox6"
@@ -2502,19 +2502,19 @@ Partial Class Form1
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Manejo de Producto"
         '
-        'Button2
+        'BtnEliminarProducto
         '
-        Me.Button2.BackgroundImage = Global.Inventario_Lab.My.Resources.Resources.Eliminar
-        Me.Button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.Button2.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button2.Location = New System.Drawing.Point(307, 31)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(4)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(116, 89)
-        Me.Button2.TabIndex = 14
-        Me.Button2.Text = "Eliminar"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.BtnEliminarProducto.BackgroundImage = Global.Inventario_Lab.My.Resources.Resources.Eliminar
+        Me.BtnEliminarProducto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.BtnEliminarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BtnEliminarProducto.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.BtnEliminarProducto.Location = New System.Drawing.Point(307, 31)
+        Me.BtnEliminarProducto.Margin = New System.Windows.Forms.Padding(4)
+        Me.BtnEliminarProducto.Name = "BtnEliminarProducto"
+        Me.BtnEliminarProducto.Size = New System.Drawing.Size(116, 89)
+        Me.BtnEliminarProducto.TabIndex = 14
+        Me.BtnEliminarProducto.Text = "Eliminar"
+        Me.BtnEliminarProducto.UseVisualStyleBackColor = True
         '
         'BtnNuevoProducto
         '
@@ -2530,19 +2530,19 @@ Partial Class Form1
         Me.BtnNuevoProducto.Text = "Nuevo"
         Me.BtnNuevoProducto.UseVisualStyleBackColor = True
         '
-        'Button4
+        'BtnGuardarProducto
         '
-        Me.Button4.BackgroundImage = Global.Inventario_Lab.My.Resources.Resources.Guardar1
-        Me.Button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.Button4.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button4.Location = New System.Drawing.Point(21, 31)
-        Me.Button4.Margin = New System.Windows.Forms.Padding(4)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(116, 89)
-        Me.Button4.TabIndex = 12
-        Me.Button4.Text = "Guardar"
-        Me.Button4.UseVisualStyleBackColor = True
+        Me.BtnGuardarProducto.BackgroundImage = Global.Inventario_Lab.My.Resources.Resources.Guardar1
+        Me.BtnGuardarProducto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.BtnGuardarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.BtnGuardarProducto.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.BtnGuardarProducto.Location = New System.Drawing.Point(21, 31)
+        Me.BtnGuardarProducto.Margin = New System.Windows.Forms.Padding(4)
+        Me.BtnGuardarProducto.Name = "BtnGuardarProducto"
+        Me.BtnGuardarProducto.Size = New System.Drawing.Size(116, 89)
+        Me.BtnGuardarProducto.TabIndex = 12
+        Me.BtnGuardarProducto.Text = "Guardar"
+        Me.BtnGuardarProducto.UseVisualStyleBackColor = True
         '
         'BtnModificarProducto
         '
@@ -3849,7 +3849,7 @@ Partial Class Form1
     Friend WithEvents BtnModificarEquipo As Button
     Friend WithEvents BtnModificarProducto As Button
     Friend WithEvents GroupBox6 As GroupBox
-    Friend WithEvents Button2 As Button
+    Friend WithEvents BtnEliminarProducto As Button
     Friend WithEvents BtnNuevoProducto As Button
-    Friend WithEvents Button4 As Button
+    Friend WithEvents BtnGuardarProducto As Button
 End Class

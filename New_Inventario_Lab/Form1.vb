@@ -174,7 +174,6 @@ Public Class Form1
 
     Dim Id_Prod As String
     Dim Prod_Num As Integer = 1
-    Dim Stock_producto As Integer
     Private Sub Recorrer_Productos()
         Label72.Visible = True
         Anterior_Producto.Visible = True
@@ -189,8 +188,11 @@ Public Class Form1
         Nombre_Producto.Text = Tabla1.Rows(Prod_Num - 1).ItemArray(2).ToString
         Marca_Producto.Text = Tabla1.Rows(Prod_Num - 1).ItemArray(5).ToString
         Serie_Producto.Text = Tabla1.Rows(Prod_Num - 1).ItemArray(6).ToString
-        Stock_producto = Tabla1.Rows(Prod_Num - 1).ItemArray(8).ToString
-        Activo_Producto.Checked = Tabla1.Rows(Prod_Num - 1).ItemArray(9).ToString
+        Stock_Minimo.Text = Tabla1.Rows(Prod_Num - 1).ItemArray(8).ToString
+        Stock_Maximo.Text = Tabla1.Rows(Prod_Num - 1).ItemArray(9).ToString
+        Stock_Existente.Text = Tabla1.Rows(Prod_Num - 1).ItemArray(10).ToString
+        Compra_Maxima.Text = Tabla1.Rows(Prod_Num - 1).ItemArray(12).ToString
+        Activo_Producto.Checked = Tabla1.Rows(Prod_Num - 1).ItemArray(13).ToString
         Unidades_Producto.Items.Clear()
         With Unidades_Producto
             .Items.Add("Uni")
@@ -199,32 +201,16 @@ Public Class Form1
             .Items.Add("L")
             .Items.Add("Gal")
         End With
+        Unidades_Producto.SelectedItem = Tabla1.Rows(Prod_Num - 1).ItemArray(11).ToString
         Try
             Dim b64str As String = Tabla1.Rows(Prod_Num - 1).ItemArray(7).ToString
             Dim binarydata() As Byte = Convert.FromBase64String(b64str)
             Dim stream As New MemoryStream(binarydata)
-            Foto_Equipo.Image = Image.FromStream(stream)
+            Foto_Producto.Image = Image.FromStream(stream)
         Catch ex As Exception
-            Foto_Equipo.Image = My.Resources.NoMachine
+            Foto_Producto.Image = My.Resources.NoMachine
         End Try
         CargarCBTabProductos(Prod_Num - 1)
-        Try
-            conn.Open()
-            Dim consulta As String = "Select * from stock where Id_Stock='" & Stock_producto & "'"
-            Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
-            Dim MysqlDset As New DataSet
-            MysqlDadap.Fill(MysqlDset)
-            conn.Close()
-            '.DataSource = MysqlDset.Tables(0)
-            Stock_Minimo.Text = MysqlDset.Tables(0).Rows(0).Item(1).ToString
-            Stock_Maximo.Text = MysqlDset.Tables(0).Rows(0).Item(2).ToString
-            Stock_Existente.Text = MysqlDset.Tables(0).Rows(0).Item(3).ToString
-            Unidades_Producto.SelectedItem = MysqlDset.Tables(0).Rows(0).Item(4).ToString
-            Compra_Maxima.Text = MysqlDset.Tables(0).Rows(0).Item(5).ToString
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-            conn.Close()
-        End Try
     End Sub
 
     Private Sub CargarCBTabProductos(ByVal numero_Producto As Integer)
@@ -269,10 +255,10 @@ Public Class Form1
     Private Sub PictureBox5_Click(sender As Object, e As EventArgs) Handles PictureBox5.Click
         Menu_Seleccionado(5)
         Esconder_tabpages_submenu()
-        'TabPage15.Parent = TabControl2
-        'cant_reg_encon = 0
-        'z = "PROVEEDORES"
-        'Recorrer_Proveedores()
+        TabPage15.Parent = TabControl2
+        cant_reg_encon = 0
+        z = "PROVEEDORES"
+        Recorrer_Proveedores()
     End Sub
     Private Sub PictureBox6_Click(sender As Object, e As EventArgs) Handles PictureBox6.Click
         Menu_Seleccionado(6)
@@ -642,6 +628,36 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub Foto_Producto_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles Foto_Producto.DragEnter
+        If Agregar_Producto = 1 Then
+            Exit Sub
+        End If
+        'DataFormats.FileDrop nos devuelve el array de rutas de archivos
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            'Los archivos son externos a nuestra aplicación por lo que de indicaremos All ya que dará lo mismo.
+            e.Effect = DragDropEffects.All
+        End If
+    End Sub
+    Private Sub Foto_Producto_DragDrop(ByVal sender As Object, e As DragEventArgs) Handles Foto_Producto.DragDrop
+        If Agregar_Producto = 1 Then
+            Exit Sub
+        End If
+
+        If MessageBox.Show("¿Esta seguro que desea CAMBIAR la foto?" & vbCrLf & "Esta accion no se puede deshacer", "Alerta", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+                Dim strRutaArchivoImagen As String
+                strRutaArchivoImagen = e.Data.GetData(DataFormats.FileDrop)(0)
+                If Path.GetExtension(strRutaArchivoImagen) = ".jpg" Or Path.GetExtension(strRutaArchivoImagen) = ".png" Or Path.GetExtension(strRutaArchivoImagen) = ".bmp" Then
+
+                    CambiarImagenBD(strRutaArchivoImagen, "Productos")
+                Else
+
+                    MsgBox("El formato (" & Path.GetExtension(strRutaArchivoImagen) & ") no es soportado", MsgBoxStyle.Critical, "Error")
+                End If
+            End If
+        End If
+    End Sub
+
     Private Sub CambiarImagenBD(ByVal strRutaArchivoImagen As String, ByVal Tabla As String)
         Select Case Tabla
             Case "Usuarios"
@@ -687,6 +703,30 @@ Public Class Form1
                     cmd.ExecuteNonQuery()
                     conn.Close()
                     Foto_Equipo.Image = Image.FromFile(strRutaArchivoImagen)
+                Catch ex As Exception
+                    MsgBox("Error al cambiar la imagen, revise el estado del archivo y su conexion a la base de datos" & vbCrLf & "Error:" & ex.Message, MsgBoxStyle.Exclamation, "Error")
+                    conn.Close()
+                End Try
+                Exit Sub
+            Case "Productos"
+                Try
+                    Foto_Producto.Image.Dispose()
+                    Foto_Producto.Image = Nothing
+                    Dim FileSize As UInt32
+                    Dim rawData() As Byte
+                    Dim fs As FileStream
+                    fs = New FileStream(strRutaArchivoImagen, FileMode.Open, FileAccess.Read)
+                    FileSize = fs.Length - 1
+
+                    rawData = New Byte(FileSize) {}
+                    fs.Read(rawData, 0, FileSize)
+                    fs.Close()
+                    conn.Open()
+                    Dim foto As String = Convert.ToBase64String(rawData)
+                    Dim cmd As New MySqlCommand(String.Format("UPDATE productos set `Foto` = '" & foto & "' where ID_Producto = '" & Id_Prod & "';"), conn)
+                    cmd.ExecuteNonQuery()
+                    conn.Close()
+                    Foto_Producto.Image = Image.FromFile(strRutaArchivoImagen)
                 Catch ex As Exception
                     MsgBox("Error al cambiar la imagen, revise el estado del archivo y su conexion a la base de datos" & vbCrLf & "Error:" & ex.Message, MsgBoxStyle.Exclamation, "Error")
                     conn.Close()
@@ -784,7 +824,7 @@ Public Class Form1
         Nombre_Equipo.Clear()
         Marca_Equipo.Clear()
         Activo_Equipo.Checked = True
-        Foto_Equipo.Image = My.Resources.NoImage
+        Foto_Equipo.Image = My.Resources.NoMachine
         Label60.Visible = False
         Anterior_Equipo.Visible = False
         Siguiente_Equipo.Visible = False
@@ -837,7 +877,7 @@ Public Class Form1
         Stock_Maximo.Clear()
         Compra_Maxima.Clear()
         Activo_Producto.Checked = True
-        Foto_Producto.Image = My.Resources.NoImage
+        Foto_Producto.Image = My.Resources.NoMachine
         Label60.Visible = False
         Anterior_Producto.Visible = False
         Siguiente_Producto.Visible = False
@@ -1243,6 +1283,151 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub BtnGuardarProducto_Click(sender As Object, e As EventArgs) Handles BtnGuardarProducto.Click
+        If Codigo_Producto.Text = "" Or Nombre_Producto.Text = "" Or Marca_Producto.Text = "" Then
+            MsgBox("Los campos que tengan (*) son obligatorios")
+            Exit Sub
+        End If
+        Dim var = Unidades_Producto.SelectedItem
+        If Unidades_Producto.SelectedItem = Nothing Then
+            MsgBox("Escoja una unidad para el producto", MsgBoxStyle.Exclamation, "Error.")
+            Exit Sub
+        End If
+
+        If Convert.ToInt32(Stock_Minimo.Text) > Convert.ToInt32(Stock_Maximo.Text) Then
+            MsgBox("El Stock minimo no puede ser mayor que el Stock maximo", MsgBoxStyle.Exclamation, "Error")
+            Exit Sub
+        End If
+
+        If Convert.ToInt32(Compra_Maxima.Text) > Convert.ToInt32(Stock_Maximo.Text) Then
+            MsgBox("El valor de la compra maxima no puede ser mayor que el stock maximo", MsgBoxStyle.Exclamation, "Error")
+            Exit Sub
+        End If
+
+        If Stock_Existente.Text = "" Then
+            Stock_Existente.Text = 0
+        End If
+        If Stock_Minimo.Text = "" Then
+            Stock_Minimo.Text = 0
+        End If
+        If Stock_Maximo.Text = "" Then
+            Stock_Maximo.Text = 0
+        End If
+        If Compra_Maxima.Text = "" Then
+            Compra_Maxima.Text = 0
+        End If
+
+        If Modificar_Producto = 1 Then
+            Dim reader As MySqlDataReader
+            Dim Codigo As String = Codigo_Producto.Text.Trim
+            Dim Serie As String = Serie_Producto.Text.Trim
+            Dim Nombre As String = Nombre_Producto.Text.Trim
+            Dim Marca As String = Marca_Producto.Text.Trim
+            Dim Activo As Boolean = Activo_Producto.Checked
+            Dim IDCategoria As String = Categoria_Producto.SelectedValue.ToString
+            Dim IDSubcategoria As String = SubCategoria_Producto.SelectedValue.ToString
+
+            Try
+                conn.Open()
+                Dim query As String = "UPDATE productos SET Cod_Producto = @Codigo, Nombre_Producto = @Nombre
+                                , Marca = @Marca, Serie = @Serie,ID_Categoria = @Categoria, Id_Subcategoria = @Subcategoria,
+                                Activo = @Activo WHERE Id_Producto= @IDProducto;"
+                Dim cmd As New MySqlCommand(query, conn)
+                With cmd.Parameters
+                    .AddWithValue("Codigo", Codigo)
+                    .AddWithValue("Nombre", Nombre)
+                    .AddWithValue("Marca", Marca)
+                    .AddWithValue("Serie", Serie)
+                    .AddWithValue("Categoria", IDCategoria)
+                    .AddWithValue("Subcategoria", IDSubcategoria)
+                    .AddWithValue("Activo", Activo)
+                    .AddWithValue("IDProducto", Id_Prod)
+                End With
+                reader = cmd.ExecuteReader
+                MsgBox("Producto modificado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                conn.Close()
+            End Try
+
+            Dim StockMinimo As String = Stock_Minimo.Text.Trim
+            Dim StockMaximo As String = Stock_Maximo.Text.Trim
+            Dim StockExistente As String = Stock_Existente.Text.Trim
+            Dim Unidades As String = Unidades_Producto.SelectedItem.ToString
+            Dim CompraMaxima As String = Compra_Maxima.Text.Trim
+
+            Try
+                conn.Open()
+                Dim query As String = "UPDATE productos SET Stock_Minimo = @Minimo, Stock_Maximo = @Maximo, Stock_Existente = @Existente,
+                                       Unidades = @Unidades, Compra_Maxima = @CMaxima WHERE Id_Producto = @IdProducto"
+                Dim cmd As New MySqlCommand(query, conn)
+                With cmd.Parameters
+                    .AddWithValue("Minimo", StockMinimo)
+                    .AddWithValue("Maximo", StockMaximo)
+                    .AddWithValue("Existente", StockExistente)
+                    .AddWithValue("Unidades", Unidades)
+                    .AddWithValue("CMaxima", CompraMaxima)
+                    .AddWithValue("IdProducto", Id_Prod)
+                End With
+                cmd.ExecuteScalar()
+                MsgBox("Stock Actualizado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox("Error Actualizando Stock del Producto:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                conn.Close()
+            End Try
+
+        ElseIf Agregar_Producto = 1 Then
+
+            Dim reader As MySqlDataReader
+            Dim Codigo As String = Codigo_Producto.Text.Trim
+            Dim Serie As String = Serie_Producto.Text.Trim
+            Dim Nombre As String = Nombre_Producto.Text.Trim
+            Dim Marca As String = Marca_Producto.Text.Trim
+            Dim Activo As Boolean = Activo_Producto.Checked
+            Dim IDCategoria As String = Categoria_Producto.SelectedValue.ToString
+            Dim IDSubcategoria As String = SubCategoria_Producto.SelectedValue.ToString
+            Dim StockMinimo As String = Stock_Minimo.Text.Trim
+            Dim StockMaximo As String = Stock_Maximo.Text.Trim
+            Dim StockExistente As String = Stock_Existente.Text.Trim
+            Dim Unidades As String = Unidades_Producto.SelectedItem.ToString
+            Dim CompraMaxima As String = Compra_Maxima.Text.Trim
+
+            Try
+                conn.Open()
+                Dim query As String = "INSERT into Productos (Cod_Producto, Nombre_Producto, Marca, Serie, Id_Categoria, Id_SubCategoria, Stock_Minimo, Stock_Maximo, Stock_Existente, Unidades, Compra_Maxima, Activo)
+                                      VALUES (@Codigo, @Nombre, @Marca, @Serie, @Categoria, @Subcategoria, @Minimo, @Maximo, @Existente, @Unidades, @CMaxima, @Activo);"
+                Dim cmd As New MySqlCommand(query, conn)
+                With cmd.Parameters
+                    .AddWithValue("Codigo", Codigo)
+                    .AddWithValue("Nombre", Nombre)
+                    .AddWithValue("Marca", Marca)
+                    .AddWithValue("Serie", Serie)
+                    .AddWithValue("Categoria", IDCategoria)
+                    .AddWithValue("Subcategoria", IDSubcategoria)
+                    .AddWithValue("Minimo", StockMinimo)
+                    .AddWithValue("Maximo", StockMaximo)
+                    .AddWithValue("Existente", StockExistente)
+                    .AddWithValue("Unidades", Unidades)
+                    .AddWithValue("CMaxima", CompraMaxima)
+                    .AddWithValue("Activo", Activo)
+                End With
+                reader = cmd.ExecuteReader
+                MsgBox("Producto Agregado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                conn.Close()
+            End Try
+
+            Agregar_Producto = 0
+            HabilitarControlesProducto()
+            Recorrer_Productos()
+        End If
+    End Sub
+
+
     Public Function ComputeHashOfString(Of T As HashAlgorithm)(ByVal str As String,
                                                                              Optional ByVal enc As Encoding = Nothing) As String
         If (enc Is Nothing) Then
@@ -1310,6 +1495,28 @@ Public Class Form1
         End If
         Recorrer_Equipos()
     End Sub
+
+    Private Sub BtnEliminarProducto_Click(sender As Object, e As EventArgs) Handles BtnEliminarProducto.Click
+        If Agregar_Producto = 1 Then
+            Exit Sub
+        End If
+        If MessageBox.Show("¿Esta seguro que desea ELIMINAR este Producto?", "Alerta", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            Try
+                conn.Open()
+                Dim query As String = "Delete from Productos where Id_Producto = @IdProducto;"
+                Dim cmd As New MySqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("IdProducto", Id_Prod)
+                cmd.ExecuteNonQuery()
+                MsgBox("Producto Eliminado", MsgBoxStyle.Information, "Info.")
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
+            End Try
+        End If
+        Recorrer_Productos()
+    End Sub
+
 
     Private Sub Eliminar_Doag_Click(sender As Object, e As EventArgs) Handles Eliminar_Doag.Click
         If Agregar_Doag = 1 Then
@@ -1502,6 +1709,67 @@ Public Class Form1
         End Try
     End Sub
 
+    Private Sub Productos_Consultar_Click(sender As Object, e As EventArgs) Handles Productos_Consultar.Click
+        If Buscar_Produ.Text.Trim = "" Then
+            Exit Sub
+        End If
+        Cargar_Tabla("*", "PRODUCTOS")
+        If z <> Buscar_Produ.Text Then
+            cant_reg_encon = 0
+        End If
+        Try
+            conn.Open()
+            Dim consulta As String = "Select * from productos"
+            Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
+            Dim MysqlDset As New DataSet
+            MysqlDadap.Fill(MysqlDset)
+            conn.Close()
+            Dim i As Integer = 0
+            Dim foundRows() As Data.DataRow
+            foundRows = MysqlDset.Tables(0).Select("Nombre_Producto Like '" & Buscar_Produ.Text & "%'")
+            z = Buscar_Produ.Text
+            If cant_reg_encon = 0 And foundRows.Length > 1 Then
+                cant_reg_encon = foundRows.Length
+                For Each row In Tabla1.Rows
+                    If foundRows(cant_reg_encon - 1).Item(1) = row(1) Then
+                        'MsgBox(foundRows(cant_reg_encon - 1).Item(1))
+                        Prod_Num = i + 1
+                        Recorrer_Productos()
+                        cant_reg_encon = cant_reg_encon - 1
+                        Exit Sub
+                    End If
+                    i = i + 1
+                Next
+            Else
+                If foundRows.Length = 0 Then
+                    MsgBox("No se encontro ninguna coincidencia")
+                ElseIf cant_reg_encon = 0 Then
+                    For Each row In Tabla1.Rows
+                        If foundRows(cant_reg_encon).Item(1) = row(1) Then
+                            Prod_Num = i + 1
+                            Recorrer_Productos()
+                            Exit Sub
+                        End If
+                        i = i + 1
+                    Next
+                Else
+                    For Each row In Tabla1.Rows
+                        If foundRows(cant_reg_encon - 1).Item(1) = row(1) Then
+                            Prod_Num = i + 1
+                            Recorrer_Productos()
+                            cant_reg_encon = cant_reg_encon - 1
+                            Exit Sub
+                        End If
+                        i = i + 1
+                    Next
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("Error durante la busqueda: " & ex.Message, MsgBoxStyle.Critical, "Error")
+            conn.Close()
+        End Try
+    End Sub
+
     Private Sub Buscar_Us_KeyDown(sender As Object, e As KeyEventArgs) Handles Buscar_Us.KeyDown
         If e.KeyCode = Keys.Enter Then
             Buscar_Usuario.PerformClick()
@@ -1514,7 +1782,13 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub TextBox_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles Monto_Doag.KeyPress
+    Private Sub Buscar_Produ_KeyDown(sender As Object, e As KeyEventArgs) Handles Buscar_Produ.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            Productos_Consultar_Click(Me.Productos_Consultar, Nothing)
+        End If
+    End Sub
+
+    Private Sub TextBox_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles Monto_Doag.KeyPress, Stock_Existente.KeyPress, Stock_Maximo.KeyPress, Stock_Minimo.KeyPress, Compra_Maxima.KeyPress
         If Asc(e.KeyChar) <> 8 Then
             If Asc(e.KeyChar) < 48 Or Asc(e.KeyChar) > 57 Then
                 e.Handled = True
@@ -2021,11 +2295,6 @@ Public Class Form1
         Monto_Movimiento.Text = Tabla1.Rows(Ord_Movimiento_num).ItemArray(6).ToString
         Proveedor_Movimiento.SelectedValue = Tabla1.Rows(Ord_Movimiento_num).ItemArray(7).ToString
     End Sub
-
-
-
-
-
 
 
 

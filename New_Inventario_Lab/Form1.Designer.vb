@@ -1833,10 +1833,10 @@ Partial Class Form1
         '
         'Precio_Movimiento
         '
-        Me.Precio_Movimiento.Location = New System.Drawing.Point(793, 51)
+        Me.Precio_Movimiento.Location = New System.Drawing.Point(787, 51)
         Me.Precio_Movimiento.Margin = New System.Windows.Forms.Padding(4)
         Me.Precio_Movimiento.Name = "Precio_Movimiento"
-        Me.Precio_Movimiento.Size = New System.Drawing.Size(185, 24)
+        Me.Precio_Movimiento.Size = New System.Drawing.Size(191, 24)
         Me.Precio_Movimiento.TabIndex = 29
         '
         'Usuario_Movimiento

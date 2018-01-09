@@ -2569,6 +2569,23 @@ Public Class Form1
             End If
             Try
                 conn.Open()
+                Dim read As MySqlDataReader
+                Dim cmd As New MySqlCommand("Select * from orden_movimientos where N_Orden_Compra = @NumOrden", conn)
+                With cmd.Parameters
+                    .AddWithValue("NumOrden", UCase(N_Orden_Movimiento.Text.Trim))
+                End With
+                read = cmd.ExecuteReader
+                If read.Read Then
+                    MsgBox("El numero de orden de compra ingresado ya se encuentra en la base de datos.", MsgBoxStyle.Exclamation, "Error.")
+                    conn.Close()
+                    Exit Sub
+                End If
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
+            Try
+                conn.Open()
                 Dim cmd As New MySqlCommand("INSERT INTO orden_movimientos (N_Orden_Compra, N_Referencia, Tipo, Fecha, Observaciones, Nit_Proveedor)
                                             VALUES (@NumOrden, @NumRef, @Tipo, @Fecha, @Obs, @NitProv);", conn)
                 With cmd.Parameters
@@ -2701,6 +2718,30 @@ Public Class Form1
         Tabla_Rel = "Productos"
         Elemento_rel = Nombre_Proveedor.Text
         Form3.ShowDialog()
+    End Sub
+
+    Private Sub Generar_Movimientos_Click(sender As Object, e As EventArgs) Handles Generar_Movimientos.Click
+        DataGridView4.Visible = True
+        Dim consulta_movimientos As String = ""
+        Dim stock As Integer
+        If IsNumeric(Cantidad_Movimiento.Text) Then
+            Cantidad_a_mover = Cantidad_Movimiento.Text
+            Tipo_Movi = Tipo_Movimiento.Text
+            Try
+                conn.Open()
+                Dim cmd As New MySqlCommand("SELECT * FROM productos where Id_Producto = @ProductoMovimiento;", conn)
+                Dim adaptador As New MySqlDataAdapter(cmd)
+                Dim Tabla As New DataTable
+                adaptador.Fill(Tabla)
+                conn.Close()
+                Tabla1 = Tabla
+            Catch ex As Exception
+                MsgBox("Error: " & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                conn.Close()
+            End Try
+            Id_Prod = Tabla1.Rows(0).ItemArray(0).ToString
+
+        End If
     End Sub
 
 

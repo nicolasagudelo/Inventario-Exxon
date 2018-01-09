@@ -2636,6 +2636,18 @@ Public Class Form1
         Proveedor_Movimiento.SelectedValue = Tabla1.Rows(Ord_Movimiento_num).ItemArray(7).ToString
     End Sub
 
+    Private Sub Modificar_Prod_Equ_Click(sender As Object, e As EventArgs) Handles Modificar_Prod_Equ.Click
+        Bandera_Rel = 1
+
+        Consulta_rel = "SELECT Cod_Producto, Nombre_Producto,IdRel_Producto_Equipos FROM rel_productos_equipos INNER JOIN productos
+                        ON (rel_productos_equipos.Id_Producto = productos.Id_Producto) INNER JOIN equipos ON (rel_productos_equipos.Id_Equipo = equipos.Id_Equipo)
+                        WHERE rel_productos_equipos.Id_Equipo='" & Id_Equipo & "'"
+        Id_elem = Id_Equipo
+        Tabla_Rel = "Productos"
+        Elemento_rel = Nombre_Equipo.Text.Trim
+        Form3.ShowDialog()
+    End Sub
+
 
 
     '    Private Sub Generar_Movimientos_Click(sender As Object, e As EventArgs) Handles Generar_Movimientos.Click

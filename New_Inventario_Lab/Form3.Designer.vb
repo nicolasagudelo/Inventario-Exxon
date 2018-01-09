@@ -83,11 +83,11 @@ Partial Class Form3
         Me.TabPage1.Controls.Add(Me.Combo_Equ_Prod)
         Me.TabPage1.Controls.Add(Me.DataGridView1)
         Me.TabPage1.Controls.Add(Me.Agregar_Equ_Prod)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 25)
         Me.TabPage1.Margin = New System.Windows.Forms.Padding(4)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(4)
-        Me.TabPage1.Size = New System.Drawing.Size(1067, 437)
+        Me.TabPage1.Size = New System.Drawing.Size(1067, 441)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Equipos/Productos"
         '
@@ -107,16 +107,17 @@ Partial Class Form3
         Me.Label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight
         Me.Label1.Location = New System.Drawing.Point(73, 40)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(65, 20)
+        Me.Label1.Size = New System.Drawing.Size(53, 16)
         Me.Label1.TabIndex = 6
         Me.Label1.Text = "Label1"
         '
         'Combo_Equ_Prod
         '
+        Me.Combo_Equ_Prod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Combo_Equ_Prod.FormattingEnabled = True
         Me.Combo_Equ_Prod.Location = New System.Drawing.Point(721, 173)
         Me.Combo_Equ_Prod.Name = "Combo_Equ_Prod"
-        Me.Combo_Equ_Prod.Size = New System.Drawing.Size(172, 28)
+        Me.Combo_Equ_Prod.Size = New System.Drawing.Size(172, 24)
         Me.Combo_Equ_Prod.TabIndex = 2
         '
         'DataGridView1
@@ -148,11 +149,11 @@ Partial Class Form3
         Me.TabPage2.Controls.Add(Me.Combo_Prov_Prod)
         Me.TabPage2.Controls.Add(Me.Agregar_Prov_Prod)
         Me.TabPage2.Controls.Add(Me.DataGridView2)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 25)
         Me.TabPage2.Margin = New System.Windows.Forms.Padding(4)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(4)
-        Me.TabPage2.Size = New System.Drawing.Size(1067, 437)
+        Me.TabPage2.Size = New System.Drawing.Size(1067, 441)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Proveedores/Productos"
         '
@@ -172,7 +173,7 @@ Partial Class Form3
         Me.Label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight
         Me.Label2.Location = New System.Drawing.Point(77, 21)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(65, 20)
+        Me.Label2.Size = New System.Drawing.Size(53, 16)
         Me.Label2.TabIndex = 6
         Me.Label2.Text = "Label2"
         '
@@ -181,7 +182,7 @@ Partial Class Form3
         Me.Combo_Prov_Prod.FormattingEnabled = True
         Me.Combo_Prov_Prod.Location = New System.Drawing.Point(719, 139)
         Me.Combo_Prov_Prod.Name = "Combo_Prov_Prod"
-        Me.Combo_Prov_Prod.Size = New System.Drawing.Size(172, 28)
+        Me.Combo_Prov_Prod.Size = New System.Drawing.Size(172, 24)
         Me.Combo_Prov_Prod.TabIndex = 4
         '
         'Agregar_Prov_Prod
@@ -216,11 +217,11 @@ Partial Class Form3
         Me.TabPage3.Controls.Add(Me.Label3)
         Me.TabPage3.Controls.Add(Me.Agregar_Ubicacion)
         Me.TabPage3.Controls.Add(Me.DataGridView3)
-        Me.TabPage3.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 25)
         Me.TabPage3.Margin = New System.Windows.Forms.Padding(4)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(4)
-        Me.TabPage3.Size = New System.Drawing.Size(1067, 437)
+        Me.TabPage3.Size = New System.Drawing.Size(1067, 441)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Ubicaciones"
         '
@@ -228,7 +229,7 @@ Partial Class Form3
         '
         Me.Aforo_Ubicacion.Location = New System.Drawing.Point(407, 391)
         Me.Aforo_Ubicacion.Name = "Aforo_Ubicacion"
-        Me.Aforo_Ubicacion.Size = New System.Drawing.Size(100, 27)
+        Me.Aforo_Ubicacion.Size = New System.Drawing.Size(100, 23)
         Me.Aforo_Ubicacion.TabIndex = 12
         '
         'Label5
@@ -237,7 +238,7 @@ Partial Class Form3
         Me.Label5.ForeColor = System.Drawing.SystemColors.ButtonHighlight
         Me.Label5.Location = New System.Drawing.Point(347, 394)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(54, 20)
+        Me.Label5.Size = New System.Drawing.Size(45, 16)
         Me.Label5.TabIndex = 11
         Me.Label5.Text = "Aforo"
         '
@@ -247,7 +248,7 @@ Partial Class Form3
         Me.Label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight
         Me.Label4.Location = New System.Drawing.Point(95, 18)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(201, 20)
+        Me.Label4.Size = New System.Drawing.Size(166, 16)
         Me.Label4.TabIndex = 10
         Me.Label4.Text = "Ubicaciones Existentes"
         '
@@ -278,7 +279,7 @@ Partial Class Form3
         Me.Label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight
         Me.Label3.Location = New System.Drawing.Point(574, 18)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(65, 20)
+        Me.Label3.Size = New System.Drawing.Size(53, 16)
         Me.Label3.TabIndex = 6
         Me.Label3.Text = "Label3"
         '
@@ -311,10 +312,10 @@ Partial Class Form3
         Me.TabPage4.Controls.Add(Me.Cantidad_Mov_Reg)
         Me.TabPage4.Controls.Add(Me.Label6)
         Me.TabPage4.Controls.Add(Me.DataGridView5)
-        Me.TabPage4.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 25)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(1067, 437)
+        Me.TabPage4.Size = New System.Drawing.Size(1067, 441)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Movimiento"
         '
@@ -322,7 +323,7 @@ Partial Class Form3
         '
         Me.Mov_ind.Location = New System.Drawing.Point(862, 190)
         Me.Mov_ind.Name = "Mov_ind"
-        Me.Mov_ind.Size = New System.Drawing.Size(92, 27)
+        Me.Mov_ind.Size = New System.Drawing.Size(92, 23)
         Me.Mov_ind.TabIndex = 11
         '
         'Label7
@@ -332,7 +333,7 @@ Partial Class Form3
         Me.Label7.ForeColor = System.Drawing.Color.Red
         Me.Label7.Location = New System.Drawing.Point(824, 142)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(141, 28)
+        Me.Label7.Size = New System.Drawing.Size(112, 22)
         Me.Label7.TabIndex = 10
         Me.Label7.Text = "Pendientes"
         '
@@ -352,7 +353,7 @@ Partial Class Form3
         Me.Label6.ForeColor = System.Drawing.SystemColors.ButtonHighlight
         Me.Label6.Location = New System.Drawing.Point(41, 37)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(525, 20)
+        Me.Label6.Size = New System.Drawing.Size(435, 16)
         Me.Label6.TabIndex = 8
         Me.Label6.Text = "El movimiento solo se finaliza cuando los pendientes esten en 0"
         '
@@ -369,7 +370,7 @@ Partial Class Form3
         '
         'Form3
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(11.0!, 20.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.SlateGray
         Me.ClientSize = New System.Drawing.Size(1147, 542)

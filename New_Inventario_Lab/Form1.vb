@@ -2648,6 +2648,48 @@ Public Class Form1
         Form3.ShowDialog()
     End Sub
 
+    Private Sub Equipo_Producto_Click(sender As Object, e As EventArgs) Handles Equipo_Producto.Click
+        Bandera_Rel = 1
+        Consulta_rel = "SELECT Cod_Equipo, Nombre_Equipo,IdRel_Producto_Equipos FROM rel_productos_equipos " &
+                        "INNER JOIN productos " &
+                        "ON (rel_productos_equipos.Id_Producto = productos.Id_Producto) " &
+                        "INNER JOIN equipos " &
+                        "ON (rel_productos_equipos.Id_Equipo = equipos.Id_Equipo) " &
+                        "WHERE rel_productos_equipos.Id_Producto='" & Id_Prod & "'"
+        Id_elem = Id_Prod
+        Tabla_Rel = "Equipos"
+        Elemento_rel = Nombre_Producto.Text
+        Form3.ShowDialog()
+    End Sub
+
+    Private Sub Proveedor_Producto_Click(sender As Object, e As EventArgs) Handles Proveedor_Producto.Click
+        Bandera_Rel = 2
+        Consulta_rel = "SELECT Nombre_Proveedor, Ciudad, IdRel_Productos_Proveedores FROM rel_productos_proveedores " &
+                        "INNER JOIN productos " &
+                        "ON (rel_productos_proveedores.Id_Producto = productos.Id_Producto) " &
+                        "INNER JOIN proveedores " &
+                        "ON (rel_productos_proveedores.Nit_Proveedor= proveedores.Nit_Proveedor) " &
+                        "WHERE rel_productos_proveedores.Id_Producto='" & Id_Prod & "'"
+        Id_elem = Id_Prod
+        Tabla_Rel = "Proveedores"
+        Form3.ShowDialog()
+    End Sub
+
+    Private Sub Ubicacion_Producto_Click(sender As Object, e As EventArgs) Handles Ubicacion_Producto.Click
+        Bandera_Rel = 3
+        Consulta_rel = "SELECT Estante,Entrepano,Caja_Color,Zona,Cantidad,Aforo,IdRel_Ubicaciones_Productos FROM rel_ubicaciones_productos " &
+                        "INNER JOIN productos " &
+                        "ON (rel_ubicaciones_productos.Id_Producto = productos.Id_Producto) " &
+                        "INNER JOIN ubicaciones " &
+                        "ON (rel_ubicaciones_productos.Id_Ubicacion = ubicaciones.Id_Ubicacion) " &
+                        "WHERE rel_ubicaciones_productos.Id_Producto='" & Id_Prod & "'"
+        Id_elem = Id_Prod
+        Tabla_Rel = "Ubicaciones"
+        Elemento_rel = Nombre_Producto.Text
+        Form3.ShowDialog()
+    End Sub
+
+
 
 
     '    Private Sub Generar_Movimientos_Click(sender As Object, e As EventArgs) Handles Generar_Movimientos.Click

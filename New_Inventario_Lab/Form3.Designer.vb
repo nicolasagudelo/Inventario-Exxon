@@ -22,6 +22,7 @@ Partial Class Form3
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form3))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Eliminar_Equ_Prod = New System.Windows.Forms.Button()
@@ -179,6 +180,7 @@ Partial Class Form3
         '
         'Combo_Prov_Prod
         '
+        Me.Combo_Prov_Prod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Combo_Prov_Prod.FormattingEnabled = True
         Me.Combo_Prov_Prod.Location = New System.Drawing.Point(719, 139)
         Me.Combo_Prov_Prod.Name = "Combo_Prov_Prod"
@@ -376,6 +378,7 @@ Partial Class Form3
         Me.ClientSize = New System.Drawing.Size(1147, 542)
         Me.Controls.Add(Me.TabControl1)
         Me.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.2!)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "Form3"
         Me.Text = "Relaciones"

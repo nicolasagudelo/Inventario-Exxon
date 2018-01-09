@@ -44,7 +44,6 @@ Partial Class Form1
         Me.Gestion_Almacen = New System.Windows.Forms.PictureBox()
         Me.Bandeja_Trabajo = New System.Windows.Forms.PictureBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.Label9 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -482,7 +481,6 @@ Partial Class Form1
         '
         Me.TabPage2.BackColor = System.Drawing.Color.DarkSlateGray
         Me.TabPage2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TabPage2.Controls.Add(Me.Label9)
         Me.TabPage2.Controls.Add(Me.Label6)
         Me.TabPage2.Controls.Add(Me.Label7)
         Me.TabPage2.Controls.Add(Me.Label8)
@@ -496,16 +494,6 @@ Partial Class Form1
         Me.TabPage2.Size = New System.Drawing.Size(209, 687)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Movimientos"
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(16, 29)
-        Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(48, 17)
-        Me.Label9.TabIndex = 20
-        Me.Label9.Text = "Crear"
         '
         'Label6
         '
@@ -3646,7 +3634,6 @@ Partial Class Form1
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
-    Friend WithEvents Label9 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents Label7 As Label
     Friend WithEvents Label8 As Label

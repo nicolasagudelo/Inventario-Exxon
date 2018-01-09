@@ -2689,6 +2689,20 @@ Public Class Form1
         Form3.ShowDialog()
     End Sub
 
+    Private Sub Modificar_Prod_Prov_Click(sender As Object, e As EventArgs) Handles Modificar_Prod_Prov.Click
+        Bandera_Rel = 2
+        Consulta_rel = "SELECT Cod_Producto, Nombre_Producto,IdRel_Productos_Proveedores FROM rel_productos_proveedores " &
+                        "INNER JOIN productos " &
+                        "ON (rel_productos_proveedores.Id_Producto = productos.Id_Producto) " &
+                        "INNER JOIN proveedores " &
+                        "ON (rel_productos_proveedores.Nit_Proveedor= proveedores.Nit_Proveedor) " &
+                        "WHERE rel_productos_proveedores.Nit_Proveedor='" & ID_Prov & "'"
+        Id_elem = ID_Prov
+        Tabla_Rel = "Productos"
+        Elemento_rel = Nombre_Proveedor.Text
+        Form3.ShowDialog()
+    End Sub
+
 
 
 

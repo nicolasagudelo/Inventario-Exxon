@@ -35,15 +35,19 @@ Partial Class Form1
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.PictureBox5 = New System.Windows.Forms.PictureBox()
+        Me.Label32 = New System.Windows.Forms.Label()
+        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Solicitudes = New System.Windows.Forms.PictureBox()
         Me.Gestion_Usuario = New System.Windows.Forms.PictureBox()
         Me.Gestion_Almacen = New System.Windows.Forms.PictureBox()
-        Me.Bandeja_Trabajo = New System.Windows.Forms.PictureBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Solicitudes = New System.Windows.Forms.PictureBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -287,24 +291,22 @@ Partial Class Form1
         Me.Label93 = New System.Windows.Forms.Label()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
-        Me.Label31 = New System.Windows.Forms.Label()
-        Me.Label32 = New System.Windows.Forms.Label()
-        Me.Label33 = New System.Windows.Forms.Label()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.TPAdministrar = New System.Windows.Forms.ToolTip(Me.components)
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox5 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.TxtBxEmail = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
-        CType(Me.Solicitudes, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Gestion_Usuario, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Gestion_Almacen, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Bandeja_Trabajo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
+        CType(Me.Solicitudes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Movimiento_Ingreso, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Movimiento_Salida, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Movimiento_Consulta, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -342,9 +344,6 @@ Partial Class Form1
         Me.GroupBox7.SuspendLayout()
         Me.TabPage16.SuspendLayout()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -371,14 +370,16 @@ Partial Class Form1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.DarkSlateGray
         Me.TabPage1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TabPage1.Controls.Add(Me.Label5)
-        Me.TabPage1.Controls.Add(Me.Label4)
+        Me.TabPage1.Controls.Add(Me.Label33)
+        Me.TabPage1.Controls.Add(Me.PictureBox5)
+        Me.TabPage1.Controls.Add(Me.Label32)
+        Me.TabPage1.Controls.Add(Me.PictureBox4)
+        Me.TabPage1.Controls.Add(Me.Label31)
+        Me.TabPage1.Controls.Add(Me.PictureBox3)
         Me.TabPage1.Controls.Add(Me.Label3)
         Me.TabPage1.Controls.Add(Me.Label2)
-        Me.TabPage1.Controls.Add(Me.Solicitudes)
         Me.TabPage1.Controls.Add(Me.Gestion_Usuario)
         Me.TabPage1.Controls.Add(Me.Gestion_Almacen)
-        Me.TabPage1.Controls.Add(Me.Bandeja_Trabajo)
         Me.TabPage1.Cursor = System.Windows.Forms.Cursors.Default
         Me.TabPage1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.TabPage1.Location = New System.Drawing.Point(4, 4)
@@ -389,33 +390,86 @@ Partial Class Form1
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Administrar"
         '
-        'Label5
+        'Label33
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label5.Location = New System.Drawing.Point(59, 636)
-        Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(87, 17)
-        Me.Label5.TabIndex = 14
-        Me.Label5.Text = "Solicitudes"
+        Me.Label33.AutoSize = True
+        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label33.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.Label33.Location = New System.Drawing.Point(65, 651)
+        Me.Label33.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(87, 15)
+        Me.Label33.TabIndex = 20
+        Me.Label33.Text = "Proveedores"
         '
-        'Label4
+        'PictureBox5
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label4.Location = New System.Drawing.Point(38, 469)
-        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(128, 17)
-        Me.Label4.TabIndex = 13
-        Me.Label4.Text = "Bandeja Trabajo"
+        Me.PictureBox5.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.PictureBox5.Image = Global.Inventario_Lab.My.Resources.Resources.Proveedores1
+        Me.PictureBox5.Location = New System.Drawing.Point(32, 567)
+        Me.PictureBox5.Margin = New System.Windows.Forms.Padding(4)
+        Me.PictureBox5.Name = "PictureBox5"
+        Me.PictureBox5.Size = New System.Drawing.Size(145, 80)
+        Me.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox5.TabIndex = 19
+        Me.PictureBox5.TabStop = False
+        Me.TPAdministrar.SetToolTip(Me.PictureBox5, "Proveedores")
+        '
+        'Label32
+        '
+        Me.Label32.AutoSize = True
+        Me.Label32.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label32.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.Label32.Location = New System.Drawing.Point(74, 548)
+        Me.Label32.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label32.Name = "Label32"
+        Me.Label32.Size = New System.Drawing.Size(71, 15)
+        Me.Label32.TabIndex = 18
+        Me.Label32.Text = "Productos"
+        '
+        'PictureBox4
+        '
+        Me.PictureBox4.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.PictureBox4.Image = Global.Inventario_Lab.My.Resources.Resources.Productos
+        Me.PictureBox4.Location = New System.Drawing.Point(32, 437)
+        Me.PictureBox4.Margin = New System.Windows.Forms.Padding(4)
+        Me.PictureBox4.Name = "PictureBox4"
+        Me.PictureBox4.Size = New System.Drawing.Size(143, 107)
+        Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox4.TabIndex = 17
+        Me.PictureBox4.TabStop = False
+        Me.TPAdministrar.SetToolTip(Me.PictureBox4, "Productos")
+        '
+        'Label31
+        '
+        Me.Label31.AutoSize = True
+        Me.Label31.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label31.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.Label31.Location = New System.Drawing.Point(74, 418)
+        Me.Label31.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(59, 15)
+        Me.Label31.TabIndex = 16
+        Me.Label31.Text = "Equipos"
+        '
+        'PictureBox3
+        '
+        Me.PictureBox3.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.PictureBox3.Image = Global.Inventario_Lab.My.Resources.Resources.Equipo1
+        Me.PictureBox3.Location = New System.Drawing.Point(32, 295)
+        Me.PictureBox3.Margin = New System.Windows.Forms.Padding(4)
+        Me.PictureBox3.Name = "PictureBox3"
+        Me.PictureBox3.Size = New System.Drawing.Size(143, 119)
+        Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox3.TabIndex = 15
+        Me.PictureBox3.TabStop = False
+        Me.TPAdministrar.SetToolTip(Me.PictureBox3, "Equipos")
         '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label3.Location = New System.Drawing.Point(38, 305)
+        Me.Label3.Location = New System.Drawing.Point(43, 274)
         Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(130, 17)
@@ -426,31 +480,20 @@ Partial Class Form1
         '
         Me.Label2.AutoSize = True
         Me.Label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label2.Location = New System.Drawing.Point(38, 141)
+        Me.Label2.Location = New System.Drawing.Point(43, 133)
         Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(125, 17)
         Me.Label2.TabIndex = 11
         Me.Label2.Text = "Gestión Usuario"
         '
-        'Solicitudes
-        '
-        Me.Solicitudes.Image = Global.Inventario_Lab.My.Resources.Resources.Solicitudes
-        Me.Solicitudes.Location = New System.Drawing.Point(18, 503)
-        Me.Solicitudes.Margin = New System.Windows.Forms.Padding(4)
-        Me.Solicitudes.Name = "Solicitudes"
-        Me.Solicitudes.Size = New System.Drawing.Size(166, 129)
-        Me.Solicitudes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.Solicitudes.TabIndex = 10
-        Me.Solicitudes.TabStop = False
-        '
         'Gestion_Usuario
         '
         Me.Gestion_Usuario.Image = Global.Inventario_Lab.My.Resources.Resources.Ges_Usuario
-        Me.Gestion_Usuario.Location = New System.Drawing.Point(18, 8)
+        Me.Gestion_Usuario.Location = New System.Drawing.Point(32, 8)
         Me.Gestion_Usuario.Margin = New System.Windows.Forms.Padding(4)
         Me.Gestion_Usuario.Name = "Gestion_Usuario"
-        Me.Gestion_Usuario.Size = New System.Drawing.Size(166, 129)
+        Me.Gestion_Usuario.Size = New System.Drawing.Size(145, 118)
         Me.Gestion_Usuario.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Gestion_Usuario.TabIndex = 7
         Me.Gestion_Usuario.TabStop = False
@@ -458,29 +501,20 @@ Partial Class Form1
         'Gestion_Almacen
         '
         Me.Gestion_Almacen.Image = Global.Inventario_Lab.My.Resources.Resources.Ges_Almacen
-        Me.Gestion_Almacen.Location = New System.Drawing.Point(18, 172)
+        Me.Gestion_Almacen.Location = New System.Drawing.Point(32, 154)
         Me.Gestion_Almacen.Margin = New System.Windows.Forms.Padding(4)
         Me.Gestion_Almacen.Name = "Gestion_Almacen"
-        Me.Gestion_Almacen.Size = New System.Drawing.Size(166, 129)
+        Me.Gestion_Almacen.Size = New System.Drawing.Size(145, 116)
         Me.Gestion_Almacen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Gestion_Almacen.TabIndex = 8
         Me.Gestion_Almacen.TabStop = False
-        '
-        'Bandeja_Trabajo
-        '
-        Me.Bandeja_Trabajo.Image = Global.Inventario_Lab.My.Resources.Resources.Bandeja_Trabajo
-        Me.Bandeja_Trabajo.Location = New System.Drawing.Point(18, 336)
-        Me.Bandeja_Trabajo.Margin = New System.Windows.Forms.Padding(4)
-        Me.Bandeja_Trabajo.Name = "Bandeja_Trabajo"
-        Me.Bandeja_Trabajo.Size = New System.Drawing.Size(166, 129)
-        Me.Bandeja_Trabajo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.Bandeja_Trabajo.TabIndex = 9
-        Me.Bandeja_Trabajo.TabStop = False
         '
         'TabPage2
         '
         Me.TabPage2.BackColor = System.Drawing.Color.DarkSlateGray
         Me.TabPage2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TabPage2.Controls.Add(Me.Label5)
+        Me.TabPage2.Controls.Add(Me.Solicitudes)
         Me.TabPage2.Controls.Add(Me.Label6)
         Me.TabPage2.Controls.Add(Me.Label7)
         Me.TabPage2.Controls.Add(Me.Label8)
@@ -495,11 +529,33 @@ Partial Class Form1
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Movimientos"
         '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.Label5.Location = New System.Drawing.Point(77, 498)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(87, 17)
+        Me.Label5.TabIndex = 21
+        Me.Label5.Text = "Solicitudes"
+        '
+        'Solicitudes
+        '
+        Me.Solicitudes.Image = Global.Inventario_Lab.My.Resources.Resources.Solicitudes
+        Me.Solicitudes.Location = New System.Drawing.Point(34, 365)
+        Me.Solicitudes.Margin = New System.Windows.Forms.Padding(4)
+        Me.Solicitudes.Name = "Solicitudes"
+        Me.Solicitudes.Size = New System.Drawing.Size(166, 129)
+        Me.Solicitudes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.Solicitudes.TabIndex = 20
+        Me.Solicitudes.TabStop = False
+        '
         'Label6
         '
         Me.Label6.AutoSize = True
         Me.Label6.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label6.Location = New System.Drawing.Point(78, 631)
+        Me.Label6.Location = New System.Drawing.Point(77, 662)
         Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(77, 17)
@@ -510,7 +566,7 @@ Partial Class Form1
         '
         Me.Label7.AutoSize = True
         Me.Label7.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label7.Location = New System.Drawing.Point(92, 364)
+        Me.Label7.Location = New System.Drawing.Point(87, 344)
         Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(53, 17)
@@ -542,7 +598,7 @@ Partial Class Form1
         'Movimiento_Salida
         '
         Me.Movimiento_Salida.Image = Global.Inventario_Lab.My.Resources.Resources.Salida
-        Me.Movimiento_Salida.Location = New System.Drawing.Point(34, 231)
+        Me.Movimiento_Salida.Location = New System.Drawing.Point(34, 211)
         Me.Movimiento_Salida.Margin = New System.Windows.Forms.Padding(4)
         Me.Movimiento_Salida.Name = "Movimiento_Salida"
         Me.Movimiento_Salida.Size = New System.Drawing.Size(166, 129)
@@ -553,7 +609,7 @@ Partial Class Form1
         'Movimiento_Consulta
         '
         Me.Movimiento_Consulta.Image = Global.Inventario_Lab.My.Resources.Resources.Consultas
-        Me.Movimiento_Consulta.Location = New System.Drawing.Point(34, 498)
+        Me.Movimiento_Consulta.Location = New System.Drawing.Point(33, 529)
         Me.Movimiento_Consulta.Margin = New System.Windows.Forms.Padding(4)
         Me.Movimiento_Consulta.Name = "Movimiento_Consulta"
         Me.Movimiento_Consulta.Size = New System.Drawing.Size(166, 129)
@@ -768,6 +824,8 @@ Partial Class Form1
         'TabPage7
         '
         Me.TabPage7.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.TabPage7.Controls.Add(Me.Label4)
+        Me.TabPage7.Controls.Add(Me.TxtBxEmail)
         Me.TabPage7.Controls.Add(Me.Label21)
         Me.TabPage7.Controls.Add(Me.Contrasena_Usuario)
         Me.TabPage7.Controls.Add(Me.BtnModificarUsuario)
@@ -800,7 +858,7 @@ Partial Class Form1
         '
         Me.Label21.AutoSize = True
         Me.Label21.Enabled = False
-        Me.Label21.Location = New System.Drawing.Point(11, 238)
+        Me.Label21.Location = New System.Drawing.Point(263, 239)
         Me.Label21.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(93, 17)
@@ -811,7 +869,7 @@ Partial Class Form1
         'Contrasena_Usuario
         '
         Me.Contrasena_Usuario.Enabled = False
-        Me.Contrasena_Usuario.Location = New System.Drawing.Point(14, 278)
+        Me.Contrasena_Usuario.Location = New System.Drawing.Point(266, 279)
         Me.Contrasena_Usuario.Margin = New System.Windows.Forms.Padding(4)
         Me.Contrasena_Usuario.Name = "Contrasena_Usuario"
         Me.Contrasena_Usuario.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
@@ -2029,9 +2087,9 @@ Partial Class Form1
         Me.Label83.Location = New System.Drawing.Point(248, 92)
         Me.Label83.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label83.Name = "Label83"
-        Me.Label83.Size = New System.Drawing.Size(162, 17)
+        Me.Label83.Size = New System.Drawing.Size(86, 17)
         Me.Label83.TabIndex = 20
-        Me.Label83.Text = "Numero Referencia *"
+        Me.Label83.Text = "Remision *"
         '
         'N_Referencia_Movimiento
         '
@@ -2044,12 +2102,12 @@ Partial Class Form1
         'Label82
         '
         Me.Label82.AutoSize = True
-        Me.Label82.Location = New System.Drawing.Point(252, 26)
+        Me.Label82.Location = New System.Drawing.Point(248, 26)
         Me.Label82.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label82.Name = "Label82"
-        Me.Label82.Size = New System.Drawing.Size(127, 17)
+        Me.Label82.Size = New System.Drawing.Size(149, 17)
         Me.Label82.TabIndex = 18
-        Me.Label82.Text = "Numero Orden *"
+        Me.Label82.Text = "Orden de Compra *"
         '
         'N_Orden_Movimiento
         '
@@ -3365,7 +3423,7 @@ Partial Class Form1
         Me.Label29.AutoSize = True
         Me.Label29.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label29.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label29.Location = New System.Drawing.Point(150, 160)
+        Me.Label29.Location = New System.Drawing.Point(420, 165)
         Me.Label29.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(80, 15)
@@ -3377,55 +3435,19 @@ Partial Class Form1
         Me.Label30.AutoSize = True
         Me.Label30.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label30.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label30.Location = New System.Drawing.Point(317, 160)
+        Me.Label30.Location = New System.Drawing.Point(655, 165)
         Me.Label30.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(88, 15)
         Me.Label30.TabIndex = 13
         Me.Label30.Text = "Movimientos"
         '
-        'Label31
-        '
-        Me.Label31.AutoSize = True
-        Me.Label31.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label31.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label31.Location = New System.Drawing.Point(522, 160)
-        Me.Label31.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label31.Name = "Label31"
-        Me.Label31.Size = New System.Drawing.Size(59, 15)
-        Me.Label31.TabIndex = 14
-        Me.Label31.Text = "Equipos"
-        '
-        'Label32
-        '
-        Me.Label32.AutoSize = True
-        Me.Label32.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label32.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label32.Location = New System.Drawing.Point(714, 160)
-        Me.Label32.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(71, 15)
-        Me.Label32.TabIndex = 15
-        Me.Label32.Text = "Productos"
-        '
-        'Label33
-        '
-        Me.Label33.AutoSize = True
-        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label33.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label33.Location = New System.Drawing.Point(896, 160)
-        Me.Label33.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(87, 15)
-        Me.Label33.TabIndex = 16
-        Me.Label33.Text = "Proveedores"
-        '
         'Label34
         '
         Me.Label34.AutoSize = True
         Me.Label34.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label34.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label34.Location = New System.Drawing.Point(1100, 160)
+        Me.Label34.Location = New System.Drawing.Point(904, 165)
         Me.Label34.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label34.Name = "Label34"
         Me.Label34.Size = New System.Drawing.Size(65, 15)
@@ -3440,7 +3462,7 @@ Partial Class Form1
         '
         Me.PictureBox6.Cursor = System.Windows.Forms.Cursors.Hand
         Me.PictureBox6.Image = Global.Inventario_Lab.My.Resources.Resources.Reportes
-        Me.PictureBox6.Location = New System.Drawing.Point(1048, 8)
+        Me.PictureBox6.Location = New System.Drawing.Point(852, 13)
         Me.PictureBox6.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox6.Name = "PictureBox6"
         Me.PictureBox6.Size = New System.Drawing.Size(164, 141)
@@ -3449,50 +3471,11 @@ Partial Class Form1
         Me.PictureBox6.TabStop = False
         Me.TPAdministrar.SetToolTip(Me.PictureBox6, "Reportes")
         '
-        'PictureBox5
-        '
-        Me.PictureBox5.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.PictureBox5.Image = Global.Inventario_Lab.My.Resources.Resources.Proveedores1
-        Me.PictureBox5.Location = New System.Drawing.Point(856, 8)
-        Me.PictureBox5.Margin = New System.Windows.Forms.Padding(4)
-        Me.PictureBox5.Name = "PictureBox5"
-        Me.PictureBox5.Size = New System.Drawing.Size(164, 141)
-        Me.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox5.TabIndex = 4
-        Me.PictureBox5.TabStop = False
-        Me.TPAdministrar.SetToolTip(Me.PictureBox5, "Proveedores")
-        '
-        'PictureBox4
-        '
-        Me.PictureBox4.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.PictureBox4.Image = Global.Inventario_Lab.My.Resources.Resources.Productos
-        Me.PictureBox4.Location = New System.Drawing.Point(664, 8)
-        Me.PictureBox4.Margin = New System.Windows.Forms.Padding(4)
-        Me.PictureBox4.Name = "PictureBox4"
-        Me.PictureBox4.Size = New System.Drawing.Size(164, 141)
-        Me.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox4.TabIndex = 3
-        Me.PictureBox4.TabStop = False
-        Me.TPAdministrar.SetToolTip(Me.PictureBox4, "Productos")
-        '
-        'PictureBox3
-        '
-        Me.PictureBox3.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.PictureBox3.Image = Global.Inventario_Lab.My.Resources.Resources.Equipo1
-        Me.PictureBox3.Location = New System.Drawing.Point(472, 8)
-        Me.PictureBox3.Margin = New System.Windows.Forms.Padding(4)
-        Me.PictureBox3.Name = "PictureBox3"
-        Me.PictureBox3.Size = New System.Drawing.Size(164, 141)
-        Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox3.TabIndex = 2
-        Me.PictureBox3.TabStop = False
-        Me.TPAdministrar.SetToolTip(Me.PictureBox3, "Equipos")
-        '
         'PictureBox2
         '
         Me.PictureBox2.Cursor = System.Windows.Forms.Cursors.Hand
         Me.PictureBox2.Image = Global.Inventario_Lab.My.Resources.Resources.Movimiento1
-        Me.PictureBox2.Location = New System.Drawing.Point(280, 8)
+        Me.PictureBox2.Location = New System.Drawing.Point(618, 13)
         Me.PictureBox2.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(164, 141)
@@ -3505,7 +3488,7 @@ Partial Class Form1
         '
         Me.PictureBox1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.PictureBox1.Image = Global.Inventario_Lab.My.Resources.Resources.Admin_User
-        Me.PictureBox1.Location = New System.Drawing.Point(110, 8)
+        Me.PictureBox1.Location = New System.Drawing.Point(380, 13)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(164, 141)
@@ -3513,6 +3496,25 @@ Partial Class Form1
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         Me.TPAdministrar.SetToolTip(Me.PictureBox1, "Administrar")
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(10, 241)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(53, 17)
+        Me.Label4.TabIndex = 39
+        Me.Label4.Text = "Email:"
+        '
+        'TxtBxEmail
+        '
+        Me.TxtBxEmail.Location = New System.Drawing.Point(14, 279)
+        Me.TxtBxEmail.Margin = New System.Windows.Forms.Padding(4)
+        Me.TxtBxEmail.Name = "TxtBxEmail"
+        Me.TxtBxEmail.ReadOnly = True
+        Me.TxtBxEmail.Size = New System.Drawing.Size(194, 24)
+        Me.TxtBxEmail.TabIndex = 38
         '
         'Form1
         '
@@ -3522,18 +3524,12 @@ Partial Class Form1
         Me.BackColor = System.Drawing.Color.DarkSlateGray
         Me.ClientSize = New System.Drawing.Size(1481, 865)
         Me.Controls.Add(Me.Label34)
-        Me.Controls.Add(Me.Label33)
-        Me.Controls.Add(Me.Label32)
-        Me.Controls.Add(Me.Label31)
         Me.Controls.Add(Me.Label30)
         Me.Controls.Add(Me.Label29)
         Me.Controls.Add(Me.TabControl2)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.PictureBox6)
-        Me.Controls.Add(Me.PictureBox5)
-        Me.Controls.Add(Me.PictureBox4)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.PictureBox3)
         Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.PictureBox1)
         Me.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -3545,12 +3541,14 @@ Partial Class Form1
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
-        CType(Me.Solicitudes, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Gestion_Usuario, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Gestion_Almacen, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Bandeja_Trabajo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
+        CType(Me.Solicitudes, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Movimiento_Ingreso, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Movimiento_Salida, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Movimiento_Consulta, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3602,9 +3600,6 @@ Partial Class Form1
         Me.TabPage16.ResumeLayout(False)
         Me.TabPage16.PerformLayout()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -3614,9 +3609,6 @@ Partial Class Form1
 
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents PictureBox3 As PictureBox
-    Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents PictureBox6 As PictureBox
     Friend WithEvents TabControl1 As TabControl
     Friend WithEvents TabPage1 As TabPage
@@ -3626,11 +3618,7 @@ Partial Class Form1
     Friend WithEvents TabPage5 As TabPage
     Friend WithEvents TabPage6 As TabPage
     Friend WithEvents Gestion_Usuario As PictureBox
-    Friend WithEvents Solicitudes As PictureBox
     Friend WithEvents Gestion_Almacen As PictureBox
-    Friend WithEvents Bandeja_Trabajo As PictureBox
-    Friend WithEvents Label5 As Label
-    Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
@@ -3673,9 +3661,6 @@ Partial Class Form1
     Friend WithEvents Guardar_Usuario As Button
     Friend WithEvents Label29 As Label
     Friend WithEvents Label30 As Label
-    Friend WithEvents Label31 As Label
-    Friend WithEvents Label32 As Label
-    Friend WithEvents Label33 As Label
     Friend WithEvents Label34 As Label
     Friend WithEvents Eliminar_Usuario As Button
     Friend WithEvents Buscar_Usuario As Button
@@ -3877,4 +3862,14 @@ Partial Class Form1
     Friend WithEvents BtnAgregarProveedor As Button
     Friend WithEvents BtnGuardarProveedor As Button
     Friend WithEvents BtnModificarProveedor As Button
+    Friend WithEvents Label33 As Label
+    Friend WithEvents PictureBox5 As PictureBox
+    Friend WithEvents Label32 As Label
+    Friend WithEvents PictureBox4 As PictureBox
+    Friend WithEvents Label31 As Label
+    Friend WithEvents PictureBox3 As PictureBox
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Solicitudes As PictureBox
+    Friend WithEvents Label4 As Label
+    Friend WithEvents TxtBxEmail As TextBox
 End Class

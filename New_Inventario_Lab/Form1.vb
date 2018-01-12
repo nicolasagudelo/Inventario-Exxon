@@ -310,7 +310,7 @@ Public Class Form1
         TabPage7.Parent = TabControl2 'Usuarios
         TabPage8.Parent = TabControl2 'Monto
         CargarDGVMontos()
-        TabPage9.Parent = TabControl2 'Perfiles
+        'TabPage9.Parent = TabControl2 'Perfiles
         CargarPerfiles()
         Recorrer_Usuarios()
     End Sub
@@ -499,7 +499,7 @@ Public Class Form1
         Label10.Visible = True
         Anterior_Usuario.Visible = True
         Siguiente_Usuario.Visible = True
-        Cargar_Tabla("Id_Usuario, Nombre_Usuario, Usuario, Id_Perfil, Foto, Id_Doag", "USUARIOS")
+        Cargar_Tabla("Id_Usuario, Nombre_Usuario, Usuario, Id_Perfil, Foto, Id_Doag, Email", "USUARIOS")
         If usuario_num >= Tabla1.Rows.Count Then
             usuario_num = Tabla1.Rows.Count
         End If
@@ -509,6 +509,7 @@ Public Class Form1
         Usuario_Nickname.Text = Tabla1.Rows(usuario_num - 1).ItemArray(2).ToString
         Perfiles_Usuario.SelectedValue = Convert.ToInt64(Tabla1.Rows(usuario_num - 1).ItemArray(3))
         Doag_Usuarios.SelectedValue = Convert.ToInt64(Tabla1.Rows(usuario_num - 1).ItemArray(5))
+        TxtBxEmail.Text = Tabla1.Rows(usuario_num - 1).ItemArray(6).ToString
         Try
             Dim b64str As String = Tabla1.Rows(usuario_num - 1).ItemArray(4).ToString
             Dim binaryData() As Byte = Convert.FromBase64String(b64str)
@@ -1063,6 +1064,7 @@ Public Class Form1
         Nombre_Usuario.Clear()
         Nombre_Usuario.Focus()
         Usuario_Nickname.Clear()
+        TxtBxEmail.Clear()
         Foto_Usuario.Image = My.Resources.NoImage
         Label10.Visible = False
         Anterior_Usuario.Visible = False
@@ -1107,11 +1109,13 @@ Public Class Form1
         If Modificar_Usuario = 1 Or Agregar_Usuario = 1 Then
             Nombre_Usuario.ReadOnly = False
             Usuario_Nickname.ReadOnly = False
+            TxtBxEmail.ReadOnly = False
             Perfiles_Usuario.Enabled = True
             Doag_Usuarios.Enabled = True
         Else
             Nombre_Usuario.ReadOnly = True
             Usuario_Nickname.ReadOnly = True
+            TxtBxEmail.ReadOnly = True
             Perfiles_Usuario.Enabled = False
             Doag_Usuarios.Enabled = False
         End If
@@ -1269,11 +1273,17 @@ Public Class Form1
             Dim Usuario As String = Usuario_Nickname.Text.Trim
             Dim IDPerfil As String = Perfiles_Usuario.SelectedValue.ToString
             Dim IDDoag As String = Doag_Usuarios.SelectedValue.ToString
-
+            Dim EmailUsu As String = TxtBxEmail.Text.Trim
+            Try
+                Dim em As New MailAddress(EmailUsu)
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                Exit Sub
+            End Try
             Try
                 conn.Open()
                 Dim query As String = "UPDATE usuarios SET Nombre_Usuario = @nombre, Usuario = @usuario
-                                , Id_Perfil = @IDPerfil, Id_Doag = @doag WHERE Id_Usuario = @IDUsu;"
+                                , Id_Perfil = @IDPerfil, Id_Doag = @doag, Email = @Email WHERE Id_Usuario = @IDUsu;"
                 Dim cmd As New MySqlCommand(query, conn)
                 With cmd.Parameters
                     .AddWithValue("nombre", Nombre)
@@ -1281,6 +1291,7 @@ Public Class Form1
                     .AddWithValue("IDPerfil", IDPerfil)
                     .AddWithValue("doag", IDDoag)
                     .AddWithValue("IDUsu", Id_Usuario)
+                    .AddWithValue("Email", EmailUsu)
                 End With
                 reader = cmd.ExecuteReader
                 MsgBox("Usuario modificado", MsgBoxStyle.Information, "Info.")
@@ -1297,6 +1308,13 @@ Public Class Form1
             Dim Usuario As String = Usuario_Nickname.Text.Trim
             Dim IDPerfil As String = Perfiles_Usuario.SelectedValue.ToString
             Dim IDDoag As String = Doag_Usuarios.SelectedValue.ToString
+            Dim EmailUsu As String = TxtBxEmail.Text.Trim
+            Try
+                Dim em As New MailAddress(EmailUsu)
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                Exit Sub
+            End Try
             Dim Contrasena As String = Contrasena_Usuario.Text
             Dim NewSalt As String = GenerateSalt()
             If Contrasena = "" Then
@@ -1312,8 +1330,8 @@ Public Class Form1
 
             Try
                 conn.Open()
-                Dim query As String = "INSERT into usuarios (Nombre_Usuario, Usuario, Salt, Hash, Id_Perfil, Id_Doag)
-                                      VALUES (@nombre, @usuario, @Salt, @Hash, @IDPerfil, @doag);"
+                Dim query As String = "INSERT into usuarios (Nombre_Usuario, Usuario, Salt, Hash, Id_Perfil, Id_Doag, Email)
+                                      VALUES (@nombre, @usuario, @Salt, @Hash, @IDPerfil, @doag, @Email);"
                 Dim cmd As New MySqlCommand(query, conn)
                 With cmd.Parameters
                     .AddWithValue("nombre", Nombre)
@@ -1323,6 +1341,7 @@ Public Class Form1
                     .AddWithValue("IDPerfil", IDPerfil)
                     .AddWithValue("doag", IDDoag)
                     .AddWithValue("IDUsu", Id_Usuario)
+                    .AddWithValue("Email", EmailUsu)
                 End With
                 reader = cmd.ExecuteReader
                 MsgBox("Usuario Agregado", MsgBoxStyle.Information, "Info.")
@@ -2567,6 +2586,28 @@ Public Class Form1
                 MsgBox("Los campos con * son obligatorios")
                 Exit Sub
             End If
+
+            Try
+                conn.Open()
+                Dim read As MySqlDataReader
+                Dim cmd As New MySqlCommand("Select * from orden_movimientos where N_Orden_Compra = @NumOrden and N_Referencia = @Referencia", conn)
+                With cmd.Parameters
+                    .AddWithValue("NumOrden", UCase(N_Orden_Movimiento.Text.Trim))
+                    .AddWithValue("Referencia", UCase(N_Referencia_Movimiento.Text.Trim))
+                End With
+                read = cmd.ExecuteReader
+                If read.Read Then
+                    MsgBox("Un numero de orden ingresado ya se encuentra con el mismo numero de remision en la base de datos, Revise los datos e intentelo de nuevo.", MsgBoxStyle.Exclamation, "Alerta.")
+                    read.Close()
+                    conn.Close()
+                    Exit Sub
+                End If
+                read.Close()
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                conn.Close()
+            End Try
             Try
                 conn.Open()
                 Dim read As MySqlDataReader
@@ -2576,13 +2617,30 @@ Public Class Form1
                 End With
                 read = cmd.ExecuteReader
                 If read.Read Then
-                    MsgBox("El numero de orden de compra ingresado ya se encuentra en la base de datos.", MsgBoxStyle.Exclamation, "Error.")
+                    DataGridView4.Visible = True
+                    Dim cmd2 As New MySqlCommand("SELECT nombre_producto as 'Producto', Cantidad, Precio_Compra as 'Precio', Descripcion 
+                                                FROM movimientos inner join productos on movimientos.Id_Producto = productos.Id_Producto
+                                                inner join orden_movimientos on movimientos.IdOrden_Movimiento = orden_movimientos.IdOrden_Movimiento
+                                                WHERE N_Orden_Compra = @Orden and tipo = 'INGRESO';", conn)
+                    With cmd2.Parameters
+                        .AddWithValue("Orden", N_Orden_Movimiento.Text.Trim)
+                    End With
+                    read.Close()
+                    Dim reader As MySqlDataReader
+                    Dim Tabla As New DataTable
+                    reader = cmd2.ExecuteReader
+                    Tabla.Load(reader)
+                    DataGridView4.DataSource = Tabla
+                    DataGridView4.ReadOnly = True
+                    DataGridView4.AllowUserToResizeColumns = True
+                    DataGridView4.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    reader.Close()
                     conn.Close()
-                    Exit Sub
                 End If
                 conn.Close()
             Catch ex As Exception
                 MsgBox(ex.Message)
+                conn.Close()
             End Try
             Try
                 conn.Open()
@@ -2729,7 +2787,10 @@ Public Class Form1
             Tipo_Movi = Tipo_Movimiento.Text
             Try
                 conn.Open()
-                Dim cmd As New MySqlCommand("SELECT * FROM productos where Id_Producto = @ProductoMovimiento;", conn)
+                Dim cmd As New MySqlCommand("SELECT Id_Producto, stock_minimo, Stock_Maximo, Stock_Existente FROM productos where Id_Producto = @ProductoMovimiento;", conn)
+                With cmd.Parameters
+                    .AddWithValue("ProductoMovimiento", Producto_Movimiento.SelectedValue)
+                End With
                 Dim adaptador As New MySqlDataAdapter(cmd)
                 Dim Tabla As New DataTable
                 adaptador.Fill(Tabla)
@@ -2740,10 +2801,21 @@ Public Class Form1
                 conn.Close()
             End Try
             Id_Prod = Tabla1.Rows(0).ItemArray(0).ToString
+            If Tipo_Movimiento.Text = "INGRESO" Then
+                If Descripcion_Movimiento.Text = "" Or Producto_Movimiento.Text = "" Or Precio_Movimiento.Text = "" Then
+                    MsgBox("Faltan algunos datos para generar el movimiento")
+                    Exit Sub
+                End If
 
+                If Convert.ToInt16(Tabla1.Rows(0).ItemArray(2).ToString) < (Convert.ToInt16(Cantidad_Movimiento.Text) + Convert.ToInt16(Tabla1.Rows(0).ItemArray(3).ToString)) Then
+                    MsgBox("Atencion NO puede realizar el movimiento, porque su movimiento supera el máximo permitido")
+                    Exit Sub
+                End If
+                stock = Convert.ToInt16(Tabla1.Rows(0).ItemArray(3).ToString) + Convert.ToInt16(Cantidad_Movimiento.Text)
+
+            End If
         End If
     End Sub
-
 
 
 

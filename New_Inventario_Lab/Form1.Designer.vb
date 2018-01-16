@@ -73,6 +73,8 @@ Partial Class Form1
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.TxtBxEmail = New System.Windows.Forms.TextBox()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Contrasena_Usuario = New System.Windows.Forms.TextBox()
         Me.BtnModificarUsuario = New System.Windows.Forms.Button()
@@ -289,6 +291,10 @@ Partial Class Form1
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label96 = New System.Windows.Forms.Label()
         Me.Label93 = New System.Windows.Forms.Label()
+        Me.TabPage17 = New System.Windows.Forms.TabPage()
+        Me.DGVProductosEquipo = New System.Windows.Forms.DataGridView()
+        Me.CBEquipos = New System.Windows.Forms.ComboBox()
+        Me.LblEquipo = New System.Windows.Forms.Label()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.Label34 = New System.Windows.Forms.Label()
@@ -296,8 +302,14 @@ Partial Class Form1
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.TxtBxEmail = New System.Windows.Forms.TextBox()
+        Me.DGVListaProductos = New System.Windows.Forms.DataGridView()
+        Me.BtnAgregarProducto = New System.Windows.Forms.Button()
+        Me.BtnQuitarProducto = New System.Windows.Forms.Button()
+        Me.CantidadProducto = New System.Windows.Forms.NumericUpDown()
+        Me.IdProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Producto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Cantidad = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BtnConfirmarSolicitud = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -343,9 +355,13 @@ Partial Class Form1
         Me.TabPage15.SuspendLayout()
         Me.GroupBox7.SuspendLayout()
         Me.TabPage16.SuspendLayout()
+        Me.TabPage17.SuspendLayout()
+        CType(Me.DGVProductosEquipo, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DGVListaProductos, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.CantidadProducto, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -813,6 +829,7 @@ Partial Class Form1
         Me.TabControl2.Controls.Add(Me.TabPage14)
         Me.TabControl2.Controls.Add(Me.TabPage15)
         Me.TabControl2.Controls.Add(Me.TabPage16)
+        Me.TabControl2.Controls.Add(Me.TabPage17)
         Me.TabControl2.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.8!)
         Me.TabControl2.Location = New System.Drawing.Point(226, 232)
         Me.TabControl2.Margin = New System.Windows.Forms.Padding(4)
@@ -853,6 +870,25 @@ Partial Class Form1
         Me.TabPage7.Size = New System.Drawing.Size(1108, 652)
         Me.TabPage7.TabIndex = 0
         Me.TabPage7.Text = "Usuarios"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(10, 241)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(53, 17)
+        Me.Label4.TabIndex = 39
+        Me.Label4.Text = "Email:"
+        '
+        'TxtBxEmail
+        '
+        Me.TxtBxEmail.Location = New System.Drawing.Point(14, 279)
+        Me.TxtBxEmail.Margin = New System.Windows.Forms.Padding(4)
+        Me.TxtBxEmail.Name = "TxtBxEmail"
+        Me.TxtBxEmail.ReadOnly = True
+        Me.TxtBxEmail.Size = New System.Drawing.Size(194, 24)
+        Me.TxtBxEmail.TabIndex = 38
         '
         'Label21
         '
@@ -1908,6 +1944,7 @@ Partial Class Form1
         '
         'Producto_Movimiento
         '
+        Me.Producto_Movimiento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Producto_Movimiento.FormattingEnabled = True
         Me.Producto_Movimiento.Location = New System.Drawing.Point(7, 52)
         Me.Producto_Movimiento.Margin = New System.Windows.Forms.Padding(4)
@@ -3418,6 +3455,53 @@ Partial Class Form1
         Me.Label93.TabIndex = 2
         Me.Label93.Text = "Desde"
         '
+        'TabPage17
+        '
+        Me.TabPage17.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.TabPage17.Controls.Add(Me.BtnConfirmarSolicitud)
+        Me.TabPage17.Controls.Add(Me.CantidadProducto)
+        Me.TabPage17.Controls.Add(Me.BtnQuitarProducto)
+        Me.TabPage17.Controls.Add(Me.BtnAgregarProducto)
+        Me.TabPage17.Controls.Add(Me.DGVListaProductos)
+        Me.TabPage17.Controls.Add(Me.DGVProductosEquipo)
+        Me.TabPage17.Controls.Add(Me.CBEquipos)
+        Me.TabPage17.Controls.Add(Me.LblEquipo)
+        Me.TabPage17.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage17.Name = "TabPage17"
+        Me.TabPage17.Size = New System.Drawing.Size(1108, 652)
+        Me.TabPage17.TabIndex = 10
+        Me.TabPage17.Text = "Solicitud Salida"
+        '
+        'DGVProductosEquipo
+        '
+        Me.DGVProductosEquipo.AllowUserToAddRows = False
+        Me.DGVProductosEquipo.AllowUserToDeleteRows = False
+        Me.DGVProductosEquipo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DGVProductosEquipo.BackgroundColor = System.Drawing.Color.LightSteelBlue
+        Me.DGVProductosEquipo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DGVProductosEquipo.Location = New System.Drawing.Point(34, 98)
+        Me.DGVProductosEquipo.Name = "DGVProductosEquipo"
+        Me.DGVProductosEquipo.Size = New System.Drawing.Size(387, 474)
+        Me.DGVProductosEquipo.TabIndex = 2
+        '
+        'CBEquipos
+        '
+        Me.CBEquipos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CBEquipos.FormattingEnabled = True
+        Me.CBEquipos.Location = New System.Drawing.Point(34, 51)
+        Me.CBEquipos.Name = "CBEquipos"
+        Me.CBEquipos.Size = New System.Drawing.Size(201, 24)
+        Me.CBEquipos.TabIndex = 1
+        '
+        'LblEquipo
+        '
+        Me.LblEquipo.AutoSize = True
+        Me.LblEquipo.Location = New System.Drawing.Point(31, 31)
+        Me.LblEquipo.Name = "LblEquipo"
+        Me.LblEquipo.Size = New System.Drawing.Size(63, 17)
+        Me.LblEquipo.TabIndex = 0
+        Me.LblEquipo.Text = "Equipo:"
+        '
         'Label29
         '
         Me.Label29.AutoSize = True
@@ -3497,24 +3581,76 @@ Partial Class Form1
         Me.PictureBox1.TabStop = False
         Me.TPAdministrar.SetToolTip(Me.PictureBox1, "Administrar")
         '
-        'Label4
+        'DGVListaProductos
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(10, 241)
-        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(53, 17)
-        Me.Label4.TabIndex = 39
-        Me.Label4.Text = "Email:"
+        Me.DGVListaProductos.AllowUserToAddRows = False
+        Me.DGVListaProductos.AllowUserToDeleteRows = False
+        Me.DGVListaProductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DGVListaProductos.BackgroundColor = System.Drawing.Color.LightSteelBlue
+        Me.DGVListaProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DGVListaProductos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IdProducto, Me.Producto, Me.Cantidad})
+        Me.DGVListaProductos.Location = New System.Drawing.Point(664, 98)
+        Me.DGVListaProductos.Name = "DGVListaProductos"
+        Me.DGVListaProductos.ReadOnly = True
+        Me.DGVListaProductos.Size = New System.Drawing.Size(387, 474)
+        Me.DGVListaProductos.TabIndex = 3
         '
-        'TxtBxEmail
+        'BtnAgregarProducto
         '
-        Me.TxtBxEmail.Location = New System.Drawing.Point(14, 279)
-        Me.TxtBxEmail.Margin = New System.Windows.Forms.Padding(4)
-        Me.TxtBxEmail.Name = "TxtBxEmail"
-        Me.TxtBxEmail.ReadOnly = True
-        Me.TxtBxEmail.Size = New System.Drawing.Size(194, 24)
-        Me.TxtBxEmail.TabIndex = 38
+        Me.BtnAgregarProducto.Font = New System.Drawing.Font("Arial", 30.0!)
+        Me.BtnAgregarProducto.Location = New System.Drawing.Point(500, 280)
+        Me.BtnAgregarProducto.Name = "BtnAgregarProducto"
+        Me.BtnAgregarProducto.Size = New System.Drawing.Size(75, 52)
+        Me.BtnAgregarProducto.TabIndex = 4
+        Me.BtnAgregarProducto.Text = ">"
+        Me.BtnAgregarProducto.UseVisualStyleBackColor = True
+        '
+        'BtnQuitarProducto
+        '
+        Me.BtnQuitarProducto.Font = New System.Drawing.Font("Arial", 30.0!)
+        Me.BtnQuitarProducto.Location = New System.Drawing.Point(500, 389)
+        Me.BtnQuitarProducto.Name = "BtnQuitarProducto"
+        Me.BtnQuitarProducto.Size = New System.Drawing.Size(75, 52)
+        Me.BtnQuitarProducto.TabIndex = 5
+        Me.BtnQuitarProducto.Text = "<"
+        Me.BtnQuitarProducto.UseVisualStyleBackColor = True
+        '
+        'CantidadProducto
+        '
+        Me.CantidadProducto.Location = New System.Drawing.Point(483, 348)
+        Me.CantidadProducto.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.CantidadProducto.Name = "CantidadProducto"
+        Me.CantidadProducto.Size = New System.Drawing.Size(120, 24)
+        Me.CantidadProducto.TabIndex = 6
+        Me.CantidadProducto.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        '
+        'IdProducto
+        '
+        Me.IdProducto.HeaderText = "Id_Producto"
+        Me.IdProducto.Name = "IdProducto"
+        Me.IdProducto.ReadOnly = True
+        Me.IdProducto.Visible = False
+        '
+        'Producto
+        '
+        Me.Producto.HeaderText = "Producto"
+        Me.Producto.Name = "Producto"
+        Me.Producto.ReadOnly = True
+        '
+        'Cantidad
+        '
+        Me.Cantidad.HeaderText = "Cantidad"
+        Me.Cantidad.Name = "Cantidad"
+        Me.Cantidad.ReadOnly = True
+        '
+        'BtnConfirmarSolicitud
+        '
+        Me.BtnConfirmarSolicitud.Location = New System.Drawing.Point(943, 587)
+        Me.BtnConfirmarSolicitud.Name = "BtnConfirmarSolicitud"
+        Me.BtnConfirmarSolicitud.Size = New System.Drawing.Size(108, 57)
+        Me.BtnConfirmarSolicitud.TabIndex = 7
+        Me.BtnConfirmarSolicitud.Text = "Confirmar"
+        Me.BtnConfirmarSolicitud.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -3599,9 +3735,14 @@ Partial Class Form1
         Me.GroupBox7.ResumeLayout(False)
         Me.TabPage16.ResumeLayout(False)
         Me.TabPage16.PerformLayout()
+        Me.TabPage17.ResumeLayout(False)
+        Me.TabPage17.PerformLayout()
+        CType(Me.DGVProductosEquipo, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DGVListaProductos, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.CantidadProducto, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3872,4 +4013,16 @@ Partial Class Form1
     Friend WithEvents Solicitudes As PictureBox
     Friend WithEvents Label4 As Label
     Friend WithEvents TxtBxEmail As TextBox
+    Friend WithEvents TabPage17 As TabPage
+    Friend WithEvents LblEquipo As Label
+    Friend WithEvents DGVProductosEquipo As DataGridView
+    Friend WithEvents CBEquipos As ComboBox
+    Friend WithEvents DGVListaProductos As DataGridView
+    Friend WithEvents CantidadProducto As NumericUpDown
+    Friend WithEvents BtnQuitarProducto As Button
+    Friend WithEvents BtnAgregarProducto As Button
+    Friend WithEvents IdProducto As DataGridViewTextBoxColumn
+    Friend WithEvents Producto As DataGridViewTextBoxColumn
+    Friend WithEvents Cantidad As DataGridViewTextBoxColumn
+    Friend WithEvents BtnConfirmarSolicitud As Button
 End Class

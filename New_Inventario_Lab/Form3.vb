@@ -147,14 +147,14 @@ Public Class Form3
                 conn.Open()
                 Dim Comando1 As New MySqlCommand("select * from ubicaciones", conn)
                 Dim Adaptador1 As New MySqlDataAdapter(Comando1)
-                    Dim Tabla1 As New DataTable
-                    DataGridView3.Columns(6).Visible = False
-                    Adaptador1.Fill(Tabla1)
-                    DataGridView4.DataSource = Tabla1
-                    DataGridView4.ReadOnly = True
-                    DataGridView4.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-                    DataGridView4.AutoResizeColumns()
-                    DataGridView4.Columns(0).Visible = False
+                Dim Tabla1 As New DataTable
+                DataGridView3.Columns(6).Visible = False
+                Adaptador1.Fill(Tabla1)
+                DataGridView4.DataSource = Tabla1
+                DataGridView4.ReadOnly = True
+                DataGridView4.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                DataGridView4.AutoResizeColumns()
+                DataGridView4.Columns(0).Visible = False
                 conn.Close()
             Case 4
                 If Cantidad_a_mover = 0 Then
@@ -169,6 +169,89 @@ Public Class Form3
                 Label7.Text = "Pendientes: " & Cantidad_a_mover
                 DataGridView5.Columns("IdRel_Ubicaciones_Productos").Visible = False
         End Select
+    End Sub
+
+    Private Sub Form3_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        Select Case Bandera_Rel
+            Case 4
+                If Cantidad_a_mover <> 0 Then
+                    e.Cancel = True
+                    MsgBox("Aun tiene movimientos pendientes ")
+                Else
+                    Me.Dispose()
+                End If
+        End Select
+    End Sub
+
+    Private Sub TextBox_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles Mov_ind.KeyPress
+        If Asc(e.KeyChar) <> 8 Then
+            If Asc(e.KeyChar) < 48 Or Asc(e.KeyChar) > 57 Then
+                e.Handled = True
+            End If
+        End If
+    End Sub
+
+    Dim Valor As String
+    Private Sub Cantidad_Mov_Reg_Click(sender As Object, e As EventArgs) Handles Cantidad_Mov_Reg.Click
+        If IsNumeric(Mov_ind.Text) Then
+            If Mov_ind.Text < 0 Then
+                MsgBox("Valor invalido")
+                Mov_ind.Text = ""
+                Exit Sub
+            End If
+
+            If Cantidad_a_mover < Convert.ToInt16(Mov_ind.Text) Then
+                MsgBox("La cantidad supera la el valor del movimiento")
+                Mov_ind.Text = ""
+                Exit Sub
+            End If
+            Dim fila As Integer = DataGridView5.CurrentCell.RowIndex
+            If Tipo_Movi = "SALIDA" Then
+                If Convert.ToInt16(Mov_ind.Text) <= DataGridView5.Item(4, fila).Value Then
+                    Cantidad_a_mover = Cantidad_a_mover - Convert.ToInt16(Mov_ind.Text)
+                    Valor = DataGridView5.Item(4, fila).Value - Convert.ToInt16(Mov_ind.Text)
+                Else
+                    MsgBox("La cantidad es mayor a la existente en la ubicación")
+                    Mov_ind.Text = ""
+                    Exit Sub
+                End If
+            Else
+                If DataGridView5.Item(5, fila).Value = "N/A" Then
+                    Cantidad_a_mover = Cantidad_a_mover - Convert.ToInt16(Mov_ind.Text)
+                    Valor = DataGridView5.Item(4, fila).Value + Convert.ToInt16(Mov_ind.Text)
+                Else
+
+                    If (DataGridView5.Item(4, fila).Value + Convert.ToInt16(Mov_ind.Text)) < DataGridView5.Item(5, fila).Value Then
+                        Cantidad_a_mover = Cantidad_a_mover - Convert.ToInt16(Mov_ind.Text)
+                        Valor = DataGridView5.Item(4, fila).Value + Convert.ToInt16(Mov_ind.Text)
+
+                    Else
+                        MsgBox("La cantidad es mayor a el aforo en la ubicación")
+                        Mov_ind.Text = ""
+                        Exit Sub
+                    End If
+
+                End If
+            End If
+            Try
+                Using conn
+                    conn.Open()
+                    Dim cmd As New MySqlCommand("UPDATE rel_ubicaciones_productos SET Cantidad = '" & Valor &
+                        "' WHERE IdRel_Ubicaciones_Productos = '" & DataGridView5.Item(6, fila).Value & "'", conn)
+                    cmd.ExecuteNonQuery()
+                    'MessageBox.Show("Registro MODIFICADO")
+                    conn.Close()
+                End Using
+            Catch ex As Exception
+                MsgBox("El registro no pudo Modificarse por: " & vbCrLf & ex.Message)
+            End Try
+            Cargar()
+            'DataGridView5.Item(4, fila).Value ' Cantidad
+            'DataGridView5.Item(5, fila).Value ' Capacidad
+        Else
+            MsgBox("Valor invalido")
+            Mov_ind.Text = ""
+        End If
     End Sub
 
     Private Sub Agregar_Equ_Prod_Click(sender As Object, e As EventArgs) Handles Agregar_Equ_Prod.Click

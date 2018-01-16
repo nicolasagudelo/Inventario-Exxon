@@ -83,7 +83,7 @@ Public Class Form1
     End Sub
     Private Sub Esconder_tabpages_submenu()
         TabControl2.Visible = True
-        For i = 6 To 16
+        For i = 6 To 17
             If Me.Controls.Find("TabPage" & i, True).Count = 1 Then
                 Dim b As TabPage = Me.Controls.Find("TabPage" & i, True)(0)
                 b.Parent = Nothing
@@ -2546,6 +2546,8 @@ Public Class Form1
     End Sub
 
     Private Sub Movimiento_Ingreso_Click(sender As Object, e As EventArgs) Handles Movimiento_Ingreso.Click
+        Esconder_tabpages_submenu()
+        TabPage12.Parent = TabControl2
         Try
             conn.Open()
             Dim cmd As New MySqlCommand(String.Format("SELECT NOW();"), conn)
@@ -2618,7 +2620,7 @@ Public Class Form1
                 read = cmd.ExecuteReader
                 If read.Read Then
                     DataGridView4.Visible = True
-                    Dim cmd2 As New MySqlCommand("SELECT nombre_producto as 'Producto', Cantidad, Precio_Compra as 'Precio', Descripcion 
+                    Dim cmd2 As New MySqlCommand("SELECT nombre_producto as 'Producto', Cantidad, Precio_Compra as 'Precio', Descripcion
                                                 FROM movimientos inner join productos on movimientos.Id_Producto = productos.Id_Producto
                                                 inner join orden_movimientos on movimientos.IdOrden_Movimiento = orden_movimientos.IdOrden_Movimiento
                                                 WHERE N_Orden_Compra = @Orden and tipo = 'INGRESO';", conn)
@@ -2635,6 +2637,11 @@ Public Class Form1
                     DataGridView4.AllowUserToResizeColumns = True
                     DataGridView4.SelectionMode = DataGridViewSelectionMode.FullRowSelect
                     reader.Close()
+                    Dim cmd3 As New MySqlCommand("Select max(monto) from orden_movimientos where N_Orden_Compra = @Orden;", conn)
+                    With cmd3.Parameters
+                        .AddWithValue("Orden", N_Orden_Movimiento.Text.Trim)
+                    End With
+                    Monto_Movimiento.Text = cmd3.ExecuteScalar.ToString
                     conn.Close()
                 End If
                 conn.Close()
@@ -2642,10 +2649,13 @@ Public Class Form1
                 MsgBox(ex.Message)
                 conn.Close()
             End Try
+            If Monto_Movimiento.Text.Trim = "" Then
+                Monto_Movimiento.Text = 0
+            End If
             Try
                 conn.Open()
-                Dim cmd As New MySqlCommand("INSERT INTO orden_movimientos (N_Orden_Compra, N_Referencia, Tipo, Fecha, Observaciones, Nit_Proveedor)
-                                            VALUES (@NumOrden, @NumRef, @Tipo, @Fecha, @Obs, @NitProv);", conn)
+                Dim cmd As New MySqlCommand("INSERT INTO orden_movimientos (N_Orden_Compra, N_Referencia, Tipo, Fecha, Observaciones, Nit_Proveedor,Monto)
+                                            VALUES (@NumOrden, @NumRef, @Tipo, @Fecha, @Obs, @NitProv, @Monto);", conn)
                 With cmd.Parameters
                     .AddWithValue("NumOrden", UCase(N_Orden_Movimiento.Text.Trim))
                     .AddWithValue("NumRef", UCase(N_Referencia_Movimiento.Text.Trim))
@@ -2653,6 +2663,7 @@ Public Class Form1
                     .AddWithValue("Fecha", UCase(Fecha_Movimiento.Text.Trim))
                     .AddWithValue("Obs", UCase(Observaciones_Movimiento.Text.Trim))
                     .AddWithValue("NitProv", UCase(Proveedor_Movimiento.SelectedValue))
+                    .AddWithValue("Monto", Monto_Movimiento.Text.Trim)
                 End With
                 cmd.ExecuteNonQuery()
                 conn.Close()
@@ -2663,6 +2674,7 @@ Public Class Form1
             Gru_Movimiento.Visible = True
             Producto_Movimiento.SelectedItem = -1
             Usuario_Movimiento.SelectedItem = -1
+            Usuario_Movimiento.Visible = False
             Label95.Text = "Precio"
             Try
                 conn.Open()
@@ -2812,12 +2824,289 @@ Public Class Form1
                     Exit Sub
                 End If
                 stock = Convert.ToInt16(Tabla1.Rows(0).ItemArray(3).ToString) + Convert.ToInt16(Cantidad_Movimiento.Text)
-
             End If
+            Using conn
+                conn.Open()
+                Dim comando As New MySqlCommand("SELECT Estante,Entrepano,Caja_Color,Zona,Cantidad,Aforo FROM rel_ubicaciones_productos " &
+                            "INNER JOIN productos " &
+                            "ON (rel_ubicaciones_productos.Id_Producto = productos.Id_Producto) " &
+                            "INNER JOIN ubicaciones " &
+                            "ON (rel_ubicaciones_productos.Id_Ubicacion = ubicaciones.Id_Ubicacion) " &
+                            "WHERE rel_ubicaciones_productos.Id_Producto= @idProd", conn)
+                With comando.Parameters
+                    .AddWithValue("idProd", Producto_Movimiento.SelectedValue)
+                End With
+                Dim adaptador As New MySqlDataAdapter(comando)
+                Dim Tabla As New DataTable
+                Try
+                    adaptador.Fill(Tabla)
+                Catch ex As Exception
+                Finally
+                    If conn.State = ConnectionState.Open Then
+                        conn.Close()
+                    End If
+                End Try
+                Tabla1 = Tabla
+                conn.Close()
+            End Using
+            If Tabla1.Rows.Count >= 1 Then
+                Bandera_Rel = 4
+                Consulta_rel = "SELECT Estante,Entrepano,Caja_Color,Zona,Cantidad,Aforo,IdRel_Ubicaciones_Productos FROM rel_ubicaciones_productos " &
+                "INNER JOIN productos " &
+                "ON (rel_ubicaciones_productos.Id_Producto = productos.Id_Producto) " &
+                "INNER JOIN ubicaciones " &
+                "ON (rel_ubicaciones_productos.Id_Ubicacion = ubicaciones.Id_Ubicacion) " &
+                "WHERE rel_ubicaciones_productos.Id_Producto='" & Producto_Movimiento.SelectedValue & "'"
+                Id_elem = Producto_Movimiento.SelectedValue
+                'Tabla_Rel = "Ubicaciones"
+                'Elemento_rel = Nombre_Producto.Text
+                Try
+                    Using conn
+                        conn.Open()
+                        Dim cmd As New MySqlCommand("UPDATE productos SET Stock_Existente = '" & stock &
+                        "' WHERE Id_Producto = @idProd", conn)
+                        With cmd.Parameters
+                            .AddWithValue("idProd", Producto_Movimiento.SelectedValue)
+                        End With
+                        cmd.ExecuteNonQuery()
+                        'MessageBox.Show("Registro MODIFICADO")
+                        conn.Close()
+                    End Using
+                Catch ex As Exception
+                    MsgBox("El registro no pudo Modificarse por: " & vbCrLf & ex.Message)
+                End Try
+                Nueva_Transaccion.Visible = True
+                If Tipo_Movimiento.Text = "INGRESO" Then
+                    Try
+                        Using conn
+                            conn.Open()
+                            Dim cmd As New MySqlCommand("INSERT INTO movimientos (IdOrden_Movimiento, Id_Producto, Cantidad, Precio_Compra, Id_Usuario, Fecha, Descripcion)
+                                                        VALUES (@IdOrd, @IdProd, @Cantidad, @Precio, @Usuario, @Fecha, @Desc)", conn)
+                            With cmd.Parameters
+                                .AddWithValue("IdOrd", UCase(Id_Ord_Movimiento))
+                                .AddWithValue("IdProd", Producto_Movimiento.SelectedValue)
+                                .AddWithValue("Cantidad", Cantidad_Movimiento.Text)
+                                .AddWithValue("Precio", Precio_Movimiento.Text)
+                                .AddWithValue("Usuario", id_Usuar_Per)
+                                .AddWithValue("Fecha", Fecha_Movimiento.Text)
+                                .AddWithValue("Desc", UCase(Descripcion_Movimiento.Text))
+                            End With
+                            cmd.ExecuteNonQuery()
+                            Dim cmd2 As New MySqlCommand("UPDATE orden_movimientos SET Monto = @NewMonto WHERE N_Orden_Compra = @Orden and N_Referencia = @Remision;", conn)
+                            With cmd2.Parameters
+                                .AddWithValue("NewMonto", (Convert.ToInt16(Monto_Movimiento.Text) + Convert.ToInt16(Cantidad_Movimiento.Text) * Convert.ToInt16(Precio_Movimiento.Text)))
+                                .AddWithValue("Orden", N_Orden_Movimiento.Text)
+                                .AddWithValue("Remision", N_Referencia_Movimiento.Text)
+                            End With
+                            cmd2.ExecuteNonQuery()
+                            Monto_Movimiento.Text = (Convert.ToInt16(Monto_Movimiento.Text) + Convert.ToInt16(Cantidad_Movimiento.Text) * Convert.ToInt16(Precio_Movimiento.Text))
+                            'MessageBox.Show("Registro MODIFICADO")
+                            conn.Close()
+                        End Using
+                    Catch ex As Exception
+                        MsgBox("El registro no pudo Modificarse por: " & vbCrLf & ex.Message)
+                    End Try
+                End If
+
+                If Tipo_Movimiento.Text = "INGRESO" Then
+                    consulta_movimientos = "SELECT nombre_producto as 'Producto', Cantidad, Precio_Compra as 'Precio', Descripcion
+                                                FROM movimientos inner join productos on movimientos.Id_Producto = productos.Id_Producto
+                                                inner join orden_movimientos on movimientos.IdOrden_Movimiento = orden_movimientos.IdOrden_Movimiento
+                                                WHERE N_Orden_Compra = @Orden and tipo = 'INGRESO';"
+                End If
+
+                Using conn
+                    conn.Open()
+                    Dim cmd As New MySqlCommand(consulta_movimientos, conn)
+                    With cmd.Parameters
+                        .AddWithValue("Orden", N_Orden_Movimiento.Text)
+                    End With
+                    Dim adaptador As New MySqlDataAdapter(cmd)
+                    Dim tabla As New DataTable
+                    Try
+                        adaptador.Fill(tabla)
+                        conn.Close()
+                    Catch ex As Exception
+                    Finally
+                        If conn.State = ConnectionState.Open Then
+                            conn.Close()
+                        End If
+                    End Try
+                    DataGridView4.DataSource = tabla
+                End Using
+                Descripcion_Movimiento.Text = ""
+                Precio_Movimiento.Text = ""
+                Cantidad_Movimiento.Text = ""
+                Form3.ShowDialog()
+            Else
+                MsgBox("Atencion NO puede realizar el movimiento, porque el producto no cuenta con ubicaciones", MsgBoxStyle.Information, "Info.")
+                Exit Sub
+            End If
+        Else
+            MsgBox("El campo de cantidad solo acepta valores numericos", MsgBoxStyle.Exclamation, "Error.")
         End If
     End Sub
 
+    Private Sub Solicitudes_Click(sender As Object, e As EventArgs) Handles Solicitudes.Click
+        Esconder_tabpages_submenu()
+        TabPage17.Parent = TabControl2
+        CargarCBTabSolicitudes()
+    End Sub
 
+    Dim EquipLoad As Boolean = False
+    Private Sub CargarCBTabSolicitudes()
+        EquipLoad = False
+        With CBEquipos
+            Try
+                conn.Open()
+                Dim query As String = "Select Id_Equipo, Nombre_Equipo from equipos"
+                Dim cmd As New MySqlCommand(query, conn)
+                Dim sqlAdap As New MySqlDataAdapter(cmd)
+                Dim dtRecord As New DataTable
+                sqlAdap.Fill(dtRecord)
+                .DataSource = dtRecord
+                .DisplayMember = "Nombre_Equipo"
+                .ValueMember = "Id_Equipo"
+                .SelectedValue = dtRecord.Rows(0).Item(0)
+                conn.Close()
+            Catch ex As Exception
+                MsgBox("Error al cargar los equipos de la base de datos", MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
+            End Try
+            EquipLoad = True
+        End With
+    End Sub
+
+    Private Sub CBEquipos_SelectedValueChanged(sender As Object, e As EventArgs) Handles CBEquipos.SelectedValueChanged
+        If EquipLoad = False Then
+            Exit Sub
+        End If
+        conn.Open()
+        Dim query As String = "select productos.Id_Producto, Nombre_Producto as 'Producto', Stock_Existente as 'Stock' from productos inner join rel_productos_equipos on productos.Id_Producto = rel_productos_equipos.Id_Producto
+                               where Id_Equipo = @Equipo;"
+        Dim cmd As New MySqlCommand(query, conn)
+        With cmd.Parameters
+            .AddWithValue("Equipo", CBEquipos.SelectedValue)
+        End With
+        Dim Adaptador As New MySqlDataAdapter(cmd)
+        Dim Tabla As New DataTable
+
+        Adaptador.Fill(Tabla)
+        DGVProductosEquipo.DataSource = Tabla
+        DGVProductosEquipo.ReadOnly = True
+        DGVProductosEquipo.Columns(0).Visible = False
+        DGVProductosEquipo.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        conn.Close()
+        showmsg = True
+
+
+    End Sub
+    Dim showmsg As Boolean = True
+    Private Sub BtnAgregarProducto_Click(sender As Object, e As EventArgs) Handles BtnAgregarProducto.Click
+        If DGVProductosEquipo.Rows.Count <= 0 Then
+            Exit Sub
+        End If
+        Dim fila_actual_producto As Integer = DGVProductosEquipo.CurrentRow.Index
+        Dim IdProducto As Integer = DGVProductosEquipo(0, (fila_actual_producto)).Value
+        Dim Producto As String = DGVProductosEquipo(1, (fila_actual_producto)).Value
+        Dim stock As Integer = DGVProductosEquipo(2, (fila_actual_producto)).Value
+        Dim Cantidad As Integer = CantidadProducto.Value
+        Dim find As Boolean
+        If DGVListaProductos.Rows.Count > 0 Then
+            For row As Integer = 0 To DGVListaProductos.Rows.Count - 1
+                If IdProducto = DGVListaProductos(0, row).Value Then
+                    DGVListaProductos(2, row).Value = DGVListaProductos(2, row).Value + Cantidad
+                    If DGVListaProductos(2, row).Value > stock And showmsg Then
+                        MsgBox("La solicitud puede demorarse mas ya que esta solicitando una cantidad mayor a la que hay en stock ahora mismo", MsgBoxStyle.Information, "Info.")
+                        showmsg = False
+                    End If
+                    find = True
+                    Exit For
+                Else
+                    find = False
+                End If
+            Next
+            If find = False Then
+                DGVListaProductos.Rows.Add(IdProducto, Producto, Cantidad)
+                If Cantidad > stock Then
+                    MsgBox("La solicitud puede demorarse mas ya que esta solicitando una cantidad mayor a la que hay en stock ahora mismo", MsgBoxStyle.Information, "Info.")
+                    showmsg = False
+                End If
+            End If
+        Else
+            DGVListaProductos.Rows.Add(IdProducto, Producto, Cantidad)
+            If Cantidad > stock Then
+                MsgBox("La solicitud puede demorarse mas ya que esta solicitando una cantidad mayor a la que hay en stock ahora mismo", MsgBoxStyle.Information, "Info.")
+                showmsg = False
+            End If
+        End If
+
+    End Sub
+
+    Private Sub BtnQuitarProducto_Click(sender As Object, e As EventArgs) Handles BtnQuitarProducto.Click
+        If DGVListaProductos.Rows.Count <= 0 Then
+            Exit Sub
+        End If
+        Dim Fila_actual As Integer = DGVListaProductos.CurrentRow.Index
+        Dim Cantidad As Integer = CantidadProducto.Value
+        DGVListaProductos(2, Fila_actual).Value = DGVListaProductos(2, Fila_actual).Value - Cantidad
+        If DGVListaProductos(2, Fila_actual).Value <= 0 Then
+            DGVListaProductos.Rows.RemoveAt(Fila_actual)
+        End If
+    End Sub
+
+    Private Sub BtnConfirmarSolicitud_Click(sender As Object, e As EventArgs) Handles BtnConfirmarSolicitud.Click
+        If DGVListaProductos.Rows.Count <= 0 Then
+            MsgBox("Agregue objetos a la lista antes de enviar la solicitud", MsgBoxStyle.Information, "Info.")
+            Exit Sub
+        End If
+        Dim fecha As String
+        Dim consecutivo As String
+        Try
+            conn.Open()
+            Dim cmd As New MySqlCommand(String.Format("SELECT NOW();"), conn)
+            Dim fecha_servidor As DateTime = cmd.ExecuteScalar()
+            conn.Close()
+            fecha = fecha_servidor.ToString("yyyyMMdd")
+        Catch ex As Exception
+            MsgBox("La solicitud no pudo enviarse error:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+            conn.Close()
+            Exit Sub
+        End Try
+
+        Try
+            conn.Open()
+            Dim cmd As New MySqlCommand(String.Format("select count(*)+1 as c from solicitud_salida where NumeroOrdenTrabajo like '" & fecha & "%';"), conn)
+            consecutivo = cmd.ExecuteScalar()
+            conn.Close()
+        Catch ex As Exception
+            MsgBox("La solicitud no pudo enviarse error:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+            conn.Close()
+            Exit Sub
+        End Try
+        Dim OrdenSalida As String = fecha & "-" & consecutivo
+
+        For row As Integer = 0 To DGVListaProductos.Rows.Count - 1
+            Try
+                conn.Open()
+                Dim cmd As New MySqlCommand("INSERT INTO solicitud_salida (NumeroOrdenTrabajo, Producto, Cantidad, Solicitador) VALUES (@OrdenS, @Producto, @Cantidad, @Usuario);", conn)
+                With cmd.Parameters
+                    .AddWithValue("OrdenS", OrdenSalida)
+                    .AddWithValue("Producto", DGVListaProductos(0, row).Value)
+                    .AddWithValue("Cantidad", DGVListaProductos(2, row).Value)
+                    .AddWithValue("Usuario", id_Usuar_Per)
+                End With
+                cmd.ExecuteNonQuery()
+                conn.Close()
+            Catch ex As Exception
+                MsgBox("Error al intentar solicitar el producto: " & DGVListaProductos(1, row).Value & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                conn.Close()
+            End Try
+        Next
+
+        MsgBox("Solicitud Enviada", MsgBoxStyle.Information, "Info.")
+
+    End Sub
 
     '    Private Sub Generar_Movimientos_Click(sender As Object, e As EventArgs) Handles Generar_Movimientos.Click
     '        DataGridView4.Visible = True

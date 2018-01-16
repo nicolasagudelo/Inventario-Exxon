@@ -3105,6 +3105,7 @@ Public Class Form1
         Next
 
         MsgBox("Solicitud Enviada", MsgBoxStyle.Information, "Info.")
+        DGVListaProductos.Rows.Clear()
 
     End Sub
 

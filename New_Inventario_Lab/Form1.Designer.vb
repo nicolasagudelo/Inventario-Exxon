@@ -67,9 +67,6 @@ Partial Class Form1
         Me.Buscar_Prov = New System.Windows.Forms.TextBox()
         Me.Proveedores_Consultar = New System.Windows.Forms.PictureBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
-        Me.MonthCalendar1 = New System.Windows.Forms.MonthCalendar()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
@@ -285,13 +282,15 @@ Partial Class Form1
         Me.Nit_Proveedor = New System.Windows.Forms.TextBox()
         Me.Modificar_Prod_Prov = New System.Windows.Forms.Button()
         Me.TabPage16 = New System.Windows.Forms.TabPage()
+        Me.LblFechaFin = New System.Windows.Forms.Label()
+        Me.FechaFin = New System.Windows.Forms.DateTimePicker()
+        Me.LblFechaInicio = New System.Windows.Forms.Label()
+        Me.FechaInicio = New System.Windows.Forms.DateTimePicker()
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.Label100 = New System.Windows.Forms.Label()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Label98 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.Label96 = New System.Windows.Forms.Label()
-        Me.Label93 = New System.Windows.Forms.Label()
         Me.TabPage17 = New System.Windows.Forms.TabPage()
         Me.BtnConfirmarSolicitud = New System.Windows.Forms.Button()
         Me.CantidadProducto = New System.Windows.Forms.NumericUpDown()
@@ -304,6 +303,8 @@ Partial Class Form1
         Me.DGVProductosEquipo = New System.Windows.Forms.DataGridView()
         Me.CBEquipos = New System.Windows.Forms.ComboBox()
         Me.LblEquipo = New System.Windows.Forms.Label()
+        Me.TabPage18 = New System.Windows.Forms.TabPage()
+        Me.DataGridView5 = New System.Windows.Forms.DataGridView()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.Label34 = New System.Windows.Forms.Label()
@@ -311,6 +312,7 @@ Partial Class Form1
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.DataGridView6 = New System.Windows.Forms.DataGridView()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -360,9 +362,12 @@ Partial Class Form1
         CType(Me.CantidadProducto, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DGVListaProductos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DGVProductosEquipo, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage18.SuspendLayout()
+        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -375,7 +380,7 @@ Partial Class Form1
         Me.TabControl1.Controls.Add(Me.TabPage5)
         Me.TabControl1.Controls.Add(Me.TabPage6)
         Me.TabControl1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TabControl1.Location = New System.Drawing.Point(5, 196)
+        Me.TabControl1.Location = New System.Drawing.Point(5, 202)
         Me.TabControl1.Margin = New System.Windows.Forms.Padding(0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
@@ -412,7 +417,7 @@ Partial Class Form1
         Me.Label33.AutoSize = True
         Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label33.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label33.Location = New System.Drawing.Point(65, 651)
+        Me.Label33.Location = New System.Drawing.Point(66, 651)
         Me.Label33.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(87, 15)
@@ -437,7 +442,7 @@ Partial Class Form1
         Me.Label32.AutoSize = True
         Me.Label32.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label32.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label32.Location = New System.Drawing.Point(74, 548)
+        Me.Label32.Location = New System.Drawing.Point(75, 548)
         Me.Label32.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label32.Name = "Label32"
         Me.Label32.Size = New System.Drawing.Size(71, 15)
@@ -462,7 +467,7 @@ Partial Class Form1
         Me.Label31.AutoSize = True
         Me.Label31.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label31.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label31.Location = New System.Drawing.Point(74, 418)
+        Me.Label31.Location = New System.Drawing.Point(75, 418)
         Me.Label31.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label31.Name = "Label31"
         Me.Label31.Size = New System.Drawing.Size(59, 15)
@@ -486,7 +491,7 @@ Partial Class Form1
         '
         Me.Label3.AutoSize = True
         Me.Label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label3.Location = New System.Drawing.Point(43, 274)
+        Me.Label3.Location = New System.Drawing.Point(42, 274)
         Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(130, 17)
@@ -497,7 +502,7 @@ Partial Class Form1
         '
         Me.Label2.AutoSize = True
         Me.Label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label2.Location = New System.Drawing.Point(43, 133)
+        Me.Label2.Location = New System.Drawing.Point(42, 133)
         Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(125, 17)
@@ -560,7 +565,7 @@ Partial Class Form1
         'Solicitudes
         '
         Me.Solicitudes.Image = Global.Inventario_Lab.My.Resources.Resources.Solicitudes
-        Me.Solicitudes.Location = New System.Drawing.Point(34, 365)
+        Me.Solicitudes.Location = New System.Drawing.Point(33, 365)
         Me.Solicitudes.Margin = New System.Windows.Forms.Padding(4)
         Me.Solicitudes.Name = "Solicitudes"
         Me.Solicitudes.Size = New System.Drawing.Size(166, 129)
@@ -604,7 +609,7 @@ Partial Class Form1
         'Movimiento_Ingreso
         '
         Me.Movimiento_Ingreso.Image = Global.Inventario_Lab.My.Resources.Resources.Ingreso
-        Me.Movimiento_Ingreso.Location = New System.Drawing.Point(34, 57)
+        Me.Movimiento_Ingreso.Location = New System.Drawing.Point(33, 57)
         Me.Movimiento_Ingreso.Margin = New System.Windows.Forms.Padding(4)
         Me.Movimiento_Ingreso.Name = "Movimiento_Ingreso"
         Me.Movimiento_Ingreso.Size = New System.Drawing.Size(166, 129)
@@ -615,7 +620,7 @@ Partial Class Form1
         'Movimiento_Salida
         '
         Me.Movimiento_Salida.Image = Global.Inventario_Lab.My.Resources.Resources.Salida
-        Me.Movimiento_Salida.Location = New System.Drawing.Point(34, 211)
+        Me.Movimiento_Salida.Location = New System.Drawing.Point(33, 211)
         Me.Movimiento_Salida.Margin = New System.Windows.Forms.Padding(4)
         Me.Movimiento_Salida.Name = "Movimiento_Salida"
         Me.Movimiento_Salida.Size = New System.Drawing.Size(166, 129)
@@ -765,7 +770,7 @@ Partial Class Form1
         Me.Proveedores_Consultar.BackColor = System.Drawing.Color.Silver
         Me.Proveedores_Consultar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Proveedores_Consultar.Image = Global.Inventario_Lab.My.Resources.Resources.Buscar
-        Me.Proveedores_Consultar.Location = New System.Drawing.Point(20, 87)
+        Me.Proveedores_Consultar.Location = New System.Drawing.Point(21, 87)
         Me.Proveedores_Consultar.Margin = New System.Windows.Forms.Padding(4)
         Me.Proveedores_Consultar.Name = "Proveedores_Consultar"
         Me.Proveedores_Consultar.Size = New System.Drawing.Size(166, 129)
@@ -784,34 +789,12 @@ Partial Class Form1
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Reportes"
         '
-        'MonthCalendar1
-        '
-        Me.MonthCalendar1.Location = New System.Drawing.Point(12, 12)
-        Me.MonthCalendar1.Name = "MonthCalendar1"
-        Me.MonthCalendar1.TabIndex = 1
-        '
-        'TextBox2
-        '
-        Me.TextBox2.Enabled = False
-        Me.TextBox2.Location = New System.Drawing.Point(418, 72)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(123, 24)
-        Me.TextBox2.TabIndex = 0
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Enabled = False
-        Me.TextBox1.Location = New System.Drawing.Point(289, 72)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(123, 24)
-        Me.TextBox1.TabIndex = 0
-        '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("MS Reference Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Red
-        Me.Label1.Location = New System.Drawing.Point(226, 209)
+        Me.Label1.Location = New System.Drawing.Point(226, 215)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(63, 19)
@@ -831,8 +814,9 @@ Partial Class Form1
         Me.TabControl2.Controls.Add(Me.TabPage15)
         Me.TabControl2.Controls.Add(Me.TabPage16)
         Me.TabControl2.Controls.Add(Me.TabPage17)
+        Me.TabControl2.Controls.Add(Me.TabPage18)
         Me.TabControl2.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.8!)
-        Me.TabControl2.Location = New System.Drawing.Point(226, 232)
+        Me.TabControl2.Location = New System.Drawing.Point(226, 238)
         Me.TabControl2.Margin = New System.Windows.Forms.Padding(4)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
@@ -895,7 +879,7 @@ Partial Class Form1
         '
         Me.Label21.AutoSize = True
         Me.Label21.Enabled = False
-        Me.Label21.Location = New System.Drawing.Point(263, 239)
+        Me.Label21.Location = New System.Drawing.Point(264, 239)
         Me.Label21.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(93, 17)
@@ -982,7 +966,7 @@ Partial Class Form1
         Me.GroupBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox1.Size = New System.Drawing.Size(443, 144)
+        Me.GroupBox1.Size = New System.Drawing.Size(444, 144)
         Me.GroupBox1.TabIndex = 18
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Manejo de Usuario"
@@ -1064,7 +1048,7 @@ Partial Class Form1
         'Label23
         '
         Me.Label23.AutoSize = True
-        Me.Label23.Location = New System.Drawing.Point(263, 156)
+        Me.Label23.Location = New System.Drawing.Point(264, 156)
         Me.Label23.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(46, 17)
@@ -1074,7 +1058,7 @@ Partial Class Form1
         'Label22
         '
         Me.Label22.AutoSize = True
-        Me.Label22.Location = New System.Drawing.Point(263, 52)
+        Me.Label22.Location = New System.Drawing.Point(264, 52)
         Me.Label22.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(47, 17)
@@ -1231,7 +1215,7 @@ Partial Class Form1
         'Label25
         '
         Me.Label25.AutoSize = True
-        Me.Label25.Location = New System.Drawing.Point(263, 52)
+        Me.Label25.Location = New System.Drawing.Point(264, 52)
         Me.Label25.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(52, 17)
@@ -1254,7 +1238,7 @@ Partial Class Form1
         Me.Comentario_Doag.Margin = New System.Windows.Forms.Padding(4)
         Me.Comentario_Doag.Name = "Comentario_Doag"
         Me.Comentario_Doag.ReadOnly = True
-        Me.Comentario_Doag.Size = New System.Drawing.Size(650, 24)
+        Me.Comentario_Doag.Size = New System.Drawing.Size(649, 24)
         Me.Comentario_Doag.TabIndex = 11
         '
         'Nombre_Doag
@@ -1286,7 +1270,7 @@ Partial Class Form1
         Me.Eliminar_Doag.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.Eliminar_Doag.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.Eliminar_Doag.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Eliminar_Doag.Location = New System.Drawing.Point(704, 343)
+        Me.Eliminar_Doag.Location = New System.Drawing.Point(705, 343)
         Me.Eliminar_Doag.Margin = New System.Windows.Forms.Padding(4)
         Me.Eliminar_Doag.Name = "Eliminar_Doag"
         Me.Eliminar_Doag.Size = New System.Drawing.Size(116, 89)
@@ -1300,7 +1284,7 @@ Partial Class Form1
         Me.Nuevo_Doag.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.Nuevo_Doag.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.Nuevo_Doag.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Nuevo_Doag.Location = New System.Drawing.Point(704, 213)
+        Me.Nuevo_Doag.Location = New System.Drawing.Point(705, 213)
         Me.Nuevo_Doag.Margin = New System.Windows.Forms.Padding(4)
         Me.Nuevo_Doag.Name = "Nuevo_Doag"
         Me.Nuevo_Doag.Size = New System.Drawing.Size(116, 89)
@@ -1314,7 +1298,7 @@ Partial Class Form1
         Me.Guardar_Doag.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.Guardar_Doag.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.Guardar_Doag.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Guardar_Doag.Location = New System.Drawing.Point(704, 89)
+        Me.Guardar_Doag.Location = New System.Drawing.Point(705, 89)
         Me.Guardar_Doag.Margin = New System.Windows.Forms.Padding(4)
         Me.Guardar_Doag.Name = "Guardar_Doag"
         Me.Guardar_Doag.Size = New System.Drawing.Size(116, 89)
@@ -1352,7 +1336,7 @@ Partial Class Form1
         'Label27
         '
         Me.Label27.AutoSize = True
-        Me.Label27.Location = New System.Drawing.Point(263, 52)
+        Me.Label27.Location = New System.Drawing.Point(264, 52)
         Me.Label27.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label27.Name = "Label27"
         Me.Label27.Size = New System.Drawing.Size(116, 17)
@@ -1439,7 +1423,7 @@ Partial Class Form1
         '
         Me.GroupBox3.Controls.Add(Me.Eliminar_SubCategoria)
         Me.GroupBox3.Controls.Add(Me.Guardar_SubCategoria)
-        Me.GroupBox3.Location = New System.Drawing.Point(799, 73)
+        Me.GroupBox3.Location = New System.Drawing.Point(798, 73)
         Me.GroupBox3.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Padding = New System.Windows.Forms.Padding(4)
@@ -1550,7 +1534,7 @@ Partial Class Form1
         DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DataGridView2.DefaultCellStyle = DataGridViewCellStyle4
         Me.DataGridView2.GridColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.DataGridView2.Location = New System.Drawing.Point(425, 73)
+        Me.DataGridView2.Location = New System.Drawing.Point(426, 73)
         Me.DataGridView2.Margin = New System.Windows.Forms.Padding(4)
         Me.DataGridView2.Name = "DataGridView2"
         DataGridViewCellStyle5.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.8!)
@@ -1711,7 +1695,7 @@ Partial Class Form1
         Me.DataGridView3.BackgroundColor = System.Drawing.Color.LightSteelBlue
         Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView3.GridColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.DataGridView3.Location = New System.Drawing.Point(47, 149)
+        Me.DataGridView3.Location = New System.Drawing.Point(48, 149)
         Me.DataGridView3.Margin = New System.Windows.Forms.Padding(4)
         Me.DataGridView3.Name = "DataGridView3"
         DataGridViewCellStyle7.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.8!)
@@ -1734,7 +1718,7 @@ Partial Class Form1
         'Label40
         '
         Me.Label40.AutoSize = True
-        Me.Label40.Location = New System.Drawing.Point(430, 53)
+        Me.Label40.Location = New System.Drawing.Point(429, 53)
         Me.Label40.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label40.Name = "Label40"
         Me.Label40.Size = New System.Drawing.Size(85, 17)
@@ -1768,7 +1752,7 @@ Partial Class Form1
         Me.Zonas.Location = New System.Drawing.Point(670, 99)
         Me.Zonas.Margin = New System.Windows.Forms.Padding(4)
         Me.Zonas.Name = "Zonas"
-        Me.Zonas.Size = New System.Drawing.Size(213, 24)
+        Me.Zonas.Size = New System.Drawing.Size(214, 24)
         Me.Zonas.TabIndex = 3
         '
         'Cajas_Colores
@@ -1788,7 +1772,7 @@ Partial Class Form1
         Me.Entrepanos.Location = New System.Drawing.Point(225, 99)
         Me.Entrepanos.Margin = New System.Windows.Forms.Padding(4)
         Me.Entrepanos.Name = "Entrepanos"
-        Me.Entrepanos.Size = New System.Drawing.Size(78, 24)
+        Me.Entrepanos.Size = New System.Drawing.Size(79, 24)
         Me.Entrepanos.TabIndex = 1
         '
         'Estantes
@@ -1798,7 +1782,7 @@ Partial Class Form1
         Me.Estantes.Location = New System.Drawing.Point(14, 99)
         Me.Estantes.Margin = New System.Windows.Forms.Padding(4)
         Me.Estantes.Name = "Estantes"
-        Me.Estantes.Size = New System.Drawing.Size(78, 24)
+        Me.Estantes.Size = New System.Drawing.Size(79, 24)
         Me.Estantes.TabIndex = 0
         '
         'Eliminar_Caja
@@ -1823,7 +1807,7 @@ Partial Class Form1
         Me.Eliminar_Entrepano.FlatAppearance.BorderColor = System.Drawing.Color.LightSkyBlue
         Me.Eliminar_Entrepano.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Eliminar_Entrepano.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Eliminar_Entrepano.Location = New System.Drawing.Point(326, 99)
+        Me.Eliminar_Entrepano.Location = New System.Drawing.Point(327, 99)
         Me.Eliminar_Entrepano.Margin = New System.Windows.Forms.Padding(0)
         Me.Eliminar_Entrepano.Name = "Eliminar_Entrepano"
         Me.Eliminar_Entrepano.Size = New System.Drawing.Size(32, 30)
@@ -1868,7 +1852,7 @@ Partial Class Form1
         Me.Agregar_Entrepano.FlatAppearance.BorderColor = System.Drawing.Color.LightSkyBlue
         Me.Agregar_Entrepano.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Agregar_Entrepano.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Agregar_Entrepano.Location = New System.Drawing.Point(326, 53)
+        Me.Agregar_Entrepano.Location = New System.Drawing.Point(327, 53)
         Me.Agregar_Entrepano.Margin = New System.Windows.Forms.Padding(0)
         Me.Agregar_Entrepano.Name = "Agregar_Entrepano"
         Me.Agregar_Entrepano.Size = New System.Drawing.Size(32, 30)
@@ -1934,23 +1918,23 @@ Partial Class Form1
         Me.Usuario_Movimiento.Location = New System.Drawing.Point(787, 51)
         Me.Usuario_Movimiento.Margin = New System.Windows.Forms.Padding(4)
         Me.Usuario_Movimiento.Name = "Usuario_Movimiento"
-        Me.Usuario_Movimiento.Size = New System.Drawing.Size(191, 24)
+        Me.Usuario_Movimiento.Size = New System.Drawing.Size(190, 24)
         Me.Usuario_Movimiento.TabIndex = 28
         '
         'Producto_Movimiento
         '
         Me.Producto_Movimiento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Producto_Movimiento.FormattingEnabled = True
-        Me.Producto_Movimiento.Location = New System.Drawing.Point(7, 52)
+        Me.Producto_Movimiento.Location = New System.Drawing.Point(6, 52)
         Me.Producto_Movimiento.Margin = New System.Windows.Forms.Padding(4)
         Me.Producto_Movimiento.Name = "Producto_Movimiento"
-        Me.Producto_Movimiento.Size = New System.Drawing.Size(227, 24)
+        Me.Producto_Movimiento.Size = New System.Drawing.Size(226, 24)
         Me.Producto_Movimiento.TabIndex = 27
         '
         'Label94
         '
         Me.Label94.AutoSize = True
-        Me.Label94.Location = New System.Drawing.Point(677, 26)
+        Me.Label94.Location = New System.Drawing.Point(678, 26)
         Me.Label94.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label94.Name = "Label94"
         Me.Label94.Size = New System.Drawing.Size(73, 17)
@@ -1978,7 +1962,7 @@ Partial Class Form1
         'Label97
         '
         Me.Label97.AutoSize = True
-        Me.Label97.Location = New System.Drawing.Point(385, 26)
+        Me.Label97.Location = New System.Drawing.Point(384, 26)
         Me.Label97.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label97.Name = "Label97"
         Me.Label97.Size = New System.Drawing.Size(96, 17)
@@ -1990,13 +1974,13 @@ Partial Class Form1
         Me.Descripcion_Movimiento.Location = New System.Drawing.Point(253, 53)
         Me.Descripcion_Movimiento.Margin = New System.Windows.Forms.Padding(4)
         Me.Descripcion_Movimiento.Name = "Descripcion_Movimiento"
-        Me.Descripcion_Movimiento.Size = New System.Drawing.Size(420, 24)
+        Me.Descripcion_Movimiento.Size = New System.Drawing.Size(421, 24)
         Me.Descripcion_Movimiento.TabIndex = 17
         '
         'Label99
         '
         Me.Label99.AutoSize = True
-        Me.Label99.Location = New System.Drawing.Point(52, 24)
+        Me.Label99.Location = New System.Drawing.Point(51, 24)
         Me.Label99.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label99.Name = "Label99"
         Me.Label99.Size = New System.Drawing.Size(75, 17)
@@ -2008,7 +1992,7 @@ Partial Class Form1
         Me.Precio_Movimiento.Location = New System.Drawing.Point(787, 51)
         Me.Precio_Movimiento.Margin = New System.Windows.Forms.Padding(4)
         Me.Precio_Movimiento.Name = "Precio_Movimiento"
-        Me.Precio_Movimiento.Size = New System.Drawing.Size(191, 24)
+        Me.Precio_Movimiento.Size = New System.Drawing.Size(190, 24)
         Me.Precio_Movimiento.TabIndex = 29
         '
         'Nueva_Transaccion
@@ -2183,7 +2167,7 @@ Partial Class Form1
         Me.Fecha_Movimiento.Location = New System.Drawing.Point(40, 118)
         Me.Fecha_Movimiento.Margin = New System.Windows.Forms.Padding(4)
         Me.Fecha_Movimiento.Name = "Fecha_Movimiento"
-        Me.Fecha_Movimiento.Size = New System.Drawing.Size(177, 24)
+        Me.Fecha_Movimiento.Size = New System.Drawing.Size(178, 24)
         Me.Fecha_Movimiento.TabIndex = 15
         '
         'Label80
@@ -2202,7 +2186,7 @@ Partial Class Form1
         Me.Tipo_Movimiento.Location = New System.Drawing.Point(40, 52)
         Me.Tipo_Movimiento.Margin = New System.Windows.Forms.Padding(4)
         Me.Tipo_Movimiento.Name = "Tipo_Movimiento"
-        Me.Tipo_Movimiento.Size = New System.Drawing.Size(177, 24)
+        Me.Tipo_Movimiento.Size = New System.Drawing.Size(178, 24)
         Me.Tipo_Movimiento.TabIndex = 13
         '
         'DataGridView4
@@ -2262,7 +2246,7 @@ Partial Class Form1
         Me.GroupBox5.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox5.Size = New System.Drawing.Size(443, 144)
+        Me.GroupBox5.Size = New System.Drawing.Size(444, 144)
         Me.GroupBox5.TabIndex = 38
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Manejo de Equipo"
@@ -2336,7 +2320,7 @@ Partial Class Form1
         'Label60
         '
         Me.Label60.AutoSize = True
-        Me.Label60.Location = New System.Drawing.Point(178, 376)
+        Me.Label60.Location = New System.Drawing.Point(177, 376)
         Me.Label60.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label60.Name = "Label60"
         Me.Label60.Size = New System.Drawing.Size(0, 17)
@@ -2369,7 +2353,7 @@ Partial Class Form1
         'Label46
         '
         Me.Label46.AutoSize = True
-        Me.Label46.Location = New System.Drawing.Point(263, 168)
+        Me.Label46.Location = New System.Drawing.Point(264, 168)
         Me.Label46.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label46.Name = "Label46"
         Me.Label46.Size = New System.Drawing.Size(163, 17)
@@ -2379,7 +2363,7 @@ Partial Class Form1
         'Label45
         '
         Me.Label45.AutoSize = True
-        Me.Label45.Location = New System.Drawing.Point(263, 52)
+        Me.Label45.Location = New System.Drawing.Point(264, 52)
         Me.Label45.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label45.Name = "Label45"
         Me.Label45.Size = New System.Drawing.Size(47, 17)
@@ -2486,7 +2470,7 @@ Partial Class Form1
         Me.Foto_Equipo.Location = New System.Drawing.Point(521, 52)
         Me.Foto_Equipo.Margin = New System.Windows.Forms.Padding(4)
         Me.Foto_Equipo.Name = "Foto_Equipo"
-        Me.Foto_Equipo.Size = New System.Drawing.Size(263, 224)
+        Me.Foto_Equipo.Size = New System.Drawing.Size(264, 224)
         Me.Foto_Equipo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Foto_Equipo.TabIndex = 8
         Me.Foto_Equipo.TabStop = False
@@ -2547,7 +2531,7 @@ Partial Class Form1
         Me.GroupBox6.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox6.Name = "GroupBox6"
         Me.GroupBox6.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox6.Size = New System.Drawing.Size(443, 144)
+        Me.GroupBox6.Size = New System.Drawing.Size(444, 144)
         Me.GroupBox6.TabIndex = 60
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Manejo de Producto"
@@ -2656,7 +2640,7 @@ Partial Class Form1
         'Label76
         '
         Me.Label76.AutoSize = True
-        Me.Label76.Location = New System.Drawing.Point(461, 426)
+        Me.Label76.Location = New System.Drawing.Point(462, 426)
         Me.Label76.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label76.Name = "Label76"
         Me.Label76.Size = New System.Drawing.Size(98, 17)
@@ -2695,7 +2679,7 @@ Partial Class Form1
         '
         'Stock_Maximo
         '
-        Me.Stock_Maximo.Location = New System.Drawing.Point(259, 465)
+        Me.Stock_Maximo.Location = New System.Drawing.Point(258, 465)
         Me.Stock_Maximo.Margin = New System.Windows.Forms.Padding(4)
         Me.Stock_Maximo.Name = "Stock_Maximo"
         Me.Stock_Maximo.ReadOnly = True
@@ -2713,7 +2697,7 @@ Partial Class Form1
         '
         'Compra_Maxima
         '
-        Me.Compra_Maxima.Location = New System.Drawing.Point(11, 538)
+        Me.Compra_Maxima.Location = New System.Drawing.Point(12, 538)
         Me.Compra_Maxima.Margin = New System.Windows.Forms.Padding(4)
         Me.Compra_Maxima.Name = "Compra_Maxima"
         Me.Compra_Maxima.ReadOnly = True
@@ -2733,7 +2717,7 @@ Partial Class Form1
         '
         Me.Anterior_Producto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.Anterior_Producto.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Anterior_Producto.Location = New System.Drawing.Point(727, 440)
+        Me.Anterior_Producto.Location = New System.Drawing.Point(726, 440)
         Me.Anterior_Producto.Margin = New System.Windows.Forms.Padding(4)
         Me.Anterior_Producto.Name = "Anterior_Producto"
         Me.Anterior_Producto.Size = New System.Drawing.Size(132, 44)
@@ -2745,7 +2729,7 @@ Partial Class Form1
         '
         Me.Siguiente_Producto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.Siguiente_Producto.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.Siguiente_Producto.Location = New System.Drawing.Point(925, 440)
+        Me.Siguiente_Producto.Location = New System.Drawing.Point(924, 440)
         Me.Siguiente_Producto.Margin = New System.Windows.Forms.Padding(4)
         Me.Siguiente_Producto.Name = "Siguiente_Producto"
         Me.Siguiente_Producto.Size = New System.Drawing.Size(132, 44)
@@ -2756,7 +2740,7 @@ Partial Class Form1
         'Label71
         '
         Me.Label71.AutoSize = True
-        Me.Label71.Location = New System.Drawing.Point(542, 267)
+        Me.Label71.Location = New System.Drawing.Point(543, 267)
         Me.Label71.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label71.Name = "Label71"
         Me.Label71.Size = New System.Drawing.Size(113, 17)
@@ -2791,7 +2775,7 @@ Partial Class Form1
         Me.SubCategoria_Producto.Location = New System.Drawing.Point(387, 174)
         Me.SubCategoria_Producto.Margin = New System.Windows.Forms.Padding(4)
         Me.SubCategoria_Producto.Name = "SubCategoria_Producto"
-        Me.SubCategoria_Producto.Size = New System.Drawing.Size(231, 24)
+        Me.SubCategoria_Producto.Size = New System.Drawing.Size(232, 24)
         Me.SubCategoria_Producto.TabIndex = 35
         '
         'Label68
@@ -2812,7 +2796,7 @@ Partial Class Form1
         Me.Categoria_Producto.Location = New System.Drawing.Point(387, 92)
         Me.Categoria_Producto.Margin = New System.Windows.Forms.Padding(4)
         Me.Categoria_Producto.Name = "Categoria_Producto"
-        Me.Categoria_Producto.Size = New System.Drawing.Size(231, 24)
+        Me.Categoria_Producto.Size = New System.Drawing.Size(232, 24)
         Me.Categoria_Producto.TabIndex = 33
         '
         'Label67
@@ -2838,7 +2822,7 @@ Partial Class Form1
         'Stock_Existente
         '
         Me.Stock_Existente.Enabled = False
-        Me.Stock_Existente.Location = New System.Drawing.Point(11, 465)
+        Me.Stock_Existente.Location = New System.Drawing.Point(12, 465)
         Me.Stock_Existente.Margin = New System.Windows.Forms.Padding(4)
         Me.Stock_Existente.Name = "Stock_Existente"
         Me.Stock_Existente.ReadOnly = True
@@ -2969,7 +2953,7 @@ Partial Class Form1
         Me.Foto_Producto.Location = New System.Drawing.Point(755, 45)
         Me.Foto_Producto.Margin = New System.Windows.Forms.Padding(4)
         Me.Foto_Producto.Name = "Foto_Producto"
-        Me.Foto_Producto.Size = New System.Drawing.Size(263, 224)
+        Me.Foto_Producto.Size = New System.Drawing.Size(264, 224)
         Me.Foto_Producto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Foto_Producto.TabIndex = 41
         Me.Foto_Producto.TabStop = False
@@ -3023,7 +3007,7 @@ Partial Class Form1
         Me.BtnModificarProveedor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.BtnModificarProveedor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnModificarProveedor.Image = Global.Inventario_Lab.My.Resources.Resources.if_icon_136_document_edit_314724
-        Me.BtnModificarProveedor.Location = New System.Drawing.Point(929, 7)
+        Me.BtnModificarProveedor.Location = New System.Drawing.Point(930, 7)
         Me.BtnModificarProveedor.Name = "BtnModificarProveedor"
         Me.BtnModificarProveedor.Size = New System.Drawing.Size(42, 38)
         Me.BtnModificarProveedor.TabIndex = 62
@@ -3039,7 +3023,7 @@ Partial Class Form1
         Me.GroupBox7.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox7.Name = "GroupBox7"
         Me.GroupBox7.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox7.Size = New System.Drawing.Size(443, 126)
+        Me.GroupBox7.Size = New System.Drawing.Size(444, 126)
         Me.GroupBox7.TabIndex = 61
         Me.GroupBox7.TabStop = False
         Me.GroupBox7.Text = "Manejo de Proveedores"
@@ -3164,7 +3148,7 @@ Partial Class Form1
         'Label55
         '
         Me.Label55.AutoSize = True
-        Me.Label55.Location = New System.Drawing.Point(331, 304)
+        Me.Label55.Location = New System.Drawing.Point(330, 304)
         Me.Label55.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label55.Name = "Label55"
         Me.Label55.Size = New System.Drawing.Size(94, 17)
@@ -3174,7 +3158,7 @@ Partial Class Form1
         'Label54
         '
         Me.Label54.AutoSize = True
-        Me.Label54.Location = New System.Drawing.Point(331, 214)
+        Me.Label54.Location = New System.Drawing.Point(330, 214)
         Me.Label54.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label54.Name = "Label54"
         Me.Label54.Size = New System.Drawing.Size(34, 17)
@@ -3184,7 +3168,7 @@ Partial Class Form1
         'Label53
         '
         Me.Label53.AutoSize = True
-        Me.Label53.Location = New System.Drawing.Point(331, 134)
+        Me.Label53.Location = New System.Drawing.Point(330, 134)
         Me.Label53.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label53.Name = "Label53"
         Me.Label53.Size = New System.Drawing.Size(48, 17)
@@ -3194,7 +3178,7 @@ Partial Class Form1
         'Label52
         '
         Me.Label52.AutoSize = True
-        Me.Label52.Location = New System.Drawing.Point(331, 49)
+        Me.Label52.Location = New System.Drawing.Point(330, 49)
         Me.Label52.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label52.Name = "Label52"
         Me.Label52.Size = New System.Drawing.Size(71, 17)
@@ -3204,7 +3188,7 @@ Partial Class Form1
         'Label51
         '
         Me.Label51.AutoSize = True
-        Me.Label51.Location = New System.Drawing.Point(11, 387)
+        Me.Label51.Location = New System.Drawing.Point(12, 387)
         Me.Label51.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label51.Name = "Label51"
         Me.Label51.Size = New System.Drawing.Size(59, 17)
@@ -3281,7 +3265,7 @@ Partial Class Form1
         Me.Clasificacion_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Clasificacion_Proveedor.Name = "Clasificacion_Proveedor"
         Me.Clasificacion_Proveedor.ReadOnly = True
-        Me.Clasificacion_Proveedor.Size = New System.Drawing.Size(231, 24)
+        Me.Clasificacion_Proveedor.Size = New System.Drawing.Size(232, 24)
         Me.Clasificacion_Proveedor.TabIndex = 10
         '
         'Detalle_Proveedor
@@ -3317,7 +3301,7 @@ Partial Class Form1
         Me.Email_Proveedor.Margin = New System.Windows.Forms.Padding(4)
         Me.Email_Proveedor.Name = "Email_Proveedor"
         Me.Email_Proveedor.ReadOnly = True
-        Me.Email_Proveedor.Size = New System.Drawing.Size(353, 24)
+        Me.Email_Proveedor.Size = New System.Drawing.Size(352, 24)
         Me.Email_Proveedor.TabIndex = 6
         '
         'Telefono_Proveedor
@@ -3391,16 +3375,16 @@ Partial Class Form1
         'TabPage16
         '
         Me.TabPage16.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.TabPage16.Controls.Add(Me.DataGridView6)
+        Me.TabPage16.Controls.Add(Me.LblFechaFin)
+        Me.TabPage16.Controls.Add(Me.FechaFin)
+        Me.TabPage16.Controls.Add(Me.LblFechaInicio)
+        Me.TabPage16.Controls.Add(Me.FechaInicio)
         Me.TabPage16.Controls.Add(Me.ComboBox2)
         Me.TabPage16.Controls.Add(Me.Label100)
         Me.TabPage16.Controls.Add(Me.ComboBox1)
         Me.TabPage16.Controls.Add(Me.Label98)
         Me.TabPage16.Controls.Add(Me.Button1)
-        Me.TabPage16.Controls.Add(Me.Label96)
-        Me.TabPage16.Controls.Add(Me.Label93)
-        Me.TabPage16.Controls.Add(Me.TextBox2)
-        Me.TabPage16.Controls.Add(Me.MonthCalendar1)
-        Me.TabPage16.Controls.Add(Me.TextBox1)
         Me.TabPage16.Location = New System.Drawing.Point(4, 25)
         Me.TabPage16.Name = "TabPage16"
         Me.TabPage16.Padding = New System.Windows.Forms.Padding(3)
@@ -3408,10 +3392,49 @@ Partial Class Form1
         Me.TabPage16.TabIndex = 9
         Me.TabPage16.Text = "Reportes"
         '
+        'LblFechaFin
+        '
+        Me.LblFechaFin.AutoSize = True
+        Me.LblFechaFin.Location = New System.Drawing.Point(187, 14)
+        Me.LblFechaFin.Name = "LblFechaFin"
+        Me.LblFechaFin.Size = New System.Drawing.Size(84, 17)
+        Me.LblFechaFin.TabIndex = 25
+        Me.LblFechaFin.Text = "Fecha Fin:"
+        '
+        'FechaFin
+        '
+        Me.FechaFin.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.FechaFin.Location = New System.Drawing.Point(190, 40)
+        Me.FechaFin.MinDate = New Date(2017, 1, 1, 0, 0, 0, 0)
+        Me.FechaFin.Name = "FechaFin"
+        Me.FechaFin.Size = New System.Drawing.Size(145, 24)
+        Me.FechaFin.TabIndex = 24
+        Me.FechaFin.Value = New Date(2017, 9, 14, 10, 3, 34, 0)
+        '
+        'LblFechaInicio
+        '
+        Me.LblFechaInicio.AutoSize = True
+        Me.LblFechaInicio.Location = New System.Drawing.Point(21, 14)
+        Me.LblFechaInicio.Name = "LblFechaInicio"
+        Me.LblFechaInicio.Size = New System.Drawing.Size(102, 17)
+        Me.LblFechaInicio.TabIndex = 23
+        Me.LblFechaInicio.Text = "Fecha Inicio:"
+        '
+        'FechaInicio
+        '
+        Me.FechaInicio.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.FechaInicio.Location = New System.Drawing.Point(24, 40)
+        Me.FechaInicio.MinDate = New Date(2017, 1, 1, 0, 0, 0, 0)
+        Me.FechaInicio.Name = "FechaInicio"
+        Me.FechaInicio.Size = New System.Drawing.Size(145, 24)
+        Me.FechaInicio.TabIndex = 22
+        Me.FechaInicio.Value = New Date(2017, 9, 14, 10, 3, 34, 0)
+        '
         'ComboBox2
         '
+        Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Location = New System.Drawing.Point(935, 71)
+        Me.ComboBox2.Location = New System.Drawing.Point(565, 40)
         Me.ComboBox2.Name = "ComboBox2"
         Me.ComboBox2.Size = New System.Drawing.Size(170, 24)
         Me.ComboBox2.TabIndex = 8
@@ -3419,7 +3442,7 @@ Partial Class Form1
         'Label100
         '
         Me.Label100.AutoSize = True
-        Me.Label100.Location = New System.Drawing.Point(971, 47)
+        Me.Label100.Location = New System.Drawing.Point(562, 14)
         Me.Label100.Name = "Label100"
         Me.Label100.Size = New System.Drawing.Size(85, 17)
         Me.Label100.TabIndex = 7
@@ -3427,8 +3450,9 @@ Partial Class Form1
         '
         'ComboBox1
         '
+        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(685, 71)
+        Me.ComboBox1.Location = New System.Drawing.Point(369, 40)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(170, 24)
         Me.ComboBox1.TabIndex = 6
@@ -3436,7 +3460,7 @@ Partial Class Form1
         'Label98
         '
         Me.Label98.AutoSize = True
-        Me.Label98.Location = New System.Drawing.Point(721, 47)
+        Me.Label98.Location = New System.Drawing.Point(366, 14)
         Me.Label98.Name = "Label98"
         Me.Label98.Size = New System.Drawing.Size(75, 17)
         Me.Label98.TabIndex = 5
@@ -3444,30 +3468,12 @@ Partial Class Form1
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(550, 170)
+        Me.Button1.Location = New System.Drawing.Point(943, 10)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(131, 60)
         Me.Button1.TabIndex = 4
         Me.Button1.Text = "Generar Reporte"
         Me.Button1.UseVisualStyleBackColor = True
-        '
-        'Label96
-        '
-        Me.Label96.AutoSize = True
-        Me.Label96.Location = New System.Drawing.Point(447, 47)
-        Me.Label96.Name = "Label96"
-        Me.Label96.Size = New System.Drawing.Size(50, 17)
-        Me.Label96.TabIndex = 3
-        Me.Label96.Text = "Hasta"
-        '
-        'Label93
-        '
-        Me.Label93.AutoSize = True
-        Me.Label93.Location = New System.Drawing.Point(313, 47)
-        Me.Label93.Name = "Label93"
-        Me.Label93.Size = New System.Drawing.Size(54, 17)
-        Me.Label93.TabIndex = 2
-        Me.Label93.Text = "Desde"
         '
         'TabPage17
         '
@@ -3488,7 +3494,7 @@ Partial Class Form1
         '
         'BtnConfirmarSolicitud
         '
-        Me.BtnConfirmarSolicitud.Location = New System.Drawing.Point(943, 587)
+        Me.BtnConfirmarSolicitud.Location = New System.Drawing.Point(942, 587)
         Me.BtnConfirmarSolicitud.Name = "BtnConfirmarSolicitud"
         Me.BtnConfirmarSolicitud.Size = New System.Drawing.Size(108, 57)
         Me.BtnConfirmarSolicitud.TabIndex = 7
@@ -3532,7 +3538,7 @@ Partial Class Form1
         Me.DGVListaProductos.BackgroundColor = System.Drawing.Color.LightSteelBlue
         Me.DGVListaProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGVListaProductos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IdProducto, Me.Producto, Me.Cantidad})
-        Me.DGVListaProductos.Location = New System.Drawing.Point(664, 98)
+        Me.DGVListaProductos.Location = New System.Drawing.Point(663, 98)
         Me.DGVListaProductos.Name = "DGVListaProductos"
         Me.DGVListaProductos.ReadOnly = True
         Me.DGVListaProductos.Size = New System.Drawing.Size(387, 474)
@@ -3564,7 +3570,7 @@ Partial Class Form1
         Me.DGVProductosEquipo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DGVProductosEquipo.BackgroundColor = System.Drawing.Color.LightSteelBlue
         Me.DGVProductosEquipo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DGVProductosEquipo.Location = New System.Drawing.Point(34, 98)
+        Me.DGVProductosEquipo.Location = New System.Drawing.Point(33, 98)
         Me.DGVProductosEquipo.Name = "DGVProductosEquipo"
         Me.DGVProductosEquipo.Size = New System.Drawing.Size(387, 474)
         Me.DGVProductosEquipo.TabIndex = 2
@@ -3573,7 +3579,7 @@ Partial Class Form1
         '
         Me.CBEquipos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CBEquipos.FormattingEnabled = True
-        Me.CBEquipos.Location = New System.Drawing.Point(34, 51)
+        Me.CBEquipos.Location = New System.Drawing.Point(33, 51)
         Me.CBEquipos.Name = "CBEquipos"
         Me.CBEquipos.Size = New System.Drawing.Size(201, 24)
         Me.CBEquipos.TabIndex = 1
@@ -3587,12 +3593,33 @@ Partial Class Form1
         Me.LblEquipo.TabIndex = 0
         Me.LblEquipo.Text = "Equipo:"
         '
+        'TabPage18
+        '
+        Me.TabPage18.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.TabPage18.Controls.Add(Me.DataGridView5)
+        Me.TabPage18.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage18.Name = "TabPage18"
+        Me.TabPage18.Size = New System.Drawing.Size(1108, 652)
+        Me.TabPage18.TabIndex = 11
+        Me.TabPage18.Text = "Consultar"
+        '
+        'DataGridView5
+        '
+        Me.DataGridView5.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DataGridView5.BackgroundColor = System.Drawing.Color.LightSteelBlue
+        Me.DataGridView5.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView5.Location = New System.Drawing.Point(3, 3)
+        Me.DataGridView5.Name = "DataGridView5"
+        Me.DataGridView5.Size = New System.Drawing.Size(1101, 641)
+        Me.DataGridView5.TabIndex = 18
+        '
         'Label29
         '
         Me.Label29.AutoSize = True
         Me.Label29.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label29.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label29.Location = New System.Drawing.Point(420, 165)
+        Me.Label29.Location = New System.Drawing.Point(420, 171)
         Me.Label29.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(80, 15)
@@ -3604,7 +3631,7 @@ Partial Class Form1
         Me.Label30.AutoSize = True
         Me.Label30.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label30.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label30.Location = New System.Drawing.Point(655, 165)
+        Me.Label30.Location = New System.Drawing.Point(654, 171)
         Me.Label30.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(88, 15)
@@ -3616,7 +3643,7 @@ Partial Class Form1
         Me.Label34.AutoSize = True
         Me.Label34.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label34.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label34.Location = New System.Drawing.Point(904, 165)
+        Me.Label34.Location = New System.Drawing.Point(904, 171)
         Me.Label34.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label34.Name = "Label34"
         Me.Label34.Size = New System.Drawing.Size(65, 15)
@@ -3631,10 +3658,10 @@ Partial Class Form1
         '
         Me.PictureBox6.Cursor = System.Windows.Forms.Cursors.Hand
         Me.PictureBox6.Image = Global.Inventario_Lab.My.Resources.Resources.Reportes
-        Me.PictureBox6.Location = New System.Drawing.Point(852, 13)
+        Me.PictureBox6.Location = New System.Drawing.Point(852, 19)
         Me.PictureBox6.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox6.Name = "PictureBox6"
-        Me.PictureBox6.Size = New System.Drawing.Size(164, 141)
+        Me.PictureBox6.Size = New System.Drawing.Size(165, 141)
         Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox6.TabIndex = 5
         Me.PictureBox6.TabStop = False
@@ -3644,10 +3671,10 @@ Partial Class Form1
         '
         Me.PictureBox2.Cursor = System.Windows.Forms.Cursors.Hand
         Me.PictureBox2.Image = Global.Inventario_Lab.My.Resources.Resources.Movimiento1
-        Me.PictureBox2.Location = New System.Drawing.Point(618, 13)
+        Me.PictureBox2.Location = New System.Drawing.Point(618, 19)
         Me.PictureBox2.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(164, 141)
+        Me.PictureBox2.Size = New System.Drawing.Size(165, 141)
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox2.TabIndex = 1
         Me.PictureBox2.TabStop = False
@@ -3657,14 +3684,25 @@ Partial Class Form1
         '
         Me.PictureBox1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.PictureBox1.Image = Global.Inventario_Lab.My.Resources.Resources.Admin_User
-        Me.PictureBox1.Location = New System.Drawing.Point(380, 13)
+        Me.PictureBox1.Location = New System.Drawing.Point(381, 19)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(164, 141)
+        Me.PictureBox1.Size = New System.Drawing.Size(165, 141)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         Me.TPAdministrar.SetToolTip(Me.PictureBox1, "Administrar")
+        '
+        'DataGridView6
+        '
+        Me.DataGridView6.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DataGridView6.BackgroundColor = System.Drawing.Color.LightSteelBlue
+        Me.DataGridView6.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.DataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView6.Location = New System.Drawing.Point(24, 87)
+        Me.DataGridView6.Name = "DataGridView6"
+        Me.DataGridView6.Size = New System.Drawing.Size(1050, 431)
+        Me.DataGridView6.TabIndex = 26
         '
         'Form1
         '
@@ -3672,7 +3710,7 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.DarkSlateGray
-        Me.ClientSize = New System.Drawing.Size(1481, 865)
+        Me.ClientSize = New System.Drawing.Size(1362, 593)
         Me.Controls.Add(Me.Label34)
         Me.Controls.Add(Me.Label30)
         Me.Controls.Add(Me.Label29)
@@ -3754,9 +3792,12 @@ Partial Class Form1
         CType(Me.CantidadProducto, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DGVListaProductos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DGVProductosEquipo, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage18.ResumeLayout(False)
+        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3982,12 +4023,7 @@ Partial Class Form1
     Friend WithEvents Label99 As Label
     Friend WithEvents Usuario_Movimiento As ComboBox
     Friend WithEvents Precio_Movimiento As TextBox
-    Friend WithEvents MonthCalendar1 As MonthCalendar
-    Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents TextBox1 As TextBox
     Friend WithEvents TabPage16 As TabPage
-    Friend WithEvents Label96 As Label
-    Friend WithEvents Label93 As Label
     Friend WithEvents ComboBox2 As ComboBox
     Friend WithEvents Label100 As Label
     Friend WithEvents ComboBox1 As ComboBox
@@ -4040,4 +4076,11 @@ Partial Class Form1
     Friend WithEvents Cantidad As DataGridViewTextBoxColumn
     Friend WithEvents BtnConfirmarSolicitud As Button
     Friend WithEvents CBN_SolicitudSalida As ComboBox
+    Friend WithEvents TabPage18 As TabPage
+    Friend WithEvents DataGridView5 As DataGridView
+    Friend WithEvents LblFechaFin As Label
+    Friend WithEvents FechaFin As DateTimePicker
+    Friend WithEvents LblFechaInicio As Label
+    Friend WithEvents FechaInicio As DateTimePicker
+    Friend WithEvents DataGridView6 As DataGridView
 End Class

@@ -83,7 +83,7 @@ Public Class Form1
     End Sub
     Private Sub Esconder_tabpages_submenu()
         TabControl2.Visible = True
-        For i = 6 To 17
+        For i = 7 To 18
             If Me.Controls.Find("TabPage" & i, True).Count = 1 Then
                 Dim b As TabPage = Me.Controls.Find("TabPage" & i, True)(0)
                 b.Parent = Nothing
@@ -294,6 +294,78 @@ Public Class Form1
         Menu_Seleccionado(6)
         Esconder_tabpages_submenu()
         TabPage16.Parent = TabControl2
+        With ComboBox1
+            .DataSource = Nothing
+            .Items.Clear()
+            Try
+                conn.Open()
+                Dim query As String = "Select Id_Producto, Nombre_Producto from productos"
+                Dim cmd As New MySqlCommand(query, conn)
+                Dim sqlAdap As New MySqlDataAdapter(cmd)
+                Dim dtRecord As New DataTable
+                sqlAdap.Fill(dtRecord)
+                Dim Todos As DataRow = dtRecord.NewRow
+                Todos("Id_Producto") = "-1"
+                Todos("Nombre_Producto") = "TODOS"
+                dtRecord.Rows.InsertAt(Todos, 0)
+                .DataSource = dtRecord
+                .DisplayMember = "Nombre_Producto"
+                .ValueMember = "Id_Producto"
+                .SelectedValue = dtRecord.Rows(0).Item(0)
+                conn.Close()
+            Catch ex As Exception
+                MsgBox("Error al cargar los productos de la base de datos", MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
+            End Try
+        End With
+
+        With ComboBox2
+            .DataSource = Nothing
+            .Items.Clear()
+            Try
+                conn.Open()
+                Dim query As String = "Select Nit_Proveedor, Nombre_Proveedor from proveedores"
+                Dim cmd As New MySqlCommand(query, conn)
+                Dim sqlAdap As New MySqlDataAdapter(cmd)
+                Dim dtRecord As New DataTable
+                sqlAdap.Fill(dtRecord)
+                Dim Todos As DataRow = dtRecord.NewRow
+                Todos("Nit_Proveedor") = "-1"
+                Todos("Nombre_Proveedor") = "TODOS"
+                dtRecord.Rows.InsertAt(Todos, 0)
+                .DataSource = dtRecord
+                .DisplayMember = "Nombre_Proveedor"
+                .ValueMember = "Nit_Proveedor"
+                .SelectedValue = dtRecord.Rows(0).Item(0)
+                conn.Close()
+            Catch ex As Exception
+                MsgBox("Error al cargar los productos de la base de datos", MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
+            End Try
+        End With
+        FechaInicio.Format = DateTimePickerFormat.Custom
+        FechaInicio.CustomFormat = "yyyy-MM-dd"
+        FechaInicio.Value = FechaInicio.MinDate
+        FechaFin.Format = DateTimePickerFormat.Custom
+        FechaFin.CustomFormat = "yyyy-MM-dd"
+
+        Try
+            conn.Open()
+            Dim cmd As New MySqlCommand(String.Format("SELECT NOW();"), conn)
+            Dim fecha_servidor As DateTime = cmd.ExecuteScalar()
+            FechaFin.MaxDate = fecha_servidor.ToString("yyyy-MM-dd")
+            FechaInicio.MaxDate = FechaFin.MaxDate
+            FechaFin.Value = FechaFin.MaxDate
+            conn.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message, False, "No se puede obtener la fecha de la base de datos se tomara la hora local")
+            conn.Close()
+            FechaFin.MaxDate = DateTime.Now.ToString("yyyy-MM-dd")
+            FechaInicio.MaxDate = FechaFin.MaxDate
+            FechaFin.Value = FechaFin.MaxDate
+            Exit Sub
+        End Try
+
     End Sub
 
 
@@ -3495,6 +3567,189 @@ Public Class Form1
         ElseIf Tipo_Movimiento.Text = "INGRESO" Then
             Movimiento_Ingreso_Click(sender, e)
         End If
+    End Sub
+
+    Private Sub Movimiento_Consulta_Click(sender As Object, e As EventArgs) Handles Movimiento_Consulta.Click
+        Esconder_tabpages_submenu()
+        TabPage18.Parent = TabControl2
+        With DataGridView5
+            .DataSource = Nothing
+            Try
+                conn.Open()
+                Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
+                                                            Nombre_SubCategoria as 'Sub-Categoria', Marca, Serie, Stock_Minimo as 'Minimo', Stock_Maximo as 'Maximo',
+                                                            stock_Existente as 'Unidades Existentes', compra_Maxima as 'Compra Maxima', Activo
+                                                            from productos inner join categorias on productos.id_categoria = categorias.id_categoria inner join categorias_sub on
+                                                            productos.Id_SubCategoria = categorias_sub.Id_SubCategoria;"), conn)
+                Dim reader As MySqlDataReader
+                reader = cmd.ExecuteReader
+                Dim T As New DataTable
+                T.Load(reader)
+                .DataSource = T
+                .ReadOnly = True
+                .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                .Visible = True
+                conn.Close()
+            Catch ex As Exception
+                MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                conn.Close()
+            End Try
+        End With
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If FechaInicio.Value > FechaFin.Value Then
+            MsgBox("La fecha inicial no puede estar despues de la fecha final", MsgBoxStyle.Exclamation, "Error")
+            Exit Sub
+        End If
+
+        Dim fecha_inicial As String = FechaInicio.Value.ToString("yyyy-MM-dd")
+        Dim fecha_final As String = FechaFin.Value.ToString("yyyy-MM-dd")
+
+        If ComboBox1.SelectedValue = "-1" And ComboBox2.SelectedValue = "-1" Then
+
+            With DataGridView6
+                .DataSource = Nothing
+                Try
+                    conn.Open()
+                    Dim query As String = "SELECT orden_movimientos.N_Orden_Compra as 'Orden de Compra #', orden_movimientos.N_Referencia as 'Numero de Remision', 
+                                            productos.Nombre_Producto as 'Producto', movimientos.Cantidad, Precio_Compra as 'Precio', movimientos.fecha as' Fecha',proveedores.Nombre_Proveedor as 'Comprado a'
+                                            from productos inner join movimientos on movimientos.Id_Producto = productos.Id_Producto
+                                            inner join orden_movimientos on orden_movimientos.IdOrden_Movimiento = movimientos.IdOrden_Movimiento
+                                            inner join proveedores on orden_movimientos.Nit_Proveedor = proveedores.Nit_Proveedor
+                                            where orden_movimientos.Tipo = 'INGRESO' and movimientos.fecha between @Inicio and @Fin;"
+                    Dim cmd As New MySqlCommand(query, conn)
+                    With cmd.Parameters
+                        .AddWithValue("Inicio", fecha_inicial)
+                        .AddWithValue("Fin", fecha_final)
+                    End With
+                    Dim reader As MySqlDataReader
+                    reader = cmd.ExecuteReader
+                    Dim T As New DataTable
+                    T.Load(reader)
+                    .DataSource = T
+                    .ReadOnly = True
+                    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    .Visible = True
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
+                    conn.Close()
+                    Exit Sub
+                End Try
+            End With
+        ElseIf ComboBox1.SelectedValue <> "-1" And ComboBox2.SelectedValue = "-1" Then
+
+            With DataGridView6
+                .DataSource = Nothing
+                Try
+                    conn.Open()
+                    Dim query As String = "SELECT orden_movimientos.N_Orden_Compra as 'Orden de Compra #', orden_movimientos.N_Referencia as 'Numero de Remision', 
+                                            productos.Nombre_Producto as 'Producto', movimientos.Cantidad, Precio_Compra as 'Precio', movimientos.fecha as' Fecha',proveedores.Nombre_Proveedor as 'Comprado a'
+                                            from productos inner join movimientos on movimientos.Id_Producto = productos.Id_Producto
+                                            inner join orden_movimientos on orden_movimientos.IdOrden_Movimiento = movimientos.IdOrden_Movimiento
+                                            inner join proveedores on orden_movimientos.Nit_Proveedor = proveedores.Nit_Proveedor
+                                            where orden_movimientos.Tipo = 'INGRESO' and movimientos.fecha between @Inicio and @Fin and movimientos.Id_Producto = @IdProd;"
+                    Dim cmd As New MySqlCommand(query, conn)
+                    With cmd.Parameters
+                        .AddWithValue("Inicio", fecha_inicial)
+                        .AddWithValue("Fin", fecha_final)
+                        .AddWithValue("IdProd", ComboBox1.SelectedValue)
+                    End With
+                    Dim reader As MySqlDataReader
+                    reader = cmd.ExecuteReader
+                    Dim T As New DataTable
+                    T.Load(reader)
+                    .DataSource = T
+                    .ReadOnly = True
+                    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    .Visible = True
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
+                    conn.Close()
+                    Exit Sub
+                End Try
+
+            End With
+
+        ElseIf ComboBox1.SelectedValue = "-1" And ComboBox2.SelectedValue <> "-1" Then
+
+            With DataGridView6
+                .DataSource = Nothing
+                Try
+                    conn.Open()
+                    Dim query As String = "SELECT orden_movimientos.N_Orden_Compra as 'Orden de Compra #', orden_movimientos.N_Referencia as 'Numero de Remision', 
+                                            productos.Nombre_Producto as 'Producto', movimientos.Cantidad, Precio_Compra as 'Precio', movimientos.fecha as' Fecha',proveedores.Nombre_Proveedor as 'Comprado a'
+                                            from productos inner join movimientos on movimientos.Id_Producto = productos.Id_Producto
+                                            inner join orden_movimientos on orden_movimientos.IdOrden_Movimiento = movimientos.IdOrden_Movimiento
+                                            inner join proveedores on orden_movimientos.Nit_Proveedor = proveedores.Nit_Proveedor
+                                            where orden_movimientos.Tipo = 'INGRESO' and movimientos.fecha between @Inicio and @Fin and orden_movimientos.Nit_Proveedor = @Nit;"
+                    Dim cmd As New MySqlCommand(query, conn)
+                    With cmd.Parameters
+                        .AddWithValue("Inicio", fecha_inicial)
+                        .AddWithValue("Fin", fecha_final)
+                        .AddWithValue("Nit", ComboBox2.SelectedValue)
+                    End With
+                    Dim reader As MySqlDataReader
+                    reader = cmd.ExecuteReader
+                    Dim T As New DataTable
+                    T.Load(reader)
+                    .DataSource = T
+                    .ReadOnly = True
+                    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    .Visible = True
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
+                    conn.Close()
+                    Exit Sub
+                End Try
+
+            End With
+        ElseIf ComboBox1.SelectedValue <> "-1" And ComboBox2.SelectedValue <> "-1" Then
+
+            With DataGridView6
+                .DataSource = Nothing
+                Try
+                    conn.Open()
+                    Dim query As String = "SELECT orden_movimientos.N_Orden_Compra as 'Orden de Compra #', orden_movimientos.N_Referencia as 'Numero de Remision', 
+                                            productos.Nombre_Producto as 'Producto', movimientos.Cantidad, Precio_Compra as 'Precio', movimientos.fecha as' Fecha',proveedores.Nombre_Proveedor as 'Comprado a'
+                                            from productos inner join movimientos on movimientos.Id_Producto = productos.Id_Producto
+                                            inner join orden_movimientos on orden_movimientos.IdOrden_Movimiento = movimientos.IdOrden_Movimiento
+                                            inner join proveedores on orden_movimientos.Nit_Proveedor = proveedores.Nit_Proveedor
+                                            where orden_movimientos.Tipo = 'INGRESO' and movimientos.fecha between @Inicio and @Fin and movimientos.Id_Producto = @IdProd and orden_movimientos.Nit_Proveedor = @Nit;"
+                    Dim cmd As New MySqlCommand(query, conn)
+                    With cmd.Parameters
+                        .AddWithValue("Inicio", fecha_inicial)
+                        .AddWithValue("Fin", fecha_final)
+                        .AddWithValue("IdProd", ComboBox1.SelectedValue)
+                        .AddWithValue("Nit", ComboBox2.SelectedValue)
+                    End With
+                    Dim reader As MySqlDataReader
+                    reader = cmd.ExecuteReader
+                    Dim T As New DataTable
+                    T.Load(reader)
+                    .DataSource = T
+                    .ReadOnly = True
+                    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    .Visible = True
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
+                    conn.Close()
+                    Exit Sub
+                End Try
+
+            End With
+        End If
+        Dim gasto As Decimal = 0
+        For row As Integer = 0 To DataGridView6.Rows.Count - 1
+            gasto = gasto + DataGridView6(3, row).Value * DataGridView6(4, row).Value
+        Next
+
+        MsgBox("Gasto total: " & Format(gasto, "Currency"))
+
     End Sub
 
     '    Private Sub Generar_Movimientos_Click(sender As Object, e As EventArgs) Handles Generar_Movimientos.Click

@@ -2137,7 +2137,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub TextBox_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles Monto_Doag.KeyPress, Stock_Existente.KeyPress, Stock_Maximo.KeyPress, Stock_Minimo.KeyPress, Compra_Maxima.KeyPress
+    Private Sub TextBox_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles Monto_Doag.KeyPress, Stock_Existente.KeyPress, Stock_Maximo.KeyPress, Stock_Minimo.KeyPress, Compra_Maxima.KeyPress, Cantidad_Movimiento.KeyPress
         If Asc(e.KeyChar) <> 8 Then
             If Asc(e.KeyChar) < 48 Or Asc(e.KeyChar) > 57 Then
                 e.Handled = True
@@ -2288,7 +2288,7 @@ Public Class Form1
             Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
             Dim MysqlDset As New DataSet
             MysqlDadap.Fill(MysqlDset)
-            a = Convert.ToInt16(MysqlDset.Tables(0).Rows(1).Item(2))
+            a = Convert.ToInt64(MysqlDset.Tables(0).Rows(1).Item(2))
             b = MysqlDset.Tables(0).Rows(1).Item(0)
             Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (a + 1) & "' " &
                             "WHERE IdDatos_App = '" & b & "'", conn)
@@ -2312,7 +2312,7 @@ Public Class Form1
             Dim MysqlDset As New DataSet
             MysqlDadap.Fill(MysqlDset)
             conn.Close()
-            a = Convert.ToInt16(MysqlDset.Tables(0).Rows(1).Item(2))
+            a = Convert.ToInt64(MysqlDset.Tables(0).Rows(1).Item(2))
             b = MysqlDset.Tables(0).Rows(1).Item(0)
             '.Enabled = False
         Catch ex As Exception
@@ -2322,7 +2322,7 @@ Public Class Form1
         Dim Num_men As Integer = 0
         For Each row As DataGridViewRow In Me.DataGridView3.Rows
             'obtenemos el valor de la columna en la variable declarada
-            If Convert.ToInt16(row.Cells(2).Value) > Num_men Then
+            If Convert.ToInt64(row.Cells(2).Value) > Num_men Then
                 Num_men = row.Cells(2).Value 'donde (0) es la columna a recorrer
             End If
         Next
@@ -2353,11 +2353,11 @@ Public Class Form1
             Dim MysqlDadap As New MySqlDataAdapter(consulta, conn)
             Dim MysqlDset As New DataSet
             MysqlDadap.Fill(MysqlDset)
-            a = Convert.ToInt16(MysqlDset.Tables(0).Rows(2).Item(2))
+            a = Convert.ToInt64(MysqlDset.Tables(0).Rows(2).Item(2))
             b = MysqlDset.Tables(0).Rows(2).Item(0)
             Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (a + 1) & "' " &
                             "WHERE IdDatos_App = '" & b & "'", conn)
-                cmd.ExecuteNonQuery()
+            cmd.ExecuteNonQuery()
             'MessageBox.Show("Registro MODIFICADO")
             conn.Close()
         Catch ex As Exception
@@ -2377,7 +2377,7 @@ Public Class Form1
             Dim MysqlDset As New DataSet
             MysqlDadap.Fill(MysqlDset)
             conn.Close()
-            a = Convert.ToInt16(MysqlDset.Tables(0).Rows(2).Item(2))
+            a = Convert.ToInt64(MysqlDset.Tables(0).Rows(2).Item(2))
             b = MysqlDset.Tables(0).Rows(2).Item(0)
             '.Enabled = False
         Catch ex As Exception
@@ -2389,7 +2389,7 @@ Public Class Form1
             'obtenemos el valor de la columna en la variable declarada
             If row.Cells(3).Value = "Azul" Or row.Cells(3).Value = "Rojo" Or row.Cells(3).Value = "Amarillo" Or row.Cells(3).Value = "Blanco" Then
             Else
-                If Convert.ToInt16(row.Cells(3).Value) > Num_men Then
+                If Convert.ToInt64(row.Cells(3).Value) > Num_men Then
                     Num_men = row.Cells(3).Value 'donde (0) es la columna a recorrer
                 End If
             End If
@@ -2498,7 +2498,7 @@ Public Class Form1
         DataGridView3.Columns(0).Visible = False
         For Each row As DataGridViewRow In Me.DataGridView3.Rows
             'obtenemos el valor de la columna en la variable declarada
-            If Convert.ToInt16(row.Cells(0).Value) = a Then
+            If Convert.ToInt64(row.Cells(0).Value) = a Then
                 DataGridView3.CurrentCell = DataGridView3(1, row.Index)
             End If
         Next
@@ -2536,7 +2536,7 @@ Public Class Form1
             DataGridView3.Columns(0).Visible = False
             For Each row As DataGridViewRow In Me.DataGridView3.Rows
                 'obtenemos el valor de la columna en la variable declarada
-                If Convert.ToInt16(row.Cells(0).Value) = a Then
+                If Convert.ToInt64(row.Cells(0).Value) = a Then
                     DataGridView3.CurrentCell = DataGridView3(1, row.Index)
                 End If
             Next
@@ -2558,9 +2558,17 @@ Public Class Form1
             MsgBox("No se puede recuperar la fecha de la base de datos", MsgBoxStyle.Exclamation, "Error")
             conn.Close()
         End Try
-        Label86.Text = "Proveedor *"
+        Label86.Text = "Proveedor: *"
+        Label82.Text = "Orden de Compra: *"
         Tipo_Movimiento.Text = "INGRESO"
+        'Haciendo los controles necesarios para el ingreso visibles
+        CBN_SolicitudSalida.Visible = False
+        Label86.Visible = True
+        Label85.Visible = True
         Label84.Visible = True
+        Label83.Visible = True
+        Observaciones_Movimiento.Visible = True
+        N_Orden_Movimiento.Visible = True
         Monto_Movimiento.Visible = True
         N_Referencia_Movimiento.Visible = True
         N_Referencia_Movimiento.Enabled = True
@@ -2703,6 +2711,110 @@ Public Class Form1
                 .ValueMember = "Id_Producto" 'el ide de tu tabla relacionada con el nombre que muestras muy importante para saber el ide de quien seleccionas en tu combobox
                 '.Enabled = False
             End With
+        ElseIf Tipo_Movimiento.Text = "SALIDA" Then
+            CBN_SolicitudSalida.Enabled = False
+            Gru_Movimiento.Visible = True
+            Precio_Movimiento.Visible = False
+            Label95.Text = "Solicitado Por:"
+            With Usuario_Movimiento
+                .DataSource = Nothing
+                .Items.Clear()
+                .Enabled = False
+                Try
+                    conn.Open()
+                    Dim query As String = "SELECT distinct usuarios.Nombre_Usuario, solicitador 
+                                           from solicitud_salida inner join usuarios on id_usuario = solicitador 
+                                           where NumeroOrdenTrabajo = @Orden"
+                    Dim cmd As New MySqlCommand(query, conn)
+                    With cmd.Parameters
+                        .AddWithValue("Orden", CBN_SolicitudSalida.SelectedValue)
+                    End With
+                    Dim sqladap As New MySqlDataAdapter(cmd)
+                    Dim dtRecord As New DataTable
+                    sqladap.Fill(dtRecord)
+                    .DataSource = dtRecord
+                    .DisplayMember = "Nombre_Usuario"
+                    .ValueMember = "solicitador"
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudo recuperar el nombre de quien solicito la salida" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
+                    conn.Close()
+                    Exit Sub
+                End Try
+            End With
+
+            With Producto_Movimiento
+                .DataSource = Nothing
+                .Items.Clear()
+                .Enabled = True
+                Try
+                    conn.Open()
+                    Dim query As String = "Select productos.Nombre_Producto, productos.Id_Producto
+                                           From solicitud_salida inner Join productos On solicitud_salida.producto = productos.Id_Producto 
+                                           Where NumeroOrdenTrabajo = @Orden and pendiente = '1';"
+                    Dim cmd As New MySqlCommand(query, conn)
+                    With cmd.Parameters
+                        .AddWithValue("Orden", CBN_SolicitudSalida.SelectedValue)
+                    End With
+                    Dim SqlAdap As New MySqlDataAdapter(cmd)
+                    Dim dtRecord As New DataTable
+                    SqlAdap.Fill(dtRecord)
+                    .DataSource = dtRecord
+                    .DisplayMember = "Nombre_Producto"
+                    .ValueMember = "Id_Producto"
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
+                    conn.Close()
+                    Exit Sub
+                End Try
+
+            End With
+
+            With DataGridView4
+                .DataSource = Nothing
+                Try
+                    conn.Open()
+                    Dim query As String = "SELECT productos.Nombre_Producto as 'Producto Solicitado', solicitud_salida.Cantidad as 'Cantidad Solicitada'
+                                           from solicitud_salida inner join productos on solicitud_salida.producto = productos.Id_Producto 
+                                           where NumeroOrdenTrabajo = @Orden and pendiente = '1';"
+                    Dim cmd As New MySqlCommand(query, conn)
+                    With cmd.Parameters
+                        .AddWithValue("Orden", CBN_SolicitudSalida.SelectedValue)
+                    End With
+                    Dim reader As MySqlDataReader
+                    reader = cmd.ExecuteReader
+                    Dim T As New DataTable
+                    T.Load(reader)
+                    .DataSource = T
+                    .ReadOnly = True
+                    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    .Visible = True
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
+                    conn.Close()
+                    Exit Sub
+                End Try
+
+            End With
+
+            Try
+                conn.Open()
+                Dim cmd As New MySqlCommand("INSERT INTO orden_movimientos (N_Orden_Compra, Tipo, Fecha)
+                                            VALUES (@NumOrden, @Tipo, @Fecha);", conn)
+                With cmd.Parameters
+                    .AddWithValue("NumOrden", UCase(CBN_SolicitudSalida.SelectedValue))
+                    .AddWithValue("Tipo", UCase(Tipo_Movimiento.Text.Trim))
+                    .AddWithValue("Fecha", UCase(Fecha_Movimiento.Text.Trim))
+                End With
+                cmd.ExecuteNonQuery()
+                conn.Close()
+            Catch ex As Exception
+                MsgBox("No se pudo registrar el movimiento:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                Exit Sub
+            End Try
+
         End If
         Movimiento_Ingreso.Enabled = False
         Movimiento_Salida.Enabled = False
@@ -2814,16 +2926,114 @@ Public Class Form1
             End Try
             Id_Prod = Tabla1.Rows(0).ItemArray(0).ToString
             If Tipo_Movimiento.Text = "INGRESO" Then
-                If Descripcion_Movimiento.Text = "" Or Producto_Movimiento.Text = "" Or Precio_Movimiento.Text = "" Then
+                If Descripcion_Movimiento.Text.Trim = "" Or Producto_Movimiento.Text = "" Or Precio_Movimiento.Text = "" Then
                     MsgBox("Faltan algunos datos para generar el movimiento")
                     Exit Sub
                 End If
 
-                If Convert.ToInt16(Tabla1.Rows(0).ItemArray(2).ToString) < (Convert.ToInt16(Cantidad_Movimiento.Text) + Convert.ToInt16(Tabla1.Rows(0).ItemArray(3).ToString)) Then
+                If Convert.ToInt64(Tabla1.Rows(0).ItemArray(2).ToString) < (Convert.ToInt64(Cantidad_Movimiento.Text) + Convert.ToInt64(Tabla1.Rows(0).ItemArray(3).ToString)) Then
                     MsgBox("Atencion NO puede realizar el movimiento, porque su movimiento supera el máximo permitido")
                     Exit Sub
                 End If
-                stock = Convert.ToInt16(Tabla1.Rows(0).ItemArray(3).ToString) + Convert.ToInt16(Cantidad_Movimiento.Text)
+                stock = Convert.ToInt64(Tabla1.Rows(0).ItemArray(3).ToString) + Convert.ToInt64(Cantidad_Movimiento.Text)
+
+            ElseIf Tipo_Movimiento.Text = "SALIDA" Then
+
+                If Descripcion_Movimiento.Text.Trim = "" Or Cantidad_Movimiento.Text.Trim = "" Then
+                    MsgBox("Faltan algunos datos para poder generar la salida", MsgBoxStyle.Information, "Info")
+                    Exit Sub
+                End If
+
+                If Cantidad_Movimiento.Text = 0 Then
+                    If MessageBox.Show("¿Esta seguro que desea rechazar la solicitud de salida de este producto?", "Alerta", MessageBoxButtons.YesNo) = DialogResult.No Then
+                        Exit Sub
+                    End If
+                    Nueva_Transaccion.Visible = True
+                    Try
+                        conn.Open()
+                        Dim cmd As New MySqlCommand(String.Format("UPDATE bd_inventario2.solicitud_salida SET Pendiente = '0' WHERE NumeroOrdenTrabajo = @Orden and Producto = @Prod;"), conn)
+                        With cmd.Parameters
+                            .AddWithValue("Orden", CBN_SolicitudSalida.SelectedValue)
+                            .AddWithValue("Prod", Producto_Movimiento.SelectedValue)
+                        End With
+                        cmd.ExecuteNonQuery()
+                        conn.Close()
+                    Catch ex As Exception
+                        MsgBox("No se pudo cambiar el estado de pendiente del producto retirado en esta solicitud, por favor realice este cambio manualmente", MsgBoxStyle.Information, "Info.")
+                        conn.Close()
+                    End Try
+
+                    With Producto_Movimiento
+                        .DataSource = Nothing
+                        .Items.Clear()
+                        .Enabled = True
+                        Try
+                            conn.Open()
+                            Dim query As String = "Select productos.Nombre_Producto, productos.Id_Producto
+                                           From solicitud_salida inner Join productos On solicitud_salida.producto = productos.Id_Producto 
+                                           Where NumeroOrdenTrabajo = @Orden and pendiente = '1';"
+                            Dim cmd As New MySqlCommand(query, conn)
+                            With cmd.Parameters
+                                .AddWithValue("Orden", CBN_SolicitudSalida.SelectedValue)
+                            End With
+                            Dim SqlAdap As New MySqlDataAdapter(cmd)
+                            Dim dtRecord As New DataTable
+                            SqlAdap.Fill(dtRecord)
+                            .DataSource = dtRecord
+                            .DisplayMember = "Nombre_Producto"
+                            .ValueMember = "Id_Producto"
+                            conn.Close()
+                        Catch ex As Exception
+                            MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
+                            conn.Close()
+                            Exit Sub
+                        End Try
+
+                    End With
+
+                    With DataGridView4
+                        .DataSource = Nothing
+                        Try
+                            conn.Open()
+                            Dim query As String = "SELECT productos.Nombre_Producto as 'Producto Solicitado', solicitud_salida.Cantidad as 'Cantidad Solicitada'
+                                           from solicitud_salida inner join productos on solicitud_salida.producto = productos.Id_Producto 
+                                           where NumeroOrdenTrabajo = @Orden and pendiente = '1';"
+                            Dim cmd As New MySqlCommand(query, conn)
+                            With cmd.Parameters
+                                .AddWithValue("Orden", CBN_SolicitudSalida.SelectedValue)
+                            End With
+                            Dim reader As MySqlDataReader
+                            reader = cmd.ExecuteReader
+                            Dim T As New DataTable
+                            T.Load(reader)
+                            .DataSource = T
+                            .ReadOnly = True
+                            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                            .Visible = True
+                            conn.Close()
+                        Catch ex As Exception
+                            MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
+                            conn.Close()
+                            Exit Sub
+                        End Try
+
+                    End With
+                    Exit Sub
+                End If
+
+                If Convert.ToInt64(Tabla1.Rows(0).ItemArray(3).ToString) - Convert.ToInt64(Cantidad_Movimiento.Text) < 0 Then
+                    MsgBox("No puede llevar a cabo este movimiento porque la cantidad que quiere retirar supera las existencias en el inventario", MsgBoxStyle.Information, "Error.")
+                    Exit Sub
+                End If
+
+                If Convert.ToInt64(Tabla1.Rows(0).ItemArray(1).ToString) > (Convert.ToInt64(Tabla1.Rows(0).ItemArray(3).ToString) - Convert.ToInt64(Cantidad_Movimiento.Text)) Then
+                    If MessageBox.Show("Alerta al realizar este movimiento va a estar por debajo del minimo establecido para el producto. ¿Desea continuar?", "Alerta", MessageBoxButtons.YesNo) = DialogResult.No Then
+                        Exit Sub
+                    End If
+                End If
+
+                stock = Convert.ToInt64(Tabla1.Rows(0).ItemArray(3).ToString) - Convert.ToInt64(Cantidad_Movimiento.Text)
+
             End If
             Using conn
                 conn.Open()
@@ -2894,13 +3104,34 @@ Public Class Form1
                             cmd.ExecuteNonQuery()
                             Dim cmd2 As New MySqlCommand("UPDATE orden_movimientos SET Monto = @NewMonto WHERE N_Orden_Compra = @Orden and N_Referencia = @Remision;", conn)
                             With cmd2.Parameters
-                                .AddWithValue("NewMonto", (Convert.ToInt16(Monto_Movimiento.Text) + Convert.ToInt16(Cantidad_Movimiento.Text) * Convert.ToInt16(Precio_Movimiento.Text)))
+                                .AddWithValue("NewMonto", (Convert.ToInt64(Monto_Movimiento.Text) + Convert.ToInt64(Cantidad_Movimiento.Text) * Convert.ToInt64(Precio_Movimiento.Text)))
                                 .AddWithValue("Orden", N_Orden_Movimiento.Text)
                                 .AddWithValue("Remision", N_Referencia_Movimiento.Text)
                             End With
                             cmd2.ExecuteNonQuery()
-                            Monto_Movimiento.Text = (Convert.ToInt16(Monto_Movimiento.Text) + Convert.ToInt16(Cantidad_Movimiento.Text) * Convert.ToInt16(Precio_Movimiento.Text))
+                            Monto_Movimiento.Text = (Convert.ToInt64(Monto_Movimiento.Text) + Convert.ToInt64(Cantidad_Movimiento.Text) * Convert.ToInt64(Precio_Movimiento.Text))
                             'MessageBox.Show("Registro MODIFICADO")
+                            conn.Close()
+                        End Using
+                    Catch ex As Exception
+                        MsgBox("El registro no pudo Modificarse por: " & vbCrLf & ex.Message)
+                    End Try
+                ElseIf Tipo_Movimiento.Text = "SALIDA" Then
+                    Try
+                        Using conn
+                            conn.Open()
+                            Dim cmd As New MySqlCommand("INSERT INTO movimientos (IdOrden_Movimiento, Id_Producto, Cantidad, Id_Usuario, Fecha, Descripcion,Id_Usuario_Final)
+                                                        VALUES (@IdOrd, @IdProd, @Cantidad, @Usuario, @Fecha, @Desc, @Final)", conn)
+                            With cmd.Parameters
+                                .AddWithValue("IdOrd", UCase(Id_Ord_Movimiento))
+                                .AddWithValue("IdProd", Producto_Movimiento.SelectedValue)
+                                .AddWithValue("Cantidad", Cantidad_Movimiento.Text)
+                                .AddWithValue("Usuario", id_Usuar_Per)
+                                .AddWithValue("Fecha", Fecha_Movimiento.Text)
+                                .AddWithValue("Desc", UCase(Descripcion_Movimiento.Text))
+                                .AddWithValue("Final", Usuario_Movimiento.SelectedValue)
+                            End With
+                            cmd.ExecuteNonQuery()
                             conn.Close()
                         End Using
                     Catch ex As Exception
@@ -2913,27 +3144,96 @@ Public Class Form1
                                                 FROM movimientos inner join productos on movimientos.Id_Producto = productos.Id_Producto
                                                 inner join orden_movimientos on movimientos.IdOrden_Movimiento = orden_movimientos.IdOrden_Movimiento
                                                 WHERE N_Orden_Compra = @Orden and tipo = 'INGRESO';"
-                End If
-
-                Using conn
-                    conn.Open()
-                    Dim cmd As New MySqlCommand(consulta_movimientos, conn)
-                    With cmd.Parameters
-                        .AddWithValue("Orden", N_Orden_Movimiento.Text)
-                    End With
-                    Dim adaptador As New MySqlDataAdapter(cmd)
-                    Dim tabla As New DataTable
+                    Using conn
+                        conn.Open()
+                        Dim cmd As New MySqlCommand(consulta_movimientos, conn)
+                        With cmd.Parameters
+                            .AddWithValue("Orden", N_Orden_Movimiento.Text)
+                        End With
+                        Dim adaptador As New MySqlDataAdapter(cmd)
+                        Dim tabla As New DataTable
+                        Try
+                            adaptador.Fill(tabla)
+                            conn.Close()
+                        Catch ex As Exception
+                        Finally
+                            If conn.State = ConnectionState.Open Then
+                                conn.Close()
+                            End If
+                        End Try
+                        DataGridView4.DataSource = tabla
+                    End Using
+                ElseIf Tipo_Movimiento.Text = "SALIDA" Then
                     Try
-                        adaptador.Fill(tabla)
+                        conn.Open()
+                        Dim cmd As New MySqlCommand(String.Format("UPDATE bd_inventario2.solicitud_salida SET Pendiente = '0' WHERE NumeroOrdenTrabajo = @Orden and Producto = @Prod;"), conn)
+                        With cmd.Parameters
+                            .AddWithValue("Orden", CBN_SolicitudSalida.SelectedValue)
+                            .AddWithValue("Prod", Producto_Movimiento.SelectedValue)
+                        End With
+                        cmd.ExecuteNonQuery()
                         conn.Close()
                     Catch ex As Exception
-                    Finally
-                        If conn.State = ConnectionState.Open Then
-                            conn.Close()
-                        End If
+                        MsgBox("No se pudo cambiar el estado de pendiente del producto retirado en esta solicitud, por favor realice este cambio manualmente", MsgBoxStyle.Information, "Info.")
+                        conn.Close()
                     End Try
-                    DataGridView4.DataSource = tabla
-                End Using
+
+                    With Producto_Movimiento
+                        .DataSource = Nothing
+                        .Items.Clear()
+                        .Enabled = True
+                        Try
+                            conn.Open()
+                            Dim query As String = "Select productos.Nombre_Producto, productos.Id_Producto
+                                           From solicitud_salida inner Join productos On solicitud_salida.producto = productos.Id_Producto 
+                                           Where NumeroOrdenTrabajo = @Orden and pendiente = '1';"
+                            Dim cmd As New MySqlCommand(query, conn)
+                            With cmd.Parameters
+                                .AddWithValue("Orden", CBN_SolicitudSalida.SelectedValue)
+                            End With
+                            Dim SqlAdap As New MySqlDataAdapter(cmd)
+                            Dim dtRecord As New DataTable
+                            SqlAdap.Fill(dtRecord)
+                            .DataSource = dtRecord
+                            .DisplayMember = "Nombre_Producto"
+                            .ValueMember = "Id_Producto"
+                            conn.Close()
+                        Catch ex As Exception
+                            MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
+                            conn.Close()
+                            Exit Sub
+                        End Try
+
+                    End With
+
+                    With DataGridView4
+                        .DataSource = Nothing
+                        Try
+                            conn.Open()
+                            Dim query As String = "SELECT productos.Nombre_Producto as 'Producto Solicitado', solicitud_salida.Cantidad as 'Cantidad Solicitada'
+                                           from solicitud_salida inner join productos on solicitud_salida.producto = productos.Id_Producto 
+                                           where NumeroOrdenTrabajo = @Orden and pendiente = '1';"
+                            Dim cmd As New MySqlCommand(query, conn)
+                            With cmd.Parameters
+                                .AddWithValue("Orden", CBN_SolicitudSalida.SelectedValue)
+                            End With
+                            Dim reader As MySqlDataReader
+                            reader = cmd.ExecuteReader
+                            Dim T As New DataTable
+                            T.Load(reader)
+                            .DataSource = T
+                            .ReadOnly = True
+                            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                            .Visible = True
+                            conn.Close()
+                        Catch ex As Exception
+                            MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
+                            conn.Close()
+                            Exit Sub
+                        End Try
+
+                    End With
+                End If
                 Descripcion_Movimiento.Text = ""
                 Precio_Movimiento.Text = ""
                 Cantidad_Movimiento.Text = ""
@@ -3109,6 +3409,94 @@ Public Class Form1
 
     End Sub
 
+    Private Sub Movimiento_Salida_Click(sender As Object, e As EventArgs) Handles Movimiento_Salida.Click
+        Esconder_tabpages_submenu()
+        TabPage12.Parent = TabControl2
+        Try
+            conn.Open()
+            Dim cmd As New MySqlCommand(String.Format("SELECT NOW();"), conn)
+            Dim fecha_servidor As DateTime = cmd.ExecuteScalar()
+            Fecha_Movimiento.Text = fecha_servidor.ToString("yyyy-MM-dd")
+            conn.Close()
+        Catch
+            MsgBox("No se puede recuperar la fecha de la base de datos", MsgBoxStyle.Exclamation, "Error")
+            conn.Close()
+        End Try
+        Tipo_Movimiento.Text = "SALIDA"
+        'Haciendo los controles necesarios para el ingreso visibles
+        Datos_Movimientos.Visible = True
+        CBN_SolicitudSalida.Visible = True
+        CBN_SolicitudSalida.Enabled = True
+        CargarCBNSolicitudesSalida()
+        Label80.Visible = True
+        Tipo_Movimiento.Visible = True
+        Label81.Visible = True
+        Fecha_Movimiento.Visible = True
+        CBN_SolicitudSalida.Visible = True
+        Label86.Visible = False
+        Label85.Visible = False
+        Label84.Visible = False
+        Label83.Visible = False
+        Label82.Text = "Numero orden de trabajo: *"
+        Label82.Visible = True
+        Observaciones_Movimiento.Visible = False
+        N_Orden_Movimiento.Visible = False
+        Monto_Movimiento.Visible = False
+        N_Referencia_Movimiento.Visible = False
+        N_Referencia_Movimiento.Enabled = False
+        Proveedor_Movimiento.Visible = False
+        N_Orden_Movimiento.Enabled = False
+        N_Orden_Movimiento.Text = ""
+        N_Referencia_Movimiento.Text = ""
+        Confirmar_Transaccion.Visible = True
+    End Sub
+
+    Private Sub CargarCBNSolicitudesSalida()
+        With CBN_SolicitudSalida
+            Try
+                conn.Open()
+                Dim query As String = "Select distinct NumeroOrdenTrabajo from solicitud_salida where pendiente = 1"
+                Dim cmd As New MySqlCommand(query, conn)
+                Dim sqlAdap As New MySqlDataAdapter(cmd)
+                Dim dtRecord As New DataTable
+                sqlAdap.Fill(dtRecord)
+                .DataSource = dtRecord
+                .DisplayMember = "NumeroOrdenTrabajo"
+                .ValueMember = "NumeroOrdenTrabajo"
+                conn.Close()
+            Catch ex As Exception
+                MsgBox("Error al cargar los perfiles de la base de datos", MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
+            End Try
+        End With
+    End Sub
+
+    Private Sub Nueva_Transaccion_Click(sender As Object, e As EventArgs) Handles Nueva_Transaccion.Click
+        DataGridView4.Visible = False
+        DataGridView4.DataSource = Nothing
+        Gru_Movimiento.Visible = False
+        Movimiento_Ingreso.Enabled = True
+        Movimiento_Salida.Enabled = True
+        Generar_Movimientos.Visible = False
+        Confirmar_Transaccion.Visible = True
+        N_Orden_Movimiento.Enabled = True
+        N_Referencia_Movimiento.Enabled = True
+        Monto_Movimiento.Enabled = True
+        Observaciones_Movimiento.Enabled = True
+        Proveedor_Movimiento.Enabled = True
+        N_Orden_Movimiento.Text = ""
+        N_Referencia_Movimiento.Text = ""
+        Monto_Movimiento.Text = ""
+        Observaciones_Movimiento.Text = ""
+        Proveedor_Movimiento.SelectedItem = -1
+        Nueva_Transaccion.Visible = False
+        If Tipo_Movimiento.Text = "SALIDA" Then
+            Movimiento_Salida_Click(sender, e)
+        ElseIf Tipo_Movimiento.Text = "INGRESO" Then
+            Movimiento_Ingreso_Click(sender, e)
+        End If
+    End Sub
+
     '    Private Sub Generar_Movimientos_Click(sender As Object, e As EventArgs) Handles Generar_Movimientos.Click
     '        DataGridView4.Visible = True
     '        Dim consulta_movimientos As String = ""
@@ -3138,24 +3526,24 @@ Public Class Form1
     '                '    MsgBox("Faltan algunos datos para generar el movimiento")
     '                '    GoTo err
     '                'End If
-    '                'If Convert.ToInt16(Tabla1.Rows(0).ItemArray(3).ToString) < Convert.ToInt16(Cantidad_Movimiento.Text) Then
+    '                'If Convert.Toint64(Tabla1.Rows(0).ItemArray(3).ToString) < Convert.Toint64(Cantidad_Movimiento.Text) Then
     '                '    MsgBox("Atencion NO puede realizar el movimiento, porque no posee esa cantidad en su inventario")
     '                '    GoTo err
     '                'End If
-    '                'stock = Convert.ToInt16(Tabla1.Rows(0).ItemArray(3).ToString) - Convert.ToInt16(Cantidad_Movimiento.Text)
+    '                'stock = Convert.Toint64(Tabla1.Rows(0).ItemArray(3).ToString) - Convert.Toint64(Cantidad_Movimiento.Text)
     '            Else
     '                If Descripcion_Movimiento.Text = "" Or Producto_Movimiento.Text = "" Or Precio_Movimiento.Text = "" Then
     '                    MsgBox("Todos los datos son obligatorios")
     '                    Exit Sub
     '                End If
     '                If Tabla1.Rows(0).ItemArray(1).ToString <> 0 Then
-    '                    stock = Convert.ToInt16(Tabla1.Rows(0).ItemArray(3).ToString) + Convert.ToInt16(Cantidad_Movimiento.Text)
-    '                    If Convert.ToInt16(Tabla1.Rows(0).ItemArray(2).ToString) < stock) Then
+    '                    stock = Convert.Toint64(Tabla1.Rows(0).ItemArray(3).ToString) + Convert.Toint64(Cantidad_Movimiento.Text)
+    '                    If Convert.Toint64(Tabla1.Rows(0).ItemArray(2).ToString) < stock) Then
     '                        MsgBox("Atencion NO puede realizar el movimiento, porque su movimiento supera el máximo permitido")
     '                        Exit Sub
     '                    End If
     '                ElseIf Tabla1.Rows(0).ItemArray(1).ToString = 0 Then
-    '                    stock = Convert.ToInt16(Tabla1.Rows(0).ItemArray(3).ToString) + Convert.ToInt16(Cantidad_Movimiento.Text)
+    '                    stock = Convert.Toint64(Tabla1.Rows(0).ItemArray(3).ToString) + Convert.Toint64(Cantidad_Movimiento.Text)
     '                End If
     '            End If
     '            Using conexion As New MySqlConnection(datasource)

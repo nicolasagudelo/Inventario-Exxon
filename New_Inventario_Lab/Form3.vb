@@ -176,7 +176,7 @@ Public Class Form3
             Case 4
                 If Cantidad_a_mover <> 0 Then
                     e.Cancel = True
-                    MsgBox("Aun tiene movimientos pendientes ")
+                    MsgBox("Aun tiene movimientos pendientes")
                 Else
                     Me.Dispose()
                 End If
@@ -429,5 +429,4 @@ Public Class Form3
         End If
         Cargar()
     End Sub
-
 End Class

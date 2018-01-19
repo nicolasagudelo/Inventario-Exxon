@@ -156,7 +156,6 @@ Partial Class Form1
         Me.Agregar_Estante = New System.Windows.Forms.Button()
         Me.TabPage12 = New System.Windows.Forms.TabPage()
         Me.Gru_Movimiento = New System.Windows.Forms.GroupBox()
-        Me.Precio_Movimiento = New System.Windows.Forms.TextBox()
         Me.Usuario_Movimiento = New System.Windows.Forms.ComboBox()
         Me.Producto_Movimiento = New System.Windows.Forms.ComboBox()
         Me.Label94 = New System.Windows.Forms.Label()
@@ -165,10 +164,12 @@ Partial Class Form1
         Me.Label97 = New System.Windows.Forms.Label()
         Me.Descripcion_Movimiento = New System.Windows.Forms.TextBox()
         Me.Label99 = New System.Windows.Forms.Label()
+        Me.Precio_Movimiento = New System.Windows.Forms.TextBox()
         Me.Nueva_Transaccion = New System.Windows.Forms.Button()
         Me.Generar_Movimientos = New System.Windows.Forms.Button()
         Me.Confirmar_Transaccion = New System.Windows.Forms.Button()
         Me.Datos_Movimientos = New System.Windows.Forms.GroupBox()
+        Me.CBN_SolicitudSalida = New System.Windows.Forms.ComboBox()
         Me.Proveedor_Movimiento = New System.Windows.Forms.ComboBox()
         Me.Label86 = New System.Windows.Forms.Label()
         Me.Label85 = New System.Windows.Forms.Label()
@@ -292,6 +293,14 @@ Partial Class Form1
         Me.Label96 = New System.Windows.Forms.Label()
         Me.Label93 = New System.Windows.Forms.Label()
         Me.TabPage17 = New System.Windows.Forms.TabPage()
+        Me.BtnConfirmarSolicitud = New System.Windows.Forms.Button()
+        Me.CantidadProducto = New System.Windows.Forms.NumericUpDown()
+        Me.BtnQuitarProducto = New System.Windows.Forms.Button()
+        Me.BtnAgregarProducto = New System.Windows.Forms.Button()
+        Me.DGVListaProductos = New System.Windows.Forms.DataGridView()
+        Me.IdProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Producto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Cantidad = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DGVProductosEquipo = New System.Windows.Forms.DataGridView()
         Me.CBEquipos = New System.Windows.Forms.ComboBox()
         Me.LblEquipo = New System.Windows.Forms.Label()
@@ -302,14 +311,6 @@ Partial Class Form1
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.DGVListaProductos = New System.Windows.Forms.DataGridView()
-        Me.BtnAgregarProducto = New System.Windows.Forms.Button()
-        Me.BtnQuitarProducto = New System.Windows.Forms.Button()
-        Me.CantidadProducto = New System.Windows.Forms.NumericUpDown()
-        Me.IdProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Producto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Cantidad = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.BtnConfirmarSolicitud = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -356,12 +357,12 @@ Partial Class Form1
         Me.GroupBox7.SuspendLayout()
         Me.TabPage16.SuspendLayout()
         Me.TabPage17.SuspendLayout()
+        CType(Me.CantidadProducto, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DGVListaProductos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DGVProductosEquipo, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DGVListaProductos, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.CantidadProducto, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -1908,7 +1909,6 @@ Partial Class Form1
         '
         'Gru_Movimiento
         '
-        Me.Gru_Movimiento.Controls.Add(Me.Precio_Movimiento)
         Me.Gru_Movimiento.Controls.Add(Me.Usuario_Movimiento)
         Me.Gru_Movimiento.Controls.Add(Me.Producto_Movimiento)
         Me.Gru_Movimiento.Controls.Add(Me.Label94)
@@ -1917,6 +1917,7 @@ Partial Class Form1
         Me.Gru_Movimiento.Controls.Add(Me.Label97)
         Me.Gru_Movimiento.Controls.Add(Me.Descripcion_Movimiento)
         Me.Gru_Movimiento.Controls.Add(Me.Label99)
+        Me.Gru_Movimiento.Controls.Add(Me.Precio_Movimiento)
         Me.Gru_Movimiento.Location = New System.Drawing.Point(3, 177)
         Me.Gru_Movimiento.Name = "Gru_Movimiento"
         Me.Gru_Movimiento.Size = New System.Drawing.Size(985, 90)
@@ -1925,16 +1926,10 @@ Partial Class Form1
         Me.Gru_Movimiento.Text = "Movimiento"
         Me.Gru_Movimiento.Visible = False
         '
-        'Precio_Movimiento
-        '
-        Me.Precio_Movimiento.Location = New System.Drawing.Point(787, 51)
-        Me.Precio_Movimiento.Margin = New System.Windows.Forms.Padding(4)
-        Me.Precio_Movimiento.Name = "Precio_Movimiento"
-        Me.Precio_Movimiento.Size = New System.Drawing.Size(191, 24)
-        Me.Precio_Movimiento.TabIndex = 29
-        '
         'Usuario_Movimiento
         '
+        Me.Usuario_Movimiento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Usuario_Movimiento.Enabled = False
         Me.Usuario_Movimiento.FormattingEnabled = True
         Me.Usuario_Movimiento.Location = New System.Drawing.Point(787, 51)
         Me.Usuario_Movimiento.Margin = New System.Windows.Forms.Padding(4)
@@ -1965,12 +1960,12 @@ Partial Class Form1
         'Label95
         '
         Me.Label95.AutoSize = True
-        Me.Label95.Location = New System.Drawing.Point(832, 25)
+        Me.Label95.Location = New System.Drawing.Point(822, 26)
         Me.Label95.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label95.Name = "Label95"
-        Me.Label95.Size = New System.Drawing.Size(65, 17)
+        Me.Label95.Size = New System.Drawing.Size(115, 17)
         Me.Label95.TabIndex = 22
-        Me.Label95.Text = "Usuario"
+        Me.Label95.Text = "Solicitado Por:"
         '
         'Cantidad_Movimiento
         '
@@ -2008,6 +2003,14 @@ Partial Class Form1
         Me.Label99.TabIndex = 14
         Me.Label99.Text = "Producto"
         '
+        'Precio_Movimiento
+        '
+        Me.Precio_Movimiento.Location = New System.Drawing.Point(787, 51)
+        Me.Precio_Movimiento.Margin = New System.Windows.Forms.Padding(4)
+        Me.Precio_Movimiento.Name = "Precio_Movimiento"
+        Me.Precio_Movimiento.Size = New System.Drawing.Size(191, 24)
+        Me.Precio_Movimiento.TabIndex = 29
+        '
         'Nueva_Transaccion
         '
         Me.Nueva_Transaccion.Location = New System.Drawing.Point(994, 90)
@@ -2040,6 +2043,7 @@ Partial Class Form1
         '
         'Datos_Movimientos
         '
+        Me.Datos_Movimientos.Controls.Add(Me.CBN_SolicitudSalida)
         Me.Datos_Movimientos.Controls.Add(Me.Proveedor_Movimiento)
         Me.Datos_Movimientos.Controls.Add(Me.Label86)
         Me.Datos_Movimientos.Controls.Add(Me.Label85)
@@ -2061,6 +2065,15 @@ Partial Class Form1
         Me.Datos_Movimientos.TabStop = False
         Me.Datos_Movimientos.Text = "Datos Movimientos"
         Me.Datos_Movimientos.Visible = False
+        '
+        'CBN_SolicitudSalida
+        '
+        Me.CBN_SolicitudSalida.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CBN_SolicitudSalida.FormattingEnabled = True
+        Me.CBN_SolicitudSalida.Location = New System.Drawing.Point(252, 52)
+        Me.CBN_SolicitudSalida.Name = "CBN_SolicitudSalida"
+        Me.CBN_SolicitudSalida.Size = New System.Drawing.Size(194, 24)
+        Me.CBN_SolicitudSalida.TabIndex = 18
         '
         'Proveedor_Movimiento
         '
@@ -2197,6 +2210,7 @@ Partial Class Form1
         DataGridViewCellStyle8.Font = New System.Drawing.Font("Arial Rounded MT Bold", 10.8!)
         DataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.DataGridView4.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle8
+        Me.DataGridView4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView4.BackgroundColor = System.Drawing.Color.LightSteelBlue
         Me.DataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView4.GridColor = System.Drawing.SystemColors.ControlDarkDark
@@ -3472,6 +3486,77 @@ Partial Class Form1
         Me.TabPage17.TabIndex = 10
         Me.TabPage17.Text = "Solicitud Salida"
         '
+        'BtnConfirmarSolicitud
+        '
+        Me.BtnConfirmarSolicitud.Location = New System.Drawing.Point(943, 587)
+        Me.BtnConfirmarSolicitud.Name = "BtnConfirmarSolicitud"
+        Me.BtnConfirmarSolicitud.Size = New System.Drawing.Size(108, 57)
+        Me.BtnConfirmarSolicitud.TabIndex = 7
+        Me.BtnConfirmarSolicitud.Text = "Confirmar"
+        Me.BtnConfirmarSolicitud.UseVisualStyleBackColor = True
+        '
+        'CantidadProducto
+        '
+        Me.CantidadProducto.Location = New System.Drawing.Point(483, 348)
+        Me.CantidadProducto.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.CantidadProducto.Name = "CantidadProducto"
+        Me.CantidadProducto.Size = New System.Drawing.Size(120, 24)
+        Me.CantidadProducto.TabIndex = 6
+        Me.CantidadProducto.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        '
+        'BtnQuitarProducto
+        '
+        Me.BtnQuitarProducto.Font = New System.Drawing.Font("Arial", 30.0!)
+        Me.BtnQuitarProducto.Location = New System.Drawing.Point(500, 389)
+        Me.BtnQuitarProducto.Name = "BtnQuitarProducto"
+        Me.BtnQuitarProducto.Size = New System.Drawing.Size(75, 52)
+        Me.BtnQuitarProducto.TabIndex = 5
+        Me.BtnQuitarProducto.Text = "<"
+        Me.BtnQuitarProducto.UseVisualStyleBackColor = True
+        '
+        'BtnAgregarProducto
+        '
+        Me.BtnAgregarProducto.Font = New System.Drawing.Font("Arial", 30.0!)
+        Me.BtnAgregarProducto.Location = New System.Drawing.Point(500, 280)
+        Me.BtnAgregarProducto.Name = "BtnAgregarProducto"
+        Me.BtnAgregarProducto.Size = New System.Drawing.Size(75, 52)
+        Me.BtnAgregarProducto.TabIndex = 4
+        Me.BtnAgregarProducto.Text = ">"
+        Me.BtnAgregarProducto.UseVisualStyleBackColor = True
+        '
+        'DGVListaProductos
+        '
+        Me.DGVListaProductos.AllowUserToAddRows = False
+        Me.DGVListaProductos.AllowUserToDeleteRows = False
+        Me.DGVListaProductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DGVListaProductos.BackgroundColor = System.Drawing.Color.LightSteelBlue
+        Me.DGVListaProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DGVListaProductos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IdProducto, Me.Producto, Me.Cantidad})
+        Me.DGVListaProductos.Location = New System.Drawing.Point(664, 98)
+        Me.DGVListaProductos.Name = "DGVListaProductos"
+        Me.DGVListaProductos.ReadOnly = True
+        Me.DGVListaProductos.Size = New System.Drawing.Size(387, 474)
+        Me.DGVListaProductos.TabIndex = 3
+        '
+        'IdProducto
+        '
+        Me.IdProducto.HeaderText = "Id_Producto"
+        Me.IdProducto.Name = "IdProducto"
+        Me.IdProducto.ReadOnly = True
+        Me.IdProducto.Visible = False
+        '
+        'Producto
+        '
+        Me.Producto.HeaderText = "Producto"
+        Me.Producto.Name = "Producto"
+        Me.Producto.ReadOnly = True
+        '
+        'Cantidad
+        '
+        Me.Cantidad.HeaderText = "Cantidad"
+        Me.Cantidad.Name = "Cantidad"
+        Me.Cantidad.ReadOnly = True
+        '
         'DGVProductosEquipo
         '
         Me.DGVProductosEquipo.AllowUserToAddRows = False
@@ -3581,77 +3666,6 @@ Partial Class Form1
         Me.PictureBox1.TabStop = False
         Me.TPAdministrar.SetToolTip(Me.PictureBox1, "Administrar")
         '
-        'DGVListaProductos
-        '
-        Me.DGVListaProductos.AllowUserToAddRows = False
-        Me.DGVListaProductos.AllowUserToDeleteRows = False
-        Me.DGVListaProductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DGVListaProductos.BackgroundColor = System.Drawing.Color.LightSteelBlue
-        Me.DGVListaProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DGVListaProductos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IdProducto, Me.Producto, Me.Cantidad})
-        Me.DGVListaProductos.Location = New System.Drawing.Point(664, 98)
-        Me.DGVListaProductos.Name = "DGVListaProductos"
-        Me.DGVListaProductos.ReadOnly = True
-        Me.DGVListaProductos.Size = New System.Drawing.Size(387, 474)
-        Me.DGVListaProductos.TabIndex = 3
-        '
-        'BtnAgregarProducto
-        '
-        Me.BtnAgregarProducto.Font = New System.Drawing.Font("Arial", 30.0!)
-        Me.BtnAgregarProducto.Location = New System.Drawing.Point(500, 280)
-        Me.BtnAgregarProducto.Name = "BtnAgregarProducto"
-        Me.BtnAgregarProducto.Size = New System.Drawing.Size(75, 52)
-        Me.BtnAgregarProducto.TabIndex = 4
-        Me.BtnAgregarProducto.Text = ">"
-        Me.BtnAgregarProducto.UseVisualStyleBackColor = True
-        '
-        'BtnQuitarProducto
-        '
-        Me.BtnQuitarProducto.Font = New System.Drawing.Font("Arial", 30.0!)
-        Me.BtnQuitarProducto.Location = New System.Drawing.Point(500, 389)
-        Me.BtnQuitarProducto.Name = "BtnQuitarProducto"
-        Me.BtnQuitarProducto.Size = New System.Drawing.Size(75, 52)
-        Me.BtnQuitarProducto.TabIndex = 5
-        Me.BtnQuitarProducto.Text = "<"
-        Me.BtnQuitarProducto.UseVisualStyleBackColor = True
-        '
-        'CantidadProducto
-        '
-        Me.CantidadProducto.Location = New System.Drawing.Point(483, 348)
-        Me.CantidadProducto.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.CantidadProducto.Name = "CantidadProducto"
-        Me.CantidadProducto.Size = New System.Drawing.Size(120, 24)
-        Me.CantidadProducto.TabIndex = 6
-        Me.CantidadProducto.Value = New Decimal(New Integer() {1, 0, 0, 0})
-        '
-        'IdProducto
-        '
-        Me.IdProducto.HeaderText = "Id_Producto"
-        Me.IdProducto.Name = "IdProducto"
-        Me.IdProducto.ReadOnly = True
-        Me.IdProducto.Visible = False
-        '
-        'Producto
-        '
-        Me.Producto.HeaderText = "Producto"
-        Me.Producto.Name = "Producto"
-        Me.Producto.ReadOnly = True
-        '
-        'Cantidad
-        '
-        Me.Cantidad.HeaderText = "Cantidad"
-        Me.Cantidad.Name = "Cantidad"
-        Me.Cantidad.ReadOnly = True
-        '
-        'BtnConfirmarSolicitud
-        '
-        Me.BtnConfirmarSolicitud.Location = New System.Drawing.Point(943, 587)
-        Me.BtnConfirmarSolicitud.Name = "BtnConfirmarSolicitud"
-        Me.BtnConfirmarSolicitud.Size = New System.Drawing.Size(108, 57)
-        Me.BtnConfirmarSolicitud.TabIndex = 7
-        Me.BtnConfirmarSolicitud.Text = "Confirmar"
-        Me.BtnConfirmarSolicitud.UseVisualStyleBackColor = True
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 16.0!)
@@ -3737,12 +3751,12 @@ Partial Class Form1
         Me.TabPage16.PerformLayout()
         Me.TabPage17.ResumeLayout(False)
         Me.TabPage17.PerformLayout()
+        CType(Me.CantidadProducto, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DGVListaProductos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DGVProductosEquipo, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DGVListaProductos, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.CantidadProducto, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -4025,4 +4039,5 @@ Partial Class Form1
     Friend WithEvents Producto As DataGridViewTextBoxColumn
     Friend WithEvents Cantidad As DataGridViewTextBoxColumn
     Friend WithEvents BtnConfirmarSolicitud As Button
+    Friend WithEvents CBN_SolicitudSalida As ComboBox
 End Class

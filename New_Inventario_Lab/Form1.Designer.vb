@@ -282,6 +282,7 @@ Partial Class Form1
         Me.Nit_Proveedor = New System.Windows.Forms.TextBox()
         Me.Modificar_Prod_Prov = New System.Windows.Forms.Button()
         Me.TabPage16 = New System.Windows.Forms.TabPage()
+        Me.DataGridView6 = New System.Windows.Forms.DataGridView()
         Me.LblFechaFin = New System.Windows.Forms.Label()
         Me.FechaFin = New System.Windows.Forms.DateTimePicker()
         Me.LblFechaInicio = New System.Windows.Forms.Label()
@@ -312,7 +313,9 @@ Partial Class Form1
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.DataGridView6 = New System.Windows.Forms.DataGridView()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.CBTipo = New System.Windows.Forms.ComboBox()
+        Me.LblTipo = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -358,6 +361,7 @@ Partial Class Form1
         Me.TabPage15.SuspendLayout()
         Me.GroupBox7.SuspendLayout()
         Me.TabPage16.SuspendLayout()
+        CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage17.SuspendLayout()
         CType(Me.CantidadProducto, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DGVListaProductos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -367,7 +371,6 @@ Partial Class Form1
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -3375,6 +3378,9 @@ Partial Class Form1
         'TabPage16
         '
         Me.TabPage16.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.TabPage16.Controls.Add(Me.CBTipo)
+        Me.TabPage16.Controls.Add(Me.LblTipo)
+        Me.TabPage16.Controls.Add(Me.Label9)
         Me.TabPage16.Controls.Add(Me.DataGridView6)
         Me.TabPage16.Controls.Add(Me.LblFechaFin)
         Me.TabPage16.Controls.Add(Me.FechaFin)
@@ -3392,10 +3398,20 @@ Partial Class Form1
         Me.TabPage16.TabIndex = 9
         Me.TabPage16.Text = "Reportes"
         '
+        'DataGridView6
+        '
+        Me.DataGridView6.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DataGridView6.BackgroundColor = System.Drawing.Color.LightSteelBlue
+        Me.DataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView6.Location = New System.Drawing.Point(24, 87)
+        Me.DataGridView6.Name = "DataGridView6"
+        Me.DataGridView6.Size = New System.Drawing.Size(1050, 431)
+        Me.DataGridView6.TabIndex = 26
+        '
         'LblFechaFin
         '
         Me.LblFechaFin.AutoSize = True
-        Me.LblFechaFin.Location = New System.Drawing.Point(187, 14)
+        Me.LblFechaFin.Location = New System.Drawing.Point(376, 14)
         Me.LblFechaFin.Name = "LblFechaFin"
         Me.LblFechaFin.Size = New System.Drawing.Size(84, 17)
         Me.LblFechaFin.TabIndex = 25
@@ -3404,7 +3420,7 @@ Partial Class Form1
         'FechaFin
         '
         Me.FechaFin.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.FechaFin.Location = New System.Drawing.Point(190, 40)
+        Me.FechaFin.Location = New System.Drawing.Point(379, 40)
         Me.FechaFin.MinDate = New Date(2017, 1, 1, 0, 0, 0, 0)
         Me.FechaFin.Name = "FechaFin"
         Me.FechaFin.Size = New System.Drawing.Size(145, 24)
@@ -3414,7 +3430,7 @@ Partial Class Form1
         'LblFechaInicio
         '
         Me.LblFechaInicio.AutoSize = True
-        Me.LblFechaInicio.Location = New System.Drawing.Point(21, 14)
+        Me.LblFechaInicio.Location = New System.Drawing.Point(210, 14)
         Me.LblFechaInicio.Name = "LblFechaInicio"
         Me.LblFechaInicio.Size = New System.Drawing.Size(102, 17)
         Me.LblFechaInicio.TabIndex = 23
@@ -3423,7 +3439,7 @@ Partial Class Form1
         'FechaInicio
         '
         Me.FechaInicio.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.FechaInicio.Location = New System.Drawing.Point(24, 40)
+        Me.FechaInicio.Location = New System.Drawing.Point(213, 40)
         Me.FechaInicio.MinDate = New Date(2017, 1, 1, 0, 0, 0, 0)
         Me.FechaInicio.Name = "FechaInicio"
         Me.FechaInicio.Size = New System.Drawing.Size(145, 24)
@@ -3434,7 +3450,7 @@ Partial Class Form1
         '
         Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Location = New System.Drawing.Point(565, 40)
+        Me.ComboBox2.Location = New System.Drawing.Point(754, 40)
         Me.ComboBox2.Name = "ComboBox2"
         Me.ComboBox2.Size = New System.Drawing.Size(170, 24)
         Me.ComboBox2.TabIndex = 8
@@ -3442,7 +3458,7 @@ Partial Class Form1
         'Label100
         '
         Me.Label100.AutoSize = True
-        Me.Label100.Location = New System.Drawing.Point(562, 14)
+        Me.Label100.Location = New System.Drawing.Point(751, 14)
         Me.Label100.Name = "Label100"
         Me.Label100.Size = New System.Drawing.Size(85, 17)
         Me.Label100.TabIndex = 7
@@ -3452,7 +3468,7 @@ Partial Class Form1
         '
         Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(369, 40)
+        Me.ComboBox1.Location = New System.Drawing.Point(558, 40)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(170, 24)
         Me.ComboBox1.TabIndex = 6
@@ -3460,7 +3476,7 @@ Partial Class Form1
         'Label98
         '
         Me.Label98.AutoSize = True
-        Me.Label98.Location = New System.Drawing.Point(366, 14)
+        Me.Label98.Location = New System.Drawing.Point(555, 14)
         Me.Label98.Name = "Label98"
         Me.Label98.Size = New System.Drawing.Size(75, 17)
         Me.Label98.TabIndex = 5
@@ -3693,16 +3709,33 @@ Partial Class Form1
         Me.PictureBox1.TabStop = False
         Me.TPAdministrar.SetToolTip(Me.PictureBox1, "Administrar")
         '
-        'DataGridView6
+        'Label9
         '
-        Me.DataGridView6.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DataGridView6.BackgroundColor = System.Drawing.Color.LightSteelBlue
-        Me.DataGridView6.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView6.Location = New System.Drawing.Point(24, 87)
-        Me.DataGridView6.Name = "DataGridView6"
-        Me.DataGridView6.Size = New System.Drawing.Size(1050, 431)
-        Me.DataGridView6.TabIndex = 26
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(24, 536)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(57, 17)
+        Me.Label9.TabIndex = 27
+        Me.Label9.Text = "Label9"
+        Me.Label9.Visible = False
+        '
+        'CBTipo
+        '
+        Me.CBTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CBTipo.FormattingEnabled = True
+        Me.CBTipo.Location = New System.Drawing.Point(24, 40)
+        Me.CBTipo.Name = "CBTipo"
+        Me.CBTipo.Size = New System.Drawing.Size(170, 24)
+        Me.CBTipo.TabIndex = 29
+        '
+        'LblTipo
+        '
+        Me.LblTipo.AutoSize = True
+        Me.LblTipo.Location = New System.Drawing.Point(24, 14)
+        Me.LblTipo.Name = "LblTipo"
+        Me.LblTipo.Size = New System.Drawing.Size(44, 17)
+        Me.LblTipo.TabIndex = 28
+        Me.LblTipo.Text = "Tipo:"
         '
         'Form1
         '
@@ -3787,6 +3820,7 @@ Partial Class Form1
         Me.GroupBox7.ResumeLayout(False)
         Me.TabPage16.ResumeLayout(False)
         Me.TabPage16.PerformLayout()
+        CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage17.ResumeLayout(False)
         Me.TabPage17.PerformLayout()
         CType(Me.CantidadProducto, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3797,7 +3831,6 @@ Partial Class Form1
         CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -4083,4 +4116,7 @@ Partial Class Form1
     Friend WithEvents LblFechaInicio As Label
     Friend WithEvents FechaInicio As DateTimePicker
     Friend WithEvents DataGridView6 As DataGridView
+    Friend WithEvents Label9 As Label
+    Friend WithEvents CBTipo As ComboBox
+    Friend WithEvents LblTipo As Label
 End Class

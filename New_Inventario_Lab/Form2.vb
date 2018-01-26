@@ -16,6 +16,7 @@ Module Module1
     Public Tipo_Movi
     Public id_stock
     Public id_Usuar_Per
+    Public Perfil
 
 End Module
 
@@ -68,6 +69,7 @@ Public Class FormIngreso
                 Dim cmd4 As New MySqlCommand(String.Format("Select Nombre_perfil from perfiles where Id_Perfil = @IDPerfil;"), conn)
                 cmd4.Parameters.AddWithValue("IDPerfil", id_perfil)
                 Usuario_Perfil = UCase(usuario) & " / " & Convert.ToString(cmd4.ExecuteScalar())
+                Perfil = Convert.ToString(cmd4.ExecuteScalar())
                 Form1.Label1.Text = Usuario_Perfil
                 id_Usuar_Per = usuario_id
                 conn.Close()

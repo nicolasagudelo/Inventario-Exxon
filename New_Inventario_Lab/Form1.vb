@@ -25,7 +25,6 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         Connect()
         RevisarPermisos()
-        Notificar()
         TabControl1.Visible = False
         TabControl1.BackColor = Color.Transparent
         TabControl2.Visible = False
@@ -33,6 +32,7 @@ Public Class Form1
         Foto_Usuario.AllowDrop = True
         Foto_Equipo.AllowDrop = True
         Foto_Producto.AllowDrop = True
+        Notificar()
         Cargar_CBTabUsuarios()
     End Sub
 
@@ -44,6 +44,10 @@ Public Class Form1
                 PictureBox1.Enabled = False
                 PictureBox1.Visible = False
                 Label29.Visible = False
+                PictureBox2.Location = New Point(226, 24)
+                PictureBox6.Location = New Point(463, 24)
+                Label30.Location = New Point(263, 173)
+                Label34.Location = New Point(516, 173)
                 Exit Select
             Case "ALMACENISTA"
                 Gestion_Usuario.Visible = False
@@ -2830,7 +2834,8 @@ Public Class Form1
             Producto_Movimiento.SelectedItem = -1
             Usuario_Movimiento.SelectedItem = -1
             Usuario_Movimiento.Visible = False
-            Label95.Text = "Precio"
+            Precio_Movimiento.Visible = True
+            Label95.Text = "Precio Unitario"
             Try
                 conn.Open()
                 Dim cmd As New MySqlCommand("SELECT * FROM rel_productos_proveedores INNER JOIN productos 
@@ -2858,6 +2863,7 @@ Public Class Form1
                 .ValueMember = "Id_Producto" 'el ide de tu tabla relacionada con el nombre que muestras muy importante para saber el ide de quien seleccionas en tu combobox
                 '.Enabled = False
             End With
+
         ElseIf Tipo_Movimiento.Text = "SALIDA" Then
             CBN_SolicitudSalida.Enabled = False
             Gru_Movimiento.Visible = True
@@ -3653,7 +3659,7 @@ Public Class Form1
                 conn.Open()
                 Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
                                                             Nombre_SubCategoria as 'Sub-Categoria', Marca, Serie, Stock_Minimo as 'Minimo', Stock_Maximo as 'Maximo',
-                                                            stock_Existente as 'Unidades Existentes', compra_Maxima as 'Compra Maxima', Activo
+                                                            stock_Existente as 'Unidades Existentes', compra_Maxima as 'Compra Maxima'
                                                             from productos inner join categorias on productos.id_categoria = categorias.id_categoria inner join categorias_sub on
                                                             productos.Id_SubCategoria = categorias_sub.Id_SubCategoria;"), conn)
                 Dim reader As MySqlDataReader
@@ -3670,6 +3676,272 @@ Public Class Form1
                 conn.Close()
             End Try
         End With
+
+        With CBCategoria
+            .DataSource = Nothing
+            .Items.Clear()
+            Try
+                conn.Open()
+                Dim query As String = "Select Id_Categoria, Nombre_Categoria from Categorias"
+                Dim cmd As New MySqlCommand(query, conn)
+                Dim sqlAdap As New MySqlDataAdapter(cmd)
+                Dim dtRecord As New DataTable
+                sqlAdap.Fill(dtRecord)
+                Dim Todos As DataRow = dtRecord.NewRow
+                Todos("Id_Categoria") = "-1"
+                Todos("Nombre_Categoria") = "TODAS"
+                dtRecord.Rows.InsertAt(Todos, 0)
+                .DataSource = dtRecord
+                .DisplayMember = "Nombre_Categoria"
+                .ValueMember = "Id_Categoria"
+                .SelectedValue = dtRecord.Rows(0).Item(0)
+                conn.Close()
+            Catch ex As Exception
+                MsgBox("Error al cargar las categorias de la base de datos:" & ex.Message, MsgBoxStyle.Exclamation, "Error")
+                conn.Close()
+            End Try
+        End With
+
+    End Sub
+    '    SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
+    'Nombre_SubCategoria as 'Sub-Categoria', Marca, Serie, Stock_Minimo as 'Minimo', Stock_Maximo as 'Maximo',
+    'stock_Existente as 'Unidades Existentes', compra_Maxima as 'Compra Maxima'
+    'from productos inner join categorias on productos.id_categoria = categorias.id_categoria inner join categorias_sub on
+    'productos.Id_SubCategoria = categorias_sub.Id_SubCategoria where Nombre_Producto = '' and Cod_Producto = '' and productos.id_Categoria = ''
+    Private Sub BtnFiltrarConsulta_Click(sender As Object, e As EventArgs) Handles BtnFiltrarConsulta.Click
+        If TxtBxCodigo.Text.Trim = "" And TxtBxProductoConsultar.Text.Trim = "" And CBCategoria.SelectedValue = "-1" Then
+            With DataGridView5
+                .DataSource = Nothing
+                Try
+                    conn.Open()
+                    Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
+                                                            Nombre_SubCategoria as 'Sub-Categoria', Marca, Serie, Stock_Minimo as 'Minimo', Stock_Maximo as 'Maximo',
+                                                            stock_Existente as 'Unidades Existentes', compra_Maxima as 'Compra Maxima'
+                                                            from productos inner join categorias on productos.id_categoria = categorias.id_categoria inner join categorias_sub on
+                                                            productos.Id_SubCategoria = categorias_sub.Id_SubCategoria;"), conn)
+                    Dim reader As MySqlDataReader
+                    reader = cmd.ExecuteReader
+                    Dim T As New DataTable
+                    T.Load(reader)
+                    .DataSource = T
+                    .ReadOnly = True
+                    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    .Visible = True
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                    conn.Close()
+                End Try
+            End With
+
+        ElseIf TxtBxCodigo.Text.Trim <> "" And TxtBxProductoConsultar.Text.Trim = "" And CBCategoria.SelectedValue = "-1" Then
+
+            With DataGridView5
+                .DataSource = Nothing
+                Try
+                    conn.Open()
+                    Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
+                                                            Nombre_SubCategoria as 'Sub-Categoria', Marca, Serie, Stock_Minimo as 'Minimo', Stock_Maximo as 'Maximo',
+                                                            stock_Existente as 'Unidades Existentes', compra_Maxima as 'Compra Maxima'
+                                                            from productos inner join categorias on productos.id_categoria = categorias.id_categoria inner join categorias_sub on
+                                                            productos.Id_SubCategoria = categorias_sub.Id_SubCategoria where Cod_Producto Like @CodProd;"), conn)
+                    With cmd.Parameters
+                        .AddWithValue("CodProd", TxtBxCodigo.Text.Trim & "%")
+                    End With
+                    Dim reader As MySqlDataReader
+                    reader = cmd.ExecuteReader
+                    Dim T As New DataTable
+                    T.Load(reader)
+                    .DataSource = T
+                    .ReadOnly = True
+                    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    .Visible = True
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                    conn.Close()
+                End Try
+            End With
+
+        ElseIf TxtBxCodigo.Text.Trim = "" And TxtBxProductoConsultar.Text.Trim <> "" And CBCategoria.SelectedValue = "-1" Then
+
+            With DataGridView5
+                .DataSource = Nothing
+                Try
+                    conn.Open()
+                    Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
+                                                            Nombre_SubCategoria as 'Sub-Categoria', Marca, Serie, Stock_Minimo as 'Minimo', Stock_Maximo as 'Maximo',
+                                                            stock_Existente as 'Unidades Existentes', compra_Maxima as 'Compra Maxima'
+                                                            from productos inner join categorias on productos.id_categoria = categorias.id_categoria inner join categorias_sub on
+                                                            productos.Id_SubCategoria = categorias_sub.Id_SubCategoria where Nombre_Producto like @NomProd;"), conn)
+                    With cmd.Parameters
+                        .AddWithValue("NomProd", TxtBxProductoConsultar.Text.Trim & "%")
+                    End With
+                    Dim reader As MySqlDataReader
+                    reader = cmd.ExecuteReader
+                    Dim T As New DataTable
+                    T.Load(reader)
+                    .DataSource = T
+                    .ReadOnly = True
+                    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    .Visible = True
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                    conn.Close()
+                End Try
+            End With
+
+        ElseIf TxtBxCodigo.Text.Trim = "" And TxtBxProductoConsultar.Text.Trim = "" And CBCategoria.SelectedValue <> "-1" Then
+
+            With DataGridView5
+                .DataSource = Nothing
+                Try
+                    conn.Open()
+                    Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
+                                                            Nombre_SubCategoria as 'Sub-Categoria', Marca, Serie, Stock_Minimo as 'Minimo', Stock_Maximo as 'Maximo',
+                                                            stock_Existente as 'Unidades Existentes', compra_Maxima as 'Compra Maxima'
+                                                            from productos inner join categorias on productos.id_categoria = categorias.id_categoria inner join categorias_sub on
+                                                            productos.Id_SubCategoria = categorias_sub.Id_SubCategoria where productos.Id_Categoria = @IdCat;"), conn)
+                    With cmd.Parameters
+                        .AddWithValue("IdCat", CBCategoria.SelectedValue)
+                    End With
+                    Dim reader As MySqlDataReader
+                    reader = cmd.ExecuteReader
+                    Dim T As New DataTable
+                    T.Load(reader)
+                    .DataSource = T
+                    .ReadOnly = True
+                    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    .Visible = True
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                    conn.Close()
+                End Try
+            End With
+
+        ElseIf TxtBxCodigo.Text.Trim <> "" And TxtBxProductoConsultar.Text.Trim <> "" And CBCategoria.SelectedValue = "-1" Then
+
+            With DataGridView5
+                .DataSource = Nothing
+                Try
+                    conn.Open()
+                    Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
+                                                            Nombre_SubCategoria as 'Sub-Categoria', Marca, Serie, Stock_Minimo as 'Minimo', Stock_Maximo as 'Maximo',
+                                                            stock_Existente as 'Unidades Existentes', compra_Maxima as 'Compra Maxima'
+                                                            from productos inner join categorias on productos.id_categoria = categorias.id_categoria inner join categorias_sub on
+                                                            productos.Id_SubCategoria = categorias_sub.Id_SubCategoria where Nombre_Producto like @NomProd and Cod_Producto like @CodProd;"), conn)
+                    With cmd.Parameters
+                        .AddWithValue("NomProd", TxtBxProductoConsultar.Text.Trim & "%")
+                        .AddWithValue("CodProd", TxtBxCodigo.Text.Trim & "%")
+                    End With
+                    Dim reader As MySqlDataReader
+                    reader = cmd.ExecuteReader
+                    Dim T As New DataTable
+                    T.Load(reader)
+                    .DataSource = T
+                    .ReadOnly = True
+                    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    .Visible = True
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                    conn.Close()
+                End Try
+            End With
+
+        ElseIf TxtBxCodigo.Text.Trim <> "" And TxtBxProductoConsultar.Text.Trim = "" And CBCategoria.SelectedValue <> "-1" Then
+
+            With DataGridView5
+                .DataSource = Nothing
+                Try
+                    conn.Open()
+                    Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
+                                                            Nombre_SubCategoria as 'Sub-Categoria', Marca, Serie, Stock_Minimo as 'Minimo', Stock_Maximo as 'Maximo',
+                                                            stock_Existente as 'Unidades Existentes', compra_Maxima as 'Compra Maxima'
+                                                            from productos inner join categorias on productos.id_categoria = categorias.id_categoria inner join categorias_sub on
+                                                            productos.Id_SubCategoria = categorias_sub.Id_SubCategoria where Cod_Producto like @CodProd and productos.Id_Categoria = @IdCat;"), conn)
+                    With cmd.Parameters
+                        .AddWithValue("CodProd", TxtBxCodigo.Text.Trim & "%")
+                        .AddWithValue("IdCat", CBCategoria.SelectedValue)
+                    End With
+                    Dim reader As MySqlDataReader
+                    reader = cmd.ExecuteReader
+                    Dim T As New DataTable
+                    T.Load(reader)
+                    .DataSource = T
+                    .ReadOnly = True
+                    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    .Visible = True
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                    conn.Close()
+                End Try
+            End With
+
+        ElseIf TxtBxCodigo.Text.Trim = "" And TxtBxProductoConsultar.Text.Trim <> "" And CBCategoria.SelectedValue <> "-1" Then
+
+            With DataGridView5
+                .DataSource = Nothing
+                Try
+                    conn.Open()
+                    Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
+                                                            Nombre_SubCategoria as 'Sub-Categoria', Marca, Serie, Stock_Minimo as 'Minimo', Stock_Maximo as 'Maximo',
+                                                            stock_Existente as 'Unidades Existentes', compra_Maxima as 'Compra Maxima'
+                                                            from productos inner join categorias on productos.id_categoria = categorias.id_categoria inner join categorias_sub on
+                                                            productos.Id_SubCategoria = categorias_sub.Id_SubCategoria where Nombre_Producto like @NomProd and productos.Id_Categoria = @IdCat;"), conn)
+                    With cmd.Parameters
+                        .AddWithValue("NomProd", TxtBxProductoConsultar.Text.Trim & "%")
+                        .AddWithValue("IdCat", CBCategoria.SelectedValue)
+                    End With
+                    Dim reader As MySqlDataReader
+                    reader = cmd.ExecuteReader
+                    Dim T As New DataTable
+                    T.Load(reader)
+                    .DataSource = T
+                    .ReadOnly = True
+                    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    .Visible = True
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                    conn.Close()
+                End Try
+            End With
+
+        ElseIf TxtBxCodigo.Text.Trim <> "" And TxtBxProductoConsultar.Text.Trim <> "" And CBCategoria.SelectedValue <> "-1" Then
+
+            With DataGridView5
+                .DataSource = Nothing
+                Try
+                    conn.Open()
+                    Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
+                                                            Nombre_SubCategoria as 'Sub-Categoria', Marca, Serie, Stock_Minimo as 'Minimo', Stock_Maximo as 'Maximo',
+                                                            stock_Existente as 'Unidades Existentes', compra_Maxima as 'Compra Maxima'
+                                                            from productos inner join categorias on productos.id_categoria = categorias.id_categoria inner join categorias_sub on
+                                                            productos.Id_SubCategoria = categorias_sub.Id_SubCategoria where Nombre_Producto like @NomProd and productos.Id_Categoria = @IdCat; and Cod_Producto like @CodProd"), conn)
+                    With cmd.Parameters
+                        .AddWithValue("NomProd", TxtBxProductoConsultar.Text.Trim & "%")
+                        .AddWithValue("IdCat", CBCategoria.SelectedValue)
+                        .AddWithValue("CodProd", TxtBxCodigo.Text.Trim & "%")
+                    End With
+                    Dim reader As MySqlDataReader
+                    reader = cmd.ExecuteReader
+                    Dim T As New DataTable
+                    T.Load(reader)
+                    .DataSource = T
+                    .ReadOnly = True
+                    .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    .Visible = True
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                    conn.Close()
+                End Try
+            End With
+        End If
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click

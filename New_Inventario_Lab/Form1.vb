@@ -18,7 +18,8 @@ Public Class Form1
             Console.WriteLine("conectandose a la base de datos")
         Catch ex As Exception
             MsgBox(ex.Message)
-            End
+            conn.Close()
+            Exit Sub
         End Try
         conn.Close()
     End Sub

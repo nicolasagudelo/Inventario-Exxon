@@ -137,6 +137,10 @@ Partial Class Form1
         Me.Nueva_Ubicacion = New System.Windows.Forms.Button()
         Me.Guardar_Ubicacion = New System.Windows.Forms.Button()
         Me.DataGridView3 = New System.Windows.Forms.DataGridView()
+        Me.Estante = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Entrepano = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Caja_Color = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Zona = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.Label40 = New System.Windows.Forms.Label()
         Me.Label39 = New System.Windows.Forms.Label()
@@ -205,6 +209,11 @@ Partial Class Form1
         Me.Modificar_Prod_Equ = New System.Windows.Forms.Button()
         Me.Foto_Equipo = New System.Windows.Forms.PictureBox()
         Me.TabPage14 = New System.Windows.Forms.TabPage()
+        Me.comboBoxType = New System.Windows.Forms.ComboBox()
+        Me.TipoCodigo = New System.Windows.Forms.Label()
+        Me.BarCodeControl1 = New Spire.Barcode.Forms.BarCodeControl()
+        Me.BtnGenerarCodigoBarras = New System.Windows.Forms.Button()
+        Me.BtnGenerarCodigo = New System.Windows.Forms.Button()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.BtnEliminarProducto = New System.Windows.Forms.Button()
         Me.BtnNuevoProducto = New System.Windows.Forms.Button()
@@ -308,6 +317,12 @@ Partial Class Form1
         Me.CBEquipos = New System.Windows.Forms.ComboBox()
         Me.LblEquipo = New System.Windows.Forms.Label()
         Me.TabPage18 = New System.Windows.Forms.TabPage()
+        Me.BtnFiltrarConsulta = New System.Windows.Forms.Button()
+        Me.CBCategoria = New System.Windows.Forms.ComboBox()
+        Me.LblCategoria = New System.Windows.Forms.Label()
+        Me.TxtBxProductoConsultar = New System.Windows.Forms.TextBox()
+        Me.LblNombreProductoConsultar = New System.Windows.Forms.Label()
+        Me.TxtBxCodigo = New System.Windows.Forms.TextBox()
         Me.LblCodigoConsulta = New System.Windows.Forms.Label()
         Me.DataGridView5 = New System.Windows.Forms.DataGridView()
         Me.Label29 = New System.Windows.Forms.Label()
@@ -317,12 +332,6 @@ Partial Class Form1
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.TxtBxCodigo = New System.Windows.Forms.TextBox()
-        Me.TxtBxProductoConsultar = New System.Windows.Forms.TextBox()
-        Me.LblNombreProductoConsultar = New System.Windows.Forms.Label()
-        Me.LblCategoria = New System.Windows.Forms.Label()
-        Me.CBCategoria = New System.Windows.Forms.ComboBox()
-        Me.BtnFiltrarConsulta = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1704,6 +1713,7 @@ Partial Class Form1
         Me.DataGridView3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView3.BackgroundColor = System.Drawing.Color.LightSteelBlue
         Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView3.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Estante, Me.Entrepano, Me.Caja_Color, Me.Zona})
         Me.DataGridView3.GridColor = System.Drawing.SystemColors.ControlDarkDark
         Me.DataGridView3.Location = New System.Drawing.Point(48, 149)
         Me.DataGridView3.Margin = New System.Windows.Forms.Padding(4)
@@ -1714,6 +1724,29 @@ Partial Class Form1
         Me.DataGridView3.RowTemplate.Height = 24
         Me.DataGridView3.Size = New System.Drawing.Size(800, 291)
         Me.DataGridView3.TabIndex = 17
+        '
+        'Estante
+        '
+        Me.Estante.HeaderText = "Estante"
+        Me.Estante.Name = "Estante"
+        '
+        'Entrepano
+        '
+        Me.Entrepano.HeaderText = "Entrepano"
+        Me.Entrepano.Name = "Entrepano"
+        Me.Entrepano.ReadOnly = True
+        '
+        'Caja_Color
+        '
+        Me.Caja_Color.HeaderText = "Caja_Color"
+        Me.Caja_Color.Name = "Caja_Color"
+        Me.Caja_Color.ReadOnly = True
+        '
+        'Zona
+        '
+        Me.Zona.HeaderText = "Zona"
+        Me.Zona.Name = "Zona"
+        Me.Zona.ReadOnly = True
         '
         'Label41
         '
@@ -2488,6 +2521,11 @@ Partial Class Form1
         'TabPage14
         '
         Me.TabPage14.BackColor = System.Drawing.Color.LightSteelBlue
+        Me.TabPage14.Controls.Add(Me.comboBoxType)
+        Me.TabPage14.Controls.Add(Me.TipoCodigo)
+        Me.TabPage14.Controls.Add(Me.BarCodeControl1)
+        Me.TabPage14.Controls.Add(Me.BtnGenerarCodigoBarras)
+        Me.TabPage14.Controls.Add(Me.BtnGenerarCodigo)
         Me.TabPage14.Controls.Add(Me.GroupBox6)
         Me.TabPage14.Controls.Add(Me.BtnModificarProducto)
         Me.TabPage14.Controls.Add(Me.Label91)
@@ -2531,6 +2569,75 @@ Partial Class Form1
         Me.TabPage14.Size = New System.Drawing.Size(1108, 652)
         Me.TabPage14.TabIndex = 7
         Me.TabPage14.Text = "Productos"
+        '
+        'comboBoxType
+        '
+        Me.comboBoxType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.comboBoxType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.comboBoxType.Font = New System.Drawing.Font("Arial Rounded MT Bold", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.comboBoxType.FormattingEnabled = True
+        Me.comboBoxType.Items.AddRange(New Object() {"Codabar", "Code11", "Code25", "Interleaved25", "Code39", "Code39Extended", "Code93", "Code93Extended", "Code128", "EAN8", "EAN13", "EAN128", "EAN14", "QRCode"})
+        Me.comboBoxType.Location = New System.Drawing.Point(755, 372)
+        Me.comboBoxType.Name = "comboBoxType"
+        Me.comboBoxType.Size = New System.Drawing.Size(153, 22)
+        Me.comboBoxType.TabIndex = 66
+        Me.comboBoxType.Text = "Code128"
+        '
+        'TipoCodigo
+        '
+        Me.TipoCodigo.AutoSize = True
+        Me.TipoCodigo.Location = New System.Drawing.Point(752, 348)
+        Me.TipoCodigo.Name = "TipoCodigo"
+        Me.TipoCodigo.Size = New System.Drawing.Size(115, 17)
+        Me.TipoCodigo.TabIndex = 65
+        Me.TipoCodigo.Text = "Barcode Type:"
+        '
+        'BarCodeControl1
+        '
+        Me.BarCodeControl1.BorderWidth = 0.6!
+        Me.BarCodeControl1.DpiX = 96.0!
+        Me.BarCodeControl1.DpiY = 96.0!
+        Me.BarCodeControl1.Font = New System.Drawing.Font("Verdana", 8.0!)
+        Me.BarCodeControl1.ImageHeight = 30.0!
+        Me.BarCodeControl1.ImageWidth = 120.0!
+        Me.BarCodeControl1.Location = New System.Drawing.Point(755, 238)
+        Me.BarCodeControl1.Name = "BarCodeControl1"
+        Me.BarCodeControl1.Rotate = 0!
+        Me.BarCodeControl1.ShowTextOnBottom = True
+        Me.BarCodeControl1.ShowTopText = True
+        Me.BarCodeControl1.Size = New System.Drawing.Size(189, 85)
+        Me.BarCodeControl1.SupSpace = 4.0!
+        Me.BarCodeControl1.TabIndex = 64
+        Me.BarCodeControl1.TextFont = New System.Drawing.Font("Arial", 8.0!)
+        Me.BarCodeControl1.TopText = ""
+        Me.BarCodeControl1.TopTextAligment = System.Drawing.StringAlignment.Near
+        Me.BarCodeControl1.TopTextFont = New System.Drawing.Font("Times New Roman", 9.0!)
+        Me.BarCodeControl1.UseChecksum = Spire.Barcode.CheckSumMode.[Auto]
+        Me.BarCodeControl1.WideNarrowRatio = 3.0!
+        Me.BarCodeControl1.XYRatio = 0!
+        Me.BarCodeControl1.Y = 2.0!
+        '
+        'BtnGenerarCodigoBarras
+        '
+        Me.BtnGenerarCodigoBarras.Font = New System.Drawing.Font("Arial Rounded MT Bold", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnGenerarCodigoBarras.Location = New System.Drawing.Point(914, 356)
+        Me.BtnGenerarCodigoBarras.Name = "BtnGenerarCodigoBarras"
+        Me.BtnGenerarCodigoBarras.Size = New System.Drawing.Size(105, 38)
+        Me.BtnGenerarCodigoBarras.TabIndex = 63
+        Me.BtnGenerarCodigoBarras.Text = "Crear Codigo de Barras"
+        Me.BtnGenerarCodigoBarras.UseVisualStyleBackColor = True
+        '
+        'BtnGenerarCodigo
+        '
+        Me.BtnGenerarCodigo.Enabled = False
+        Me.BtnGenerarCodigo.Location = New System.Drawing.Point(245, 78)
+        Me.BtnGenerarCodigo.Name = "BtnGenerarCodigo"
+        Me.BtnGenerarCodigo.Size = New System.Drawing.Size(96, 24)
+        Me.BtnGenerarCodigo.TabIndex = 61
+        Me.BtnGenerarCodigo.Text = "Generar"
+        Me.TPAdministrar.SetToolTip(Me.BtnGenerarCodigo, "Generar codigo automaticamente")
+        Me.BtnGenerarCodigo.UseVisualStyleBackColor = True
+        Me.BtnGenerarCodigo.Visible = False
         '
         'GroupBox6
         '
@@ -2963,7 +3070,7 @@ Partial Class Form1
         Me.Foto_Producto.Location = New System.Drawing.Point(755, 45)
         Me.Foto_Producto.Margin = New System.Windows.Forms.Padding(4)
         Me.Foto_Producto.Name = "Foto_Producto"
-        Me.Foto_Producto.Size = New System.Drawing.Size(264, 224)
+        Me.Foto_Producto.Size = New System.Drawing.Size(264, 186)
         Me.Foto_Producto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Foto_Producto.TabIndex = 41
         Me.Foto_Producto.TabStop = False
@@ -3483,7 +3590,8 @@ Partial Class Form1
         '
         'ComboBox2
         '
-        Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.ComboBox2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.ComboBox2.FormattingEnabled = True
         Me.ComboBox2.Location = New System.Drawing.Point(754, 40)
         Me.ComboBox2.Name = "ComboBox2"
@@ -3501,7 +3609,8 @@ Partial Class Form1
         '
         'ComboBox1
         '
-        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.ComboBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Location = New System.Drawing.Point(558, 40)
         Me.ComboBox1.Name = "ComboBox1"
@@ -3661,6 +3770,56 @@ Partial Class Form1
         Me.TabPage18.TabIndex = 11
         Me.TabPage18.Text = "Consultar"
         '
+        'BtnFiltrarConsulta
+        '
+        Me.BtnFiltrarConsulta.Location = New System.Drawing.Point(18, 77)
+        Me.BtnFiltrarConsulta.Name = "BtnFiltrarConsulta"
+        Me.BtnFiltrarConsulta.Size = New System.Drawing.Size(97, 51)
+        Me.BtnFiltrarConsulta.TabIndex = 25
+        Me.BtnFiltrarConsulta.Text = "Filtrar"
+        Me.BtnFiltrarConsulta.UseVisualStyleBackColor = True
+        '
+        'CBCategoria
+        '
+        Me.CBCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CBCategoria.FormattingEnabled = True
+        Me.CBCategoria.Location = New System.Drawing.Point(400, 36)
+        Me.CBCategoria.Name = "CBCategoria"
+        Me.CBCategoria.Size = New System.Drawing.Size(174, 24)
+        Me.CBCategoria.TabIndex = 24
+        '
+        'LblCategoria
+        '
+        Me.LblCategoria.AutoSize = True
+        Me.LblCategoria.Location = New System.Drawing.Point(397, 16)
+        Me.LblCategoria.Name = "LblCategoria"
+        Me.LblCategoria.Size = New System.Drawing.Size(85, 17)
+        Me.LblCategoria.TabIndex = 23
+        Me.LblCategoria.Text = "Categoria:"
+        '
+        'TxtBxProductoConsultar
+        '
+        Me.TxtBxProductoConsultar.Location = New System.Drawing.Point(208, 36)
+        Me.TxtBxProductoConsultar.Name = "TxtBxProductoConsultar"
+        Me.TxtBxProductoConsultar.Size = New System.Drawing.Size(170, 24)
+        Me.TxtBxProductoConsultar.TabIndex = 22
+        '
+        'LblNombreProductoConsultar
+        '
+        Me.LblNombreProductoConsultar.AutoSize = True
+        Me.LblNombreProductoConsultar.Location = New System.Drawing.Point(205, 16)
+        Me.LblNombreProductoConsultar.Name = "LblNombreProductoConsultar"
+        Me.LblNombreProductoConsultar.Size = New System.Drawing.Size(142, 17)
+        Me.LblNombreProductoConsultar.TabIndex = 21
+        Me.LblNombreProductoConsultar.Text = "Nombre Producto:"
+        '
+        'TxtBxCodigo
+        '
+        Me.TxtBxCodigo.Location = New System.Drawing.Point(18, 36)
+        Me.TxtBxCodigo.Name = "TxtBxCodigo"
+        Me.TxtBxCodigo.Size = New System.Drawing.Size(170, 24)
+        Me.TxtBxCodigo.TabIndex = 20
+        '
         'LblCodigoConsulta
         '
         Me.LblCodigoConsulta.AutoSize = True
@@ -3759,56 +3918,6 @@ Partial Class Form1
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         Me.TPAdministrar.SetToolTip(Me.PictureBox1, "Administrar")
-        '
-        'TxtBxCodigo
-        '
-        Me.TxtBxCodigo.Location = New System.Drawing.Point(18, 36)
-        Me.TxtBxCodigo.Name = "TxtBxCodigo"
-        Me.TxtBxCodigo.Size = New System.Drawing.Size(170, 24)
-        Me.TxtBxCodigo.TabIndex = 20
-        '
-        'TxtBxProductoConsultar
-        '
-        Me.TxtBxProductoConsultar.Location = New System.Drawing.Point(208, 36)
-        Me.TxtBxProductoConsultar.Name = "TxtBxProductoConsultar"
-        Me.TxtBxProductoConsultar.Size = New System.Drawing.Size(170, 24)
-        Me.TxtBxProductoConsultar.TabIndex = 22
-        '
-        'LblNombreProductoConsultar
-        '
-        Me.LblNombreProductoConsultar.AutoSize = True
-        Me.LblNombreProductoConsultar.Location = New System.Drawing.Point(205, 16)
-        Me.LblNombreProductoConsultar.Name = "LblNombreProductoConsultar"
-        Me.LblNombreProductoConsultar.Size = New System.Drawing.Size(142, 17)
-        Me.LblNombreProductoConsultar.TabIndex = 21
-        Me.LblNombreProductoConsultar.Text = "Nombre Producto:"
-        '
-        'LblCategoria
-        '
-        Me.LblCategoria.AutoSize = True
-        Me.LblCategoria.Location = New System.Drawing.Point(397, 16)
-        Me.LblCategoria.Name = "LblCategoria"
-        Me.LblCategoria.Size = New System.Drawing.Size(85, 17)
-        Me.LblCategoria.TabIndex = 23
-        Me.LblCategoria.Text = "Categoria:"
-        '
-        'CBCategoria
-        '
-        Me.CBCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.CBCategoria.FormattingEnabled = True
-        Me.CBCategoria.Location = New System.Drawing.Point(400, 36)
-        Me.CBCategoria.Name = "CBCategoria"
-        Me.CBCategoria.Size = New System.Drawing.Size(174, 24)
-        Me.CBCategoria.TabIndex = 24
-        '
-        'BtnFiltrarConsulta
-        '
-        Me.BtnFiltrarConsulta.Location = New System.Drawing.Point(18, 77)
-        Me.BtnFiltrarConsulta.Name = "BtnFiltrarConsulta"
-        Me.BtnFiltrarConsulta.Size = New System.Drawing.Size(97, 51)
-        Me.BtnFiltrarConsulta.TabIndex = 25
-        Me.BtnFiltrarConsulta.Text = "Filtrar"
-        Me.BtnFiltrarConsulta.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -4200,4 +4309,13 @@ Partial Class Form1
     Friend WithEvents TxtBxProductoConsultar As TextBox
     Friend WithEvents LblNombreProductoConsultar As Label
     Friend WithEvents BtnFiltrarConsulta As Button
+    Friend WithEvents BtnGenerarCodigo As Button
+    Friend WithEvents Estante As DataGridViewTextBoxColumn
+    Friend WithEvents Entrepano As DataGridViewTextBoxColumn
+    Friend WithEvents Caja_Color As DataGridViewTextBoxColumn
+    Friend WithEvents Zona As DataGridViewTextBoxColumn
+    Friend WithEvents BtnGenerarCodigoBarras As Button
+    Friend WithEvents BarCodeControl1 As Spire.Barcode.Forms.BarCodeControl
+    Private WithEvents comboBoxType As ComboBox
+    Private WithEvents TipoCodigo As Label
 End Class

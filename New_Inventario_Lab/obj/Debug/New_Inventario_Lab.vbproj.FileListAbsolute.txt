@@ -29,3 +29,5 @@ E:\Desarrollo ExxonMobil\Inventario Lab New\New_Inventario_Lab\obj\Debug\New_Inv
 E:\Desarrollo ExxonMobil\Inventario Lab New\New_Inventario_Lab\obj\Debug\Inventario_Lab.exe
 E:\Desarrollo ExxonMobil\Inventario Lab New\New_Inventario_Lab\obj\Debug\Inventario_Lab.xml
 E:\Desarrollo ExxonMobil\Inventario Lab New\New_Inventario_Lab\obj\Debug\Inventario_Lab.pdb
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\bin\Debug\Spire.Barcode.dll
+C:\Users\IDETECO\source\repos\Inventario Exxon_New\New_Inventario_Lab\bin\Debug\Spire.Barcode.xml

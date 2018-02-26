@@ -8,8 +8,16 @@ Imports System.Security.Cryptography
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Net.Mail
+Imports System
+Imports System.ComponentModel
+Imports System.Drawing.Drawing2D
+Imports System.Drawing
+Imports System.Diagnostics
+Imports Spire.Barcode.Forms
+Imports Spire.Barcode
 
 Public Class Form1
+
     Dim conn As New MySqlConnection
     Private Sub Connect()
         conn.ConnectionString = ConfigurationManager.ConnectionStrings("cs").ConnectionString
@@ -87,11 +95,11 @@ Public Class Form1
     End Sub
 
     Private Sub Notificar()
+        Dim reader As MySqlDataReader
         Try
             conn.Open()
             Dim cmd As New MySqlCommand(String.Format("Select Nombre_Producto, stock_minimo, stock_existente from productos where Stock_Existente < Stock_Minimo;"), conn)
             Dim T As New DataTable
-            Dim reader As MySqlDataReader
             reader = cmd.ExecuteReader
             T.Load(reader)
             Dim mensaje As String = "Los siguientes productos se encuentran por debajo del stock minimo establecido:" & vbCrLf
@@ -103,6 +111,9 @@ Public Class Form1
         Catch ex As Exception
             MsgBox(ex.Message)
             conn.Close()
+        Finally
+            conn.Close()
+            reader.Close()
         End Try
 
     End Sub
@@ -360,7 +371,7 @@ Public Class Form1
         Detalle_Proveedor.Text = Tabla1.Rows(Proveedor_Num - 1).ItemArray(9).ToString
         Clasificacion_Proveedor.Text = Tabla1.Rows(Proveedor_Num - 1).ItemArray(10).ToString
         Aprovado_Proveedor.Checked = Tabla1.Rows(Proveedor_Num - 1).ItemArray(11).ToString
-        Activo_Proveedor.Checked = Tabla1.Rows(Proveedor_Num - 1).ItemArray(13).ToString
+        Activo_Proveedor.Checked = Tabla1.Rows(Proveedor_Num - 1).ItemArray(12).ToString
     End Sub
 
     Private Sub PictureBox6_Click(sender As Object, e As EventArgs) Handles PictureBox6.Click
@@ -503,17 +514,22 @@ Public Class Form1
         CargarSubCategorias()
         CargarCBTabUbicaciones()
         TabPage11.Parent = TabControl2
-        Cargar_Tabla("*", "Ubicaciones")
-        Id_Ubicacion = Tabla1.Rows(0).ItemArray(0)
-        Estantes.Text = Tabla1.Rows(0).ItemArray(1).ToString
-        Entrepanos.Text = Tabla1.Rows(0).ItemArray(2).ToString
-        Cajas_Colores.Text = Tabla1.Rows(0).ItemArray(3).ToString
-        Zonas.Text = Tabla1.Rows(0).ItemArray(4).ToString
-        DataGridView3.DataSource = Nothing
-        DataGridView3.DataSource = Tabla1
-        DataGridView3.ReadOnly = True
-        DataGridView3.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        DataGridView3.Columns(0).Visible = False
+        Try
+            Cargar_Tabla("*", "Ubicaciones")
+            Id_Ubicacion = Tabla1.Rows(0).ItemArray(0)
+            Estantes.Text = Tabla1.Rows(0).ItemArray(1).ToString
+            Entrepanos.Text = Tabla1.Rows(0).ItemArray(2).ToString
+            Cajas_Colores.Text = Tabla1.Rows(0).ItemArray(3).ToString
+            Zonas.Text = Tabla1.Rows(0).ItemArray(4).ToString
+            DataGridView3.Columns.Clear()
+            DataGridView3.DataSource = Nothing
+            DataGridView3.DataSource = Tabla1
+            DataGridView3.ReadOnly = True
+            DataGridView3.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            DataGridView3.Columns(0).Visible = False
+        Catch
+
+        End Try
     End Sub
 
     Private Sub CargarCBTabUbicaciones()
@@ -1133,8 +1149,8 @@ Public Class Form1
         End If
         HabilitarControlesProducto()
         Label72.Visible = True
-        Anterior_Equipo.Visible = True
-        Siguiente_Equipo.Visible = True
+        Anterior_Producto.Visible = True
+        Siguiente_Producto.Visible = True
         Recorrer_Productos()
     End Sub
 
@@ -1158,6 +1174,8 @@ Public Class Form1
         Label60.Visible = False
         Anterior_Producto.Visible = False
         Siguiente_Producto.Visible = False
+        BtnGenerarCodigo.Enabled = True
+        BtnGenerarCodigo.Visible = True
     End Sub
 
     Private Sub HabilitarControlesProducto()
@@ -1174,6 +1192,8 @@ Public Class Form1
             Categoria_Producto.Enabled = True
             SubCategoria_Producto.Enabled = True
             Unidades_Producto.Enabled = True
+            BtnGenerarCodigo.Enabled = True
+            BtnGenerarCodigo.Visible = True
         Else
             Codigo_Producto.ReadOnly = True
             Serie_Producto.ReadOnly = True
@@ -1187,6 +1207,8 @@ Public Class Form1
             Categoria_Producto.Enabled = False
             SubCategoria_Producto.Enabled = False
             Unidades_Producto.Enabled = False
+            BtnGenerarCodigo.Enabled = False
+            BtnGenerarCodigo.Visible = False
         End If
     End Sub
 
@@ -1451,6 +1473,9 @@ Public Class Form1
             Catch ex As Exception
                 MsgBox(ex.Message)
                 conn.Close()
+            Finally
+                conn.Close()
+                reader.Close()
             End Try
 
         ElseIf Agregar_Usuario = 1 Then
@@ -1501,6 +1526,9 @@ Public Class Form1
             Catch ex As Exception
                 MsgBox(ex.Message)
                 conn.Close()
+            Finally
+                conn.Close()
+                reader.Close()
             End Try
             Agregar_Usuario = 0
             HabilitarControlesUsuario()
@@ -1537,6 +1565,9 @@ Public Class Form1
             Catch ex As Exception
                 MsgBox(ex.Message)
                 conn.Close()
+            Finally
+                conn.Close()
+                reader.Close()
             End Try
 
         ElseIf Agregar_Equipo = 1 Then
@@ -1571,6 +1602,9 @@ Public Class Form1
             Catch ex As Exception
                 MsgBox(ex.Message)
                 conn.Close()
+            Finally
+                conn.Close()
+                reader.Close()
             End Try
             Agregar_Equipo = 0
             HabilitarControlesEquipo()
@@ -1644,6 +1678,9 @@ Public Class Form1
             Catch ex As Exception
                 MsgBox(ex.Message)
                 conn.Close()
+            Finally
+                conn.Close()
+                reader.Close()
             End Try
 
             Dim StockMinimo As String = Stock_Minimo.Text.Trim
@@ -1714,6 +1751,9 @@ Public Class Form1
             Catch ex As Exception
                 MsgBox(ex.Message)
                 conn.Close()
+            Finally
+                conn.Close()
+                reader.Close()
             End Try
 
             Agregar_Producto = 0
@@ -1784,6 +1824,9 @@ Public Class Form1
             Catch ex As Exception
                 MsgBox(ex.Message)
                 conn.Close()
+            Finally
+                conn.Close()
+                reader.Close()
             End Try
         ElseIf Agregar_Proveedor = 1 Then
 
@@ -1838,6 +1881,9 @@ Public Class Form1
             Catch ex As Exception
                 MsgBox(ex.Message)
                 conn.Close()
+            Finally
+                conn.Close()
+                reader.Close()
             End Try
 
             Agregar_Proveedor = 0
@@ -1848,7 +1894,7 @@ Public Class Form1
 
 
     Public Function ComputeHashOfString(Of T As HashAlgorithm)(ByVal str As String,
-                                                                             Optional ByVal enc As Encoding = Nothing) As String
+                                                                                 Optional ByVal enc As Encoding = Nothing) As String
         If (enc Is Nothing) Then
             enc = Encoding.Default
         End If
@@ -2332,7 +2378,7 @@ Public Class Form1
                 Try
                     conn.Open()
                     Dim cmd As New MySqlCommand("INSERT INTO categorias_sub (Nombre_SubCategoria, Id_Categoria) " &
-                            "VALUES (@NombreSubCat, @IdCat)", conn)
+                                "VALUES (@NombreSubCat, @IdCat)", conn)
                     With cmd.Parameters
                         .AddWithValue("NombreSubCat", NombreSubCat)
                         .AddWithValue("IdCat", IdCat)
@@ -2378,7 +2424,7 @@ Public Class Form1
             NumeroEstantes = Convert.ToInt32(MysqlDset.Tables(0).Rows(0).Item(2))
             IDDatosApp = MysqlDset.Tables(0).Rows(0).Item(0)
             Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (NumeroEstantes + 1) & "' " &
-                        "WHERE IdDatos_App = '" & IDDatosApp & "'", conn)
+                            "WHERE IdDatos_App = '" & IDDatosApp & "'", conn)
             cmd.ExecuteNonQuery()
             conn.Close()
         Catch ex As Exception
@@ -2416,9 +2462,9 @@ Public Class Form1
             Try
 
                 conn.Open()
-                    Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (NumeroEstantes - 1) & "' " &
+                Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (NumeroEstantes - 1) & "' " &
                                 "WHERE IdDatos_App = '" & IDDatosApp & "'", conn)
-                    cmd.ExecuteNonQuery()
+                cmd.ExecuteNonQuery()
                 'MessageBox.Show("Registro MODIFICADO")
                 conn.Close()
             Catch ex As Exception
@@ -2443,7 +2489,7 @@ Public Class Form1
             a = Convert.ToInt64(MysqlDset.Tables(0).Rows(1).Item(2))
             b = MysqlDset.Tables(0).Rows(1).Item(0)
             Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (a + 1) & "' " &
-                            "WHERE IdDatos_App = '" & b & "'", conn)
+                                "WHERE IdDatos_App = '" & b & "'", conn)
             cmd.ExecuteNonQuery()
             'MessageBox.Show("Registro MODIFICADO")
             conn.Close()
@@ -2482,7 +2528,7 @@ Public Class Form1
             Try
                 conn.Open()
                 Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (a - 1) & "' " &
-                            "WHERE IdDatos_App = '" & b & "'", conn)
+                                "WHERE IdDatos_App = '" & b & "'", conn)
                 cmd.ExecuteNonQuery()
                 'MessageBox.Show("Registro MODIFICADO")
                 conn.Close()
@@ -2508,7 +2554,7 @@ Public Class Form1
             a = Convert.ToInt64(MysqlDset.Tables(0).Rows(2).Item(2))
             b = MysqlDset.Tables(0).Rows(2).Item(0)
             Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (a + 1) & "' " &
-                            "WHERE IdDatos_App = '" & b & "'", conn)
+                                "WHERE IdDatos_App = '" & b & "'", conn)
             cmd.ExecuteNonQuery()
             'MessageBox.Show("Registro MODIFICADO")
             conn.Close()
@@ -2551,7 +2597,7 @@ Public Class Form1
             Try
                 conn.Open()
                 Dim cmd As New MySqlCommand("UPDATE datos_app SET Detalles = '" & (a - 1) & "' " &
-                            "WHERE IdDatos_App = '" & b & "'", conn)
+                                "WHERE IdDatos_App = '" & b & "'", conn)
                 cmd.ExecuteNonQuery()
                 'MessageBox.Show("Registro MODIFICADO")
                 conn.Close()
@@ -2618,6 +2664,9 @@ Public Class Form1
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Error.")
                 conn.Close()
+            Finally
+                conn.Close()
+                leerbd.Close()
             End Try
         Else
             leerbd.Close()
@@ -2644,6 +2693,7 @@ Public Class Form1
         End If
 
         DataGridView3.DataSource = Nothing
+        DataGridView3.Columns.Clear()
         DataGridView3.DataSource = Tabla1
         DataGridView3.ReadOnly = True
         DataGridView3.SelectionMode = DataGridViewSelectionMode.FullRowSelect
@@ -2748,10 +2798,9 @@ Public Class Form1
                 MsgBox("Los campos con * son obligatorios")
                 Exit Sub
             End If
-
+            Dim read As MySqlDataReader
             Try
                 conn.Open()
-                Dim read As MySqlDataReader
                 Dim cmd As New MySqlCommand("Select * from orden_movimientos where N_Orden_Compra = @NumOrden and N_Referencia = @Referencia", conn)
                 With cmd.Parameters
                     .AddWithValue("NumOrden", UCase(N_Orden_Movimiento.Text.Trim))
@@ -2769,16 +2818,21 @@ Public Class Form1
             Catch ex As Exception
                 MsgBox(ex.Message)
                 conn.Close()
+            Finally
+                conn.Close()
+                read.Close()
             End Try
+            Dim read2 As MySqlDataReader
+            Dim reader As MySqlDataReader
             Try
                 conn.Open()
-                Dim read As MySqlDataReader
                 Dim cmd As New MySqlCommand("Select * from orden_movimientos where N_Orden_Compra = @NumOrden", conn)
                 With cmd.Parameters
                     .AddWithValue("NumOrden", UCase(N_Orden_Movimiento.Text.Trim))
                 End With
-                read = cmd.ExecuteReader
-                If read.Read Then
+                read2 = cmd.ExecuteReader
+
+                If read2.Read Then
                     DataGridView4.Visible = True
                     Dim cmd2 As New MySqlCommand("SELECT nombre_producto as 'Producto', Cantidad, Precio_Compra as 'Precio', Descripcion
                                                 FROM movimientos inner join productos on movimientos.Id_Producto = productos.Id_Producto
@@ -2787,8 +2841,7 @@ Public Class Form1
                     With cmd2.Parameters
                         .AddWithValue("Orden", N_Orden_Movimiento.Text.Trim)
                     End With
-                    read.Close()
-                    Dim reader As MySqlDataReader
+                    read2.Close()
                     Dim Tabla As New DataTable
                     reader = cmd2.ExecuteReader
                     Tabla.Load(reader)
@@ -2804,9 +2857,14 @@ Public Class Form1
                     Monto_Movimiento.Text = cmd3.ExecuteScalar.ToString
                     conn.Close()
                 End If
+                read.Close()
                 conn.Close()
             Catch ex As Exception
                 MsgBox(ex.Message)
+                conn.Close()
+            Finally
+                read2.Close()
+                reader.Close()
                 conn.Close()
             End Try
             If Monto_Movimiento.Text.Trim = "" Then
@@ -2927,6 +2985,7 @@ Public Class Form1
 
             With DataGridView4
                 .DataSource = Nothing
+                Dim reader As MySqlDataReader
                 Try
                     conn.Open()
                     Dim query As String = "SELECT productos.Nombre_Producto as 'Producto Solicitado', solicitud_salida.Cantidad as 'Cantidad Solicitada'
@@ -2936,7 +2995,6 @@ Public Class Form1
                     With cmd.Parameters
                         .AddWithValue("Orden", CBN_SolicitudSalida.SelectedValue)
                     End With
-                    Dim reader As MySqlDataReader
                     reader = cmd.ExecuteReader
                     Dim T As New DataTable
                     T.Load(reader)
@@ -2949,6 +3007,9 @@ Public Class Form1
                     MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
                     conn.Close()
                     Exit Sub
+                Finally
+                    reader.Close()
+                    conn.Close()
                 End Try
 
             End With
@@ -3004,11 +3065,11 @@ Public Class Form1
     Private Sub Equipo_Producto_Click(sender As Object, e As EventArgs) Handles Equipo_Producto.Click
         Bandera_Rel = 1
         Consulta_rel = "SELECT Cod_Equipo, Nombre_Equipo,IdRel_Producto_Equipos FROM rel_productos_equipos " &
-                        "INNER JOIN productos " &
-                        "ON (rel_productos_equipos.Id_Producto = productos.Id_Producto) " &
-                        "INNER JOIN equipos " &
-                        "ON (rel_productos_equipos.Id_Equipo = equipos.Id_Equipo) " &
-                        "WHERE rel_productos_equipos.Id_Producto='" & Id_Prod & "'"
+                            "INNER JOIN productos " &
+                            "ON (rel_productos_equipos.Id_Producto = productos.Id_Producto) " &
+                            "INNER JOIN equipos " &
+                            "ON (rel_productos_equipos.Id_Equipo = equipos.Id_Equipo) " &
+                            "WHERE rel_productos_equipos.Id_Producto='" & Id_Prod & "'"
         Id_elem = Id_Prod
         Tabla_Rel = "Equipos"
         Elemento_rel = Nombre_Producto.Text
@@ -3018,11 +3079,11 @@ Public Class Form1
     Private Sub Proveedor_Producto_Click(sender As Object, e As EventArgs) Handles Proveedor_Producto.Click
         Bandera_Rel = 2
         Consulta_rel = "SELECT Nombre_Proveedor, Ciudad, IdRel_Productos_Proveedores FROM rel_productos_proveedores " &
-                        "INNER JOIN productos " &
-                        "ON (rel_productos_proveedores.Id_Producto = productos.Id_Producto) " &
-                        "INNER JOIN proveedores " &
-                        "ON (rel_productos_proveedores.Nit_Proveedor= proveedores.Nit_Proveedor) " &
-                        "WHERE rel_productos_proveedores.Id_Producto='" & Id_Prod & "'"
+                            "INNER JOIN productos " &
+                            "ON (rel_productos_proveedores.Id_Producto = productos.Id_Producto) " &
+                            "INNER JOIN proveedores " &
+                            "ON (rel_productos_proveedores.Nit_Proveedor= proveedores.Nit_Proveedor) " &
+                            "WHERE rel_productos_proveedores.Id_Producto='" & Id_Prod & "'"
         Id_elem = Id_Prod
         Tabla_Rel = "Proveedores"
         Form3.ShowDialog()
@@ -3031,11 +3092,11 @@ Public Class Form1
     Private Sub Ubicacion_Producto_Click(sender As Object, e As EventArgs) Handles Ubicacion_Producto.Click
         Bandera_Rel = 3
         Consulta_rel = "SELECT Estante,Entrepano,Caja_Color,Zona,Cantidad,Aforo,IdRel_Ubicaciones_Productos FROM rel_ubicaciones_productos " &
-                        "INNER JOIN productos " &
-                        "ON (rel_ubicaciones_productos.Id_Producto = productos.Id_Producto) " &
-                        "INNER JOIN ubicaciones " &
-                        "ON (rel_ubicaciones_productos.Id_Ubicacion = ubicaciones.Id_Ubicacion) " &
-                        "WHERE rel_ubicaciones_productos.Id_Producto='" & Id_Prod & "'"
+                            "INNER JOIN productos " &
+                            "ON (rel_ubicaciones_productos.Id_Producto = productos.Id_Producto) " &
+                            "INNER JOIN ubicaciones " &
+                            "ON (rel_ubicaciones_productos.Id_Ubicacion = ubicaciones.Id_Ubicacion) " &
+                            "WHERE rel_ubicaciones_productos.Id_Producto='" & Id_Prod & "'"
         Id_elem = Id_Prod
         Tabla_Rel = "Ubicaciones"
         Elemento_rel = Nombre_Producto.Text
@@ -3045,11 +3106,11 @@ Public Class Form1
     Private Sub Modificar_Prod_Prov_Click(sender As Object, e As EventArgs) Handles Modificar_Prod_Prov.Click
         Bandera_Rel = 2
         Consulta_rel = "SELECT Cod_Producto, Nombre_Producto,IdRel_Productos_Proveedores FROM rel_productos_proveedores " &
-                        "INNER JOIN productos " &
-                        "ON (rel_productos_proveedores.Id_Producto = productos.Id_Producto) " &
-                        "INNER JOIN proveedores " &
-                        "ON (rel_productos_proveedores.Nit_Proveedor= proveedores.Nit_Proveedor) " &
-                        "WHERE rel_productos_proveedores.Nit_Proveedor='" & ID_Prov & "'"
+                            "INNER JOIN productos " &
+                            "ON (rel_productos_proveedores.Id_Producto = productos.Id_Producto) " &
+                            "INNER JOIN proveedores " &
+                            "ON (rel_productos_proveedores.Nit_Proveedor= proveedores.Nit_Proveedor) " &
+                            "WHERE rel_productos_proveedores.Nit_Proveedor='" & ID_Prov & "'"
         Id_elem = ID_Prov
         Tabla_Rel = "Productos"
         Elemento_rel = Nombre_Proveedor.Text
@@ -3147,6 +3208,7 @@ Public Class Form1
 
                     With DataGridView4
                         .DataSource = Nothing
+                        Dim reader As MySqlDataReader
                         Try
                             conn.Open()
                             Dim query As String = "SELECT productos.Nombre_Producto as 'Producto Solicitado', solicitud_salida.Cantidad as 'Cantidad Solicitada'
@@ -3156,7 +3218,6 @@ Public Class Form1
                             With cmd.Parameters
                                 .AddWithValue("Orden", CBN_SolicitudSalida.SelectedValue)
                             End With
-                            Dim reader As MySqlDataReader
                             reader = cmd.ExecuteReader
                             Dim T As New DataTable
                             T.Load(reader)
@@ -3169,6 +3230,9 @@ Public Class Form1
                             MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
                             conn.Close()
                             Exit Sub
+                        Finally
+                            reader.Close()
+                            conn.Close()
                         End Try
 
                     End With
@@ -3192,11 +3256,11 @@ Public Class Form1
             Using conn
                 conn.Open()
                 Dim comando As New MySqlCommand("SELECT Estante,Entrepano,Caja_Color,Zona,Cantidad,Aforo FROM rel_ubicaciones_productos " &
-                            "INNER JOIN productos " &
-                            "ON (rel_ubicaciones_productos.Id_Producto = productos.Id_Producto) " &
-                            "INNER JOIN ubicaciones " &
-                            "ON (rel_ubicaciones_productos.Id_Ubicacion = ubicaciones.Id_Ubicacion) " &
-                            "WHERE rel_ubicaciones_productos.Id_Producto= @idProd", conn)
+                                "INNER JOIN productos " &
+                                "ON (rel_ubicaciones_productos.Id_Producto = productos.Id_Producto) " &
+                                "INNER JOIN ubicaciones " &
+                                "ON (rel_ubicaciones_productos.Id_Ubicacion = ubicaciones.Id_Ubicacion) " &
+                                "WHERE rel_ubicaciones_productos.Id_Producto= @idProd", conn)
                 With comando.Parameters
                     .AddWithValue("idProd", Producto_Movimiento.SelectedValue)
                 End With
@@ -3216,11 +3280,11 @@ Public Class Form1
             If Tabla1.Rows.Count >= 1 Then
                 Bandera_Rel = 4
                 Consulta_rel = "SELECT Estante,Entrepano,Caja_Color,Zona,Cantidad,Aforo,IdRel_Ubicaciones_Productos FROM rel_ubicaciones_productos " &
-                "INNER JOIN productos " &
-                "ON (rel_ubicaciones_productos.Id_Producto = productos.Id_Producto) " &
-                "INNER JOIN ubicaciones " &
-                "ON (rel_ubicaciones_productos.Id_Ubicacion = ubicaciones.Id_Ubicacion) " &
-                "WHERE rel_ubicaciones_productos.Id_Producto='" & Producto_Movimiento.SelectedValue & "'"
+                    "INNER JOIN productos " &
+                    "ON (rel_ubicaciones_productos.Id_Producto = productos.Id_Producto) " &
+                    "INNER JOIN ubicaciones " &
+                    "ON (rel_ubicaciones_productos.Id_Ubicacion = ubicaciones.Id_Ubicacion) " &
+                    "WHERE rel_ubicaciones_productos.Id_Producto='" & Producto_Movimiento.SelectedValue & "'"
                 Id_elem = Producto_Movimiento.SelectedValue
                 'Tabla_Rel = "Ubicaciones"
                 'Elemento_rel = Nombre_Producto.Text
@@ -3228,7 +3292,7 @@ Public Class Form1
                     Using conn
                         conn.Open()
                         Dim cmd As New MySqlCommand("UPDATE productos SET Stock_Existente = '" & stock &
-                        "' WHERE Id_Producto = @idProd", conn)
+                            "' WHERE Id_Producto = @idProd", conn)
                         With cmd.Parameters
                             .AddWithValue("idProd", Producto_Movimiento.SelectedValue)
                         End With
@@ -3362,6 +3426,7 @@ Public Class Form1
 
                     With DataGridView4
                         .DataSource = Nothing
+                        Dim reader As MySqlDataReader
                         Try
                             conn.Open()
                             Dim query As String = "SELECT productos.Nombre_Producto as 'Producto Solicitado', solicitud_salida.Cantidad as 'Cantidad Solicitada'
@@ -3371,7 +3436,6 @@ Public Class Form1
                             With cmd.Parameters
                                 .AddWithValue("Orden", CBN_SolicitudSalida.SelectedValue)
                             End With
-                            Dim reader As MySqlDataReader
                             reader = cmd.ExecuteReader
                             Dim T As New DataTable
                             T.Load(reader)
@@ -3384,6 +3448,9 @@ Public Class Form1
                             MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
                             conn.Close()
                             Exit Sub
+                        Finally
+                            reader.Close()
+                            conn.Close()
                         End Try
 
                     End With
@@ -3656,6 +3723,7 @@ Public Class Form1
         TabPage18.Parent = TabControl2
         With DataGridView5
             .DataSource = Nothing
+            Dim reader As MySqlDataReader
             Try
                 conn.Open()
                 Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
@@ -3663,7 +3731,6 @@ Public Class Form1
                                                             stock_Existente as 'Unidades Existentes', compra_Maxima as 'Compra Maxima'
                                                             from productos inner join categorias on productos.id_categoria = categorias.id_categoria inner join categorias_sub on
                                                             productos.Id_SubCategoria = categorias_sub.Id_SubCategoria;"), conn)
-                Dim reader As MySqlDataReader
                 reader = cmd.ExecuteReader
                 Dim T As New DataTable
                 T.Load(reader)
@@ -3675,6 +3742,9 @@ Public Class Form1
             Catch ex As Exception
                 MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
                 conn.Close()
+            Finally
+                conn.Close()
+                reader.Close()
             End Try
         End With
 
@@ -3713,6 +3783,7 @@ Public Class Form1
         If TxtBxCodigo.Text.Trim = "" And TxtBxProductoConsultar.Text.Trim = "" And CBCategoria.SelectedValue = "-1" Then
             With DataGridView5
                 .DataSource = Nothing
+                Dim reader As MySqlDataReader
                 Try
                     conn.Open()
                     Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
@@ -3720,7 +3791,6 @@ Public Class Form1
                                                             stock_Existente as 'Unidades Existentes', compra_Maxima as 'Compra Maxima'
                                                             from productos inner join categorias on productos.id_categoria = categorias.id_categoria inner join categorias_sub on
                                                             productos.Id_SubCategoria = categorias_sub.Id_SubCategoria;"), conn)
-                    Dim reader As MySqlDataReader
                     reader = cmd.ExecuteReader
                     Dim T As New DataTable
                     T.Load(reader)
@@ -3732,6 +3802,9 @@ Public Class Form1
                 Catch ex As Exception
                     MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
                     conn.Close()
+                Finally
+                    reader.Close()
+                    conn.Close()
                 End Try
             End With
 
@@ -3739,6 +3812,7 @@ Public Class Form1
 
             With DataGridView5
                 .DataSource = Nothing
+                Dim reader As MySqlDataReader
                 Try
                     conn.Open()
                     Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
@@ -3749,7 +3823,7 @@ Public Class Form1
                     With cmd.Parameters
                         .AddWithValue("CodProd", TxtBxCodigo.Text.Trim & "%")
                     End With
-                    Dim reader As MySqlDataReader
+
                     reader = cmd.ExecuteReader
                     Dim T As New DataTable
                     T.Load(reader)
@@ -3761,6 +3835,9 @@ Public Class Form1
                 Catch ex As Exception
                     MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
                     conn.Close()
+                Finally
+                    reader.Close()
+                    conn.Close()
                 End Try
             End With
 
@@ -3768,6 +3845,7 @@ Public Class Form1
 
             With DataGridView5
                 .DataSource = Nothing
+                Dim reader As MySqlDataReader
                 Try
                     conn.Open()
                     Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
@@ -3778,7 +3856,6 @@ Public Class Form1
                     With cmd.Parameters
                         .AddWithValue("NomProd", TxtBxProductoConsultar.Text.Trim & "%")
                     End With
-                    Dim reader As MySqlDataReader
                     reader = cmd.ExecuteReader
                     Dim T As New DataTable
                     T.Load(reader)
@@ -3790,6 +3867,9 @@ Public Class Form1
                 Catch ex As Exception
                     MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
                     conn.Close()
+                Finally
+                    reader.Close()
+                    conn.Close()
                 End Try
             End With
 
@@ -3797,6 +3877,7 @@ Public Class Form1
 
             With DataGridView5
                 .DataSource = Nothing
+                Dim reader As MySqlDataReader
                 Try
                     conn.Open()
                     Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
@@ -3807,7 +3888,6 @@ Public Class Form1
                     With cmd.Parameters
                         .AddWithValue("IdCat", CBCategoria.SelectedValue)
                     End With
-                    Dim reader As MySqlDataReader
                     reader = cmd.ExecuteReader
                     Dim T As New DataTable
                     T.Load(reader)
@@ -3819,6 +3899,9 @@ Public Class Form1
                 Catch ex As Exception
                     MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
                     conn.Close()
+                Finally
+                    reader.Close()
+                    conn.Close()
                 End Try
             End With
 
@@ -3826,6 +3909,7 @@ Public Class Form1
 
             With DataGridView5
                 .DataSource = Nothing
+                Dim reader As MySqlDataReader
                 Try
                     conn.Open()
                     Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
@@ -3837,7 +3921,6 @@ Public Class Form1
                         .AddWithValue("NomProd", TxtBxProductoConsultar.Text.Trim & "%")
                         .AddWithValue("CodProd", TxtBxCodigo.Text.Trim & "%")
                     End With
-                    Dim reader As MySqlDataReader
                     reader = cmd.ExecuteReader
                     Dim T As New DataTable
                     T.Load(reader)
@@ -3849,6 +3932,9 @@ Public Class Form1
                 Catch ex As Exception
                     MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
                     conn.Close()
+                Finally
+                    reader.Close()
+                    conn.Close()
                 End Try
             End With
 
@@ -3856,6 +3942,7 @@ Public Class Form1
 
             With DataGridView5
                 .DataSource = Nothing
+                Dim reader As MySqlDataReader
                 Try
                     conn.Open()
                     Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
@@ -3867,7 +3954,6 @@ Public Class Form1
                         .AddWithValue("CodProd", TxtBxCodigo.Text.Trim & "%")
                         .AddWithValue("IdCat", CBCategoria.SelectedValue)
                     End With
-                    Dim reader As MySqlDataReader
                     reader = cmd.ExecuteReader
                     Dim T As New DataTable
                     T.Load(reader)
@@ -3879,6 +3965,9 @@ Public Class Form1
                 Catch ex As Exception
                     MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
                     conn.Close()
+                Finally
+                    reader.Close()
+                    conn.Close()
                 End Try
             End With
 
@@ -3886,6 +3975,7 @@ Public Class Form1
 
             With DataGridView5
                 .DataSource = Nothing
+                Dim reader As MySqlDataReader
                 Try
                     conn.Open()
                     Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
@@ -3897,7 +3987,6 @@ Public Class Form1
                         .AddWithValue("NomProd", TxtBxProductoConsultar.Text.Trim & "%")
                         .AddWithValue("IdCat", CBCategoria.SelectedValue)
                     End With
-                    Dim reader As MySqlDataReader
                     reader = cmd.ExecuteReader
                     Dim T As New DataTable
                     T.Load(reader)
@@ -3909,6 +3998,9 @@ Public Class Form1
                 Catch ex As Exception
                     MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
                     conn.Close()
+                Finally
+                    reader.Close()
+                    conn.Close()
                 End Try
             End With
 
@@ -3916,6 +4008,7 @@ Public Class Form1
 
             With DataGridView5
                 .DataSource = Nothing
+                Dim reader As MySqlDataReader
                 Try
                     conn.Open()
                     Dim cmd As New MySqlCommand(String.Format("SELECT Cod_Producto as 'Codigo del Producto', Nombre_Producto as 'Producto', Nombre_Categoria as 'Categoria',
@@ -3928,7 +4021,6 @@ Public Class Form1
                         .AddWithValue("IdCat", CBCategoria.SelectedValue)
                         .AddWithValue("CodProd", TxtBxCodigo.Text.Trim & "%")
                     End With
-                    Dim reader As MySqlDataReader
                     reader = cmd.ExecuteReader
                     Dim T As New DataTable
                     T.Load(reader)
@@ -3939,6 +4031,9 @@ Public Class Form1
                     conn.Close()
                 Catch ex As Exception
                     MsgBox("No se pudieron recuperar los datos de los productos de la base de datos:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error.")
+                    conn.Close()
+                Finally
+                    reader.Close()
                     conn.Close()
                 End Try
             End With
@@ -3959,6 +4054,7 @@ Public Class Form1
 
                 With DataGridView6
                     .DataSource = Nothing
+                    Dim reader As MySqlDataReader
                     Try
                         conn.Open()
                         Dim query As String = "SELECT orden_movimientos.N_Orden_Compra as 'Orden de Compra #', orden_movimientos.N_Referencia as 'Numero de Remision', 
@@ -3972,7 +4068,6 @@ Public Class Form1
                             .AddWithValue("Inicio", fecha_inicial)
                             .AddWithValue("Fin", fecha_final)
                         End With
-                        Dim reader As MySqlDataReader
                         reader = cmd.ExecuteReader
                         Dim T As New DataTable
                         T.Load(reader)
@@ -3985,12 +4080,16 @@ Public Class Form1
                         MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
                         conn.Close()
                         Exit Sub
+                    Finally
+                        reader.Close()
+                        conn.Close()
                     End Try
                 End With
             ElseIf ComboBox1.SelectedValue <> "-1" And ComboBox2.SelectedValue = "-1" Then
 
                 With DataGridView6
                     .DataSource = Nothing
+                    Dim reader As MySqlDataReader
                     Try
                         conn.Open()
                         Dim query As String = "SELECT orden_movimientos.N_Orden_Compra as 'Orden de Compra #', orden_movimientos.N_Referencia as 'Numero de Remision', 
@@ -4005,7 +4104,6 @@ Public Class Form1
                             .AddWithValue("Fin", fecha_final)
                             .AddWithValue("IdProd", ComboBox1.SelectedValue)
                         End With
-                        Dim reader As MySqlDataReader
                         reader = cmd.ExecuteReader
                         Dim T As New DataTable
                         T.Load(reader)
@@ -4018,6 +4116,9 @@ Public Class Form1
                         MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
                         conn.Close()
                         Exit Sub
+                    Finally
+                        reader.Close()
+                        conn.Close()
                     End Try
 
                 End With
@@ -4026,6 +4127,7 @@ Public Class Form1
 
                 With DataGridView6
                     .DataSource = Nothing
+                    Dim reader As MySqlDataReader
                     Try
                         conn.Open()
                         Dim query As String = "SELECT orden_movimientos.N_Orden_Compra as 'Orden de Compra #', orden_movimientos.N_Referencia as 'Numero de Remision', 
@@ -4040,7 +4142,6 @@ Public Class Form1
                             .AddWithValue("Fin", fecha_final)
                             .AddWithValue("Nit", ComboBox2.SelectedValue)
                         End With
-                        Dim reader As MySqlDataReader
                         reader = cmd.ExecuteReader
                         Dim T As New DataTable
                         T.Load(reader)
@@ -4053,6 +4154,9 @@ Public Class Form1
                         MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
                         conn.Close()
                         Exit Sub
+                    Finally
+                        reader.Close()
+                        conn.Close()
                     End Try
 
                 End With
@@ -4060,6 +4164,7 @@ Public Class Form1
 
                 With DataGridView6
                     .DataSource = Nothing
+                    Dim reader As MySqlDataReader
                     Try
                         conn.Open()
                         Dim query As String = "SELECT orden_movimientos.N_Orden_Compra as 'Orden de Compra #', orden_movimientos.N_Referencia as 'Numero de Remision', 
@@ -4075,7 +4180,6 @@ Public Class Form1
                             .AddWithValue("IdProd", ComboBox1.SelectedValue)
                             .AddWithValue("Nit", ComboBox2.SelectedValue)
                         End With
-                        Dim reader As MySqlDataReader
                         reader = cmd.ExecuteReader
                         Dim T As New DataTable
                         T.Load(reader)
@@ -4088,6 +4192,9 @@ Public Class Form1
                         MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
                         conn.Close()
                         Exit Sub
+                    Finally
+                        reader.Close()
+                        conn.Close()
                     End Try
 
                 End With
@@ -4107,6 +4214,7 @@ Public Class Form1
 
                 With DataGridView6
                     .DataSource = Nothing
+                    Dim reader As MySqlDataReader
                     Try
                         conn.Open()
                         Dim query As String = "SELECT orden_movimientos.N_Orden_Compra as 'Numero Orden de Salida', productos.Nombre_Producto as 'Producto', movimientos.Cantidad, movimientos.fecha as' Fecha',usuarios.Nombre_Usuario as 'Entregado a:'
@@ -4119,7 +4227,6 @@ Public Class Form1
                             .AddWithValue("Inicio", fecha_inicial)
                             .AddWithValue("Fin", fecha_final)
                         End With
-                        Dim reader As MySqlDataReader
                         reader = cmd.ExecuteReader
                         Dim T As New DataTable
                         T.Load(reader)
@@ -4132,12 +4239,16 @@ Public Class Form1
                         MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
                         conn.Close()
                         Exit Sub
+                    Finally
+                        reader.Close()
+                        conn.Close()
                     End Try
                 End With
             ElseIf ComboBox1.SelectedValue <> "-1" And ComboBox2.SelectedValue = "-1" Then
 
                 With DataGridView6
                     .DataSource = Nothing
+                    Dim reader As MySqlDataReader
                     Try
                         conn.Open()
                         Dim query As String = "SELECT orden_movimientos.N_Orden_Compra as 'Numero Orden de Salida', productos.Nombre_Producto as 'Producto', movimientos.Cantidad, movimientos.fecha as' Fecha',usuarios.Nombre_Usuario as 'Entregado a:'
@@ -4151,7 +4262,6 @@ Public Class Form1
                             .AddWithValue("Fin", fecha_final)
                             .AddWithValue("IdProd", ComboBox1.SelectedValue)
                         End With
-                        Dim reader As MySqlDataReader
                         reader = cmd.ExecuteReader
                         Dim T As New DataTable
                         T.Load(reader)
@@ -4164,6 +4274,9 @@ Public Class Form1
                         MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
                         conn.Close()
                         Exit Sub
+                    Finally
+                        reader.Close()
+                        conn.Close()
                     End Try
 
                 End With
@@ -4172,6 +4285,7 @@ Public Class Form1
 
                 With DataGridView6
                     .DataSource = Nothing
+                    Dim reader As MySqlDataReader
                     Try
                         conn.Open()
                         Dim query As String = "SELECT orden_movimientos.N_Orden_Compra as 'Numero Orden de Salida', productos.Nombre_Producto as 'Producto', movimientos.Cantidad, movimientos.fecha as' Fecha',usuarios.Nombre_Usuario as 'Entregado a:'
@@ -4185,7 +4299,6 @@ Public Class Form1
                             .AddWithValue("Fin", fecha_final)
                             .AddWithValue("Nit", ComboBox2.SelectedValue)
                         End With
-                        Dim reader As MySqlDataReader
                         reader = cmd.ExecuteReader
                         Dim T As New DataTable
                         T.Load(reader)
@@ -4198,6 +4311,9 @@ Public Class Form1
                         MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
                         conn.Close()
                         Exit Sub
+                    Finally
+                        reader.Close()
+                        conn.Close()
                     End Try
 
                 End With
@@ -4205,6 +4321,7 @@ Public Class Form1
 
                 With DataGridView6
                     .DataSource = Nothing
+                    Dim reader As MySqlDataReader
                     Try
                         conn.Open()
                         Dim query As String = "SELECT orden_movimientos.N_Orden_Compra as 'Numero Orden de Salida', productos.Nombre_Producto as 'Producto', movimientos.Cantidad, movimientos.fecha as' Fecha',usuarios.Nombre_Usuario as 'Entregado a:'
@@ -4219,7 +4336,6 @@ Public Class Form1
                             .AddWithValue("IdProd", ComboBox1.SelectedValue)
                             .AddWithValue("Nit", ComboBox2.SelectedValue)
                         End With
-                        Dim reader As MySqlDataReader
                         reader = cmd.ExecuteReader
                         Dim T As New DataTable
                         T.Load(reader)
@@ -4232,6 +4348,9 @@ Public Class Form1
                         MsgBox("No se pudieron recuperar los productos de la solicitud:" & vbCrLf & ex.Message, MsgBoxStyle.Exclamation, "Error")
                         conn.Close()
                         Exit Sub
+                    Finally
+                        reader.Close()
+                        conn.Close()
                     End Try
 
                 End With
@@ -4254,6 +4373,123 @@ Public Class Form1
             ComboBox2.Enabled = False
         End If
     End Sub
+
+    Private Sub BtnGenerarCodigo_Click(sender As Object, e As EventArgs) Handles BtnGenerarCodigo.Click
+
+        If Codigo_Producto.Text.Trim = "" Then
+            Dim año_actual As String
+
+            Try
+                conn.Open()
+                Dim cmd As New MySqlCommand(String.Format("SELECT date_format(date (NOW()),'%Y%m%d');"), conn)
+                año_actual = (cmd.ExecuteScalar).ToString
+                conn.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message, False, "Error")
+                conn.Close()
+                Exit Sub
+            End Try
+
+            Dim consecutivo As String
+            Dim Existe As Boolean
+            Try
+                conn.Open()
+                Dim cmd As New MySqlCommand(String.Format("select count(Cod_Producto) from productos where cod_producto like '" & año_actual & "%';"), conn)
+                If cmd.ExecuteScalar = 0 Then
+                    Existe = False
+                Else
+                    Existe = True
+                End If
+            Catch ex As Exception
+                MsgBox(ex.Message, False, "Error")
+                conn.Close()
+                Exit Sub
+            End Try
+
+            If Existe Then
+                Try
+                    conn.Open()
+                    Dim cmd As New MySqlCommand(String.Format("select max(productos.Cod_Producto) from productos where cod_producto like '" & año_actual & "%';"), conn)
+                    consecutivo = cmd.ExecuteScalar
+                    conn.Close()
+                Catch ex As Exception
+                    MsgBox(ex.Message, False, "Error")
+                    conn.Close()
+                    Exit Sub
+                Finally
+                    conn.Close()
+                End Try
+            Else
+                consecutivo = ""
+            End If
+
+            Dim sub_id As Char
+            If consecutivo = "" Then
+                consecutivo = año_actual + "A"
+                Codigo_Producto.Text = consecutivo
+            Else
+                sub_id = consecutivo(consecutivo.Length - 1)
+
+                If Char.IsNumber(sub_id) Then
+                    sub_id = "A"
+                ElseIf Char.IsLetter(sub_id) Then
+                    Inc(sub_id)
+                End If
+                Codigo_Producto.Text = consecutivo + sub_id
+            End If
+
+
+
+        Else
+            MsgBox("El producto ya posee un codigo, vacíe el campo de codigo si desea generar un codigo nuevo.", MsgBoxStyle.Information, "Advertencia")
+            Exit Sub
+        End If
+
+    End Sub
+    Public Sub Inc(ByRef c As Char)
+
+        'Remember if input is uppercase for later
+        Dim isUpper = Char.IsUpper(c)
+
+        'Work in lower case for ease
+        c = Char.ToLower(c)
+
+        'Check input range
+        If c < "a" Or c > "z" Then Throw New ArgumentOutOfRangeException
+
+        'Do the increment
+        c = Chr(Asc(c) + 1)
+
+        'Check not left alphabet
+        If c > "z" Then c = "a"
+
+        'Check if input was upper case
+        If isUpper Then c = Char.ToUpper(c)
+
+    End Sub
+    Private Sub BtnGenerarCodigoBarras_Click(sender As Object, e As EventArgs) Handles BtnGenerarCodigoBarras.Click
+        Me.BarCodeControl1.SaveToFile("Codigo.png")
+        Process.Start("Codigo.png")
+    End Sub
+
+    Private Sub Codigo_Producto_TextChanged(sender As Object, e As EventArgs) Handles Codigo_Producto.TextChanged
+        If (TryCast(sender, TextBox)).Text IsNot Nothing Then
+            Me.BarCodeControl1.Data = (TryCast(sender, TextBox)).Text
+            Me.BarCodeControl1.Data2D = (TryCast(sender, TextBox)).Text
+        End If
+    End Sub
+
+    Private Sub comboBoxType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles comboBoxType.SelectedIndexChanged
+        Try
+            Dim barcodeType As String = (TryCast(sender, ComboBox)).SelectedItem.ToString()
+            Me.BarCodeControl1.Type = CType(System.Enum.Parse(GetType(BarCodeType), barcodeType), BarCodeType)
+        Catch ex As Exception
+            MsgBox("No se puede utilizar el tipo de codigo seleccionado: " & ex.Message, MsgBoxStyle.Exclamation, "Error")
+        End Try
+    End Sub
+
+
+
 
     '    Private Sub Generar_Movimientos_Click(sender As Object, e As EventArgs) Handles Generar_Movimientos.Click
     '        DataGridView4.Visible = True
